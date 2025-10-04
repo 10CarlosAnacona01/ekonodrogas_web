@@ -35,8 +35,8 @@ body{
 /* Container */
 .container{
     display: grid;
-    border: 2px solid green;
     grid-template-columns: 4.2fr 5fr 0.8fr; /*Dividir en cuadricula contenedor (3) fr= franciones */
+    align-items: center;
     width: 57.25rem;
     height: 31rem;
 }
@@ -46,6 +46,7 @@ body{
     border: 2px solid blue;
     height: 100%;
     background-color: var(--color-background-form);
+    overflow: hidden; /*Oculta contenido que sobrepase tamaño del contenedor*/
 }
 
 form{
@@ -62,8 +63,9 @@ form p{
 }
 
 form p a{
-    color: var(--color-text-secondary);
+    color: var(--color-secondary);
     font-weight: 700;
+    
 }
 
 /* Input Container */
@@ -120,6 +122,11 @@ form button{
     border-radius: 0.5rem;
     margin-bottom: 0.3rem;
     cursor: pointer;
+}
+
+/* Boton Refister */
+form .btn-register{
+    margin-top: 1.5rem;
 }
 
 /* line-width-text */
@@ -181,9 +188,71 @@ form button{
 /* Banner */
 .banner{
     border: 2px solid black;
+    height: 100%; /* Posible ERROR en imagen, se desborda */
+    padding: 5rem 2rem 0rem 2rem;
+    position: relative;
+    overflow: hidden; /*Shape no se desbordan del banner*/
+    background-color: var(--color-primary);
+}
+
+.banner h1{
+    color: var(--color-title);
+    font-size: 3rem;
+    line-height: 0.9; /*Reducir el espacio entre líneas*/
+}
+
+.banner h1 span{
+    display: block; /*Salto de línea*/
+    font-weight: 500;
+}
+
+.banner p{
+    color: var(--color-background-form);
+    font-size: 0.8rem;
+    margin-top: 1rem;
+}
+
+.banner img{
+    position: absolute;
+    bottom: 2.5rem;
+    right: -2rem;
+    width: 95%;
+}
+
+/* Shapes (decoración de circulos)*/
+.shape{
+    background-color: #fff;
+    border-radius: 50%;
+    opacity: 0.2;
+    position: absolute;
+}
+
+.shape1{
+    height: 12.5rem;
+    width: 12.5rem;
+    left: 20rem;
+    top: 1.25rem;
+}
+
+.shape2{
+    width: 28rem;
+    height: 28rem;
+    bottom: -10rem;
+    right: -10rem;
+}
+
+.shape3{
+    width: 18rem;
+    height: 15rem;
+    left: -10rem;
+    top: 10.5rem;
 }
 
 /* Sidebar */
 .sidebar{
     border: 2px solid red;
+}
+
+.sidebar img{
+    
 }
