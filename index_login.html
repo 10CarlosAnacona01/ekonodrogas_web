@@ -8,13 +8,13 @@
 </head>
 <body>
     
-    <div class="container">
+    <div class="container" id="container">
         <div class="forms-container">
-            <div class="forms">
+            <div class="forms"  id="forms">
                 <!-- Formulario de Login -->
-                <form action="">
+                <form action="" id="sign-in">
                     <h2>Login</h2>
-                    <p>Don't have an account yer? <a href="#">Sign up</a></p>
+                    <p>Don't have an account yer? <a href="#" id="link-sign-in">Sign up</a></p>
                     <!-- Email -->
                     <div class="input-container">
                         <label for="email">Email Address</label>
@@ -52,9 +52,9 @@
 
 
                 <!-- Formulario de Registro-->
-                <form action="">
+                <form action="" id="sign-up">
                     <h2>Register</h2>
-                    <p>Already registered? <a href="#">Sign in</a></p>
+                    <p>Already registered? <a href="#" id="link-sign-up">Sign in</a></p>
                     <div class="input-container">
                         <label for="name">Name</label>
                         <input id="name" type="text" placeholder="your name">
@@ -75,6 +75,7 @@
             </div>
         </div>
         <div class="banner">
+            <!-- Decoración circulos en la imagen -->
             <div class="shape shape1"></div>
             <div class="shape shape2"></div>
             <div class="shape shape3"></div>
@@ -84,7 +85,7 @@
                 <img src="imagenes/banner.svg" alt="imagen inicio de sesión">
             </section>
         </div>
-        <div class="sidebar">
+        <div class="sidebar" id="sidebar">
             <!-- Icono Login -->
             <div class="sign" id="btn-sign-in">
                 <img src="iconos/crown.svg" alt="Icono de corona">
