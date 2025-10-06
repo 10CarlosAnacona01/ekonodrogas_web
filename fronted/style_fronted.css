@@ -196,3 +196,34 @@ html{
 }
 
 /* BANNER */
+
+.banner{
+    background-image: url('/iconos/logo_jpg/logo_grande.jpg'); /* Desbanecer colores despues */
+    height: 60rem;
+    background-size: cover;
+    background-position: center;
+}
+
+.content-banner{
+    max-width: 90rem;
+    margin: 0rem auto;
+    padding: 50rem 0rem 0rem 0rem; /* Acomodar boton */
+}
+
+.content-banner h2{
+    color: #fff;
+    font-size: 3.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.content-banner a{
+    margin-top: 2rem;
+    text-decoration: none;
+    color: #fff;
+    background-color: var(--primary-color);
+    display: inline-block;
+    padding: 1rem 3rem;
+    text-transform: uppercase;
+    border-radius: 3rem;
+}
