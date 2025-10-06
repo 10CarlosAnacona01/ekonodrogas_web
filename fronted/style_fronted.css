@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root{
+    --primary-color: #C7A17A;
+    --background-color: #F9F5F0;
+    --dark-color: #151515;
+}
+
+html{
+    font-size: 62.5%; /* 10px */
+    font-family: 'Poppins', sans-serif; /* Si falla uno se utiliza el otro*/
+}
+
+*{
+    margin: 0rem; /*Por buena practica dar un valor a los 0, rem o px. TENER EN CUENTA*/
+    padding: 0rem;
+    box-sizing: border-box;
+}
+
+/* UTILITIES */
+
+/* center content */
+.container{
+    max-width: 120rem;
+    margin: 0rem auto;
+}
+
+/* HEADER */
+
+.container-hero{
+    background-color: var(--background-color);
+}
+
+.hero{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 0rem;
+}
+
+.customer-support{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.customer-support i{
+    font-size: 3.3rem;
+}
+
+.content-customer-support{
+    display: flex;
+    flex-direction: column;
+}
+
+.container-logo{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.container-logo i{
+    font-size: 3rem;
+}
+
+.container-logo h1 a{
+    text-decoration: none;
+    color: #000;
+    font-size: 3rem; 
+    text-transform: uppercase; /* TODO EL TEXTO EN MAYÚSCULA*/
+    letter-spacing: -1px; /* Espacio entre eletras*/
+}
+
+.container-user{
+    display: flex;
+    gap: 1rem;
+    cursor: pointer;
+}
+
+/* User logo */
+.container-user .bi-person-fill{
+    font-size: 3rem;
+    color: var(--primary-color);
+    padding-right: 2.5rem;
+    border-right: 1px solid #E2E2E2;
+}
+
+/* Shopping cart icon */
+.container-user .bi-cart4{
+    font-size: 4rem;
+    color: var(--primary-color);
+    padding-left: 1rem;
+}
+
+/* Shopping cart text */
+.content-shopping-cart{
+    display: flex;
+    flex-direction: column;
+}
+
+/* NAVBAR */
+
+.container-navbar{
+    background-color: var(--primary-color);
+}
+
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0rem;
+}
+
+.navbar .bi-list{
+    display: none; /* No mostrar menú en pantalla grande*/
+}
+
+.menu{
+    display: flex;
+    gap: 2rem;
+}
+
+.menu li{
+    list-style: none; /* Quitar estilo de lista */
+}
+.menu a{
+    text-decoration: none;
+    font-size: 1.3rem;
+    color: var(--dark-color);
+    font-weight: 600;
+    text-transform: uppercase;
+    position: relative;
+}
+
+.menu a::after{
+    content: '';
+    width: 1.5rem;
+    height: 1px;
+    background-color: #fff;
+    position: absolute;
+    bottom: -3px;
+    left: 50px;
+    transform: translate(-50%, 50%); /* Centra */
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.menu a:hover::after{
+    opacity: 1;
+}
+
+.menu a:hover{
+    color: #fff;
+}
+
+.search-form{
+    position: relative;
+    display: flex;
+    align-items: center;
+    border: 2px solid #fff;
+    border-radius: 2rem;
+    background-color: #fff;
+    height: 4.4rem;
+    overflow: hidden;
+}
+
+.search-form input{
+    outline: none;
+    font-family: inherit; /* Quita cualquier letra predetermianda*/
+    border: none;
+    width: 25rem;
+    font-size: 1.4rem;
+    padding: 0rem 2rem;
+    color: #777;
+    cursor: pointer;
+}
+
+
+.search-form input::-webkit-search-cancel-button{
+    appearance: none;   /* Eliminar X del campo de busqueda */
+}
+
+.search-form .btn-search{
+    border: none;
+    background-color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 1rem;
+}
+
+.btn-search i{
+    font-size: 2rem;
+    color: #fff;
+}
+
+/* BANNER */
