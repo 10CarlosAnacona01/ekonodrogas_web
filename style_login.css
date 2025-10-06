@@ -9,17 +9,16 @@
 
 /* Colors */
 :root {
-    --color-primary: #925FE2;
-    --color-secondary: #6D4EA1;
-    --color-background: #D9C7F2;
-    --color-background-form: #FFF;
-    --color-text-primary: #000;
-    --color-text-secondary: #656565;
-    --color-border: #CDCDCD;
-    --color-button-text: #FFF;
-    --color-icon-google: #DB4437;
-    --color-icon-facebook: #4267B2;
-    --color-title: #F7F3FA;
+    --color-primary: #C2AB2D;  /* OK */
+    --color-secondary: #C9A208;  /* OK */
+    --color-background: #F9E79F; /* OK */
+    --color-background-form: #ffffff; /* OK */
+    --color-text-secondary: #656565; /* OK */
+    --color-border: #CDCDCD; /* OK */
+    --color-button-text: #FFF; /* OK */
+    --color-icon-google: #DB4437; /* OK */
+    --color-icon-facebook: #4267B2; /* OK */
+    --color-title: #F7F3FA; /* OK */
 }
 
 /* Body */
