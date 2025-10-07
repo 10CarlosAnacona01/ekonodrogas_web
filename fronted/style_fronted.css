@@ -25,6 +25,13 @@ html{
     margin: 0rem auto;
 }
 
+/* Titles */
+.heading-1{
+    text-align: center;
+    font-weight: 500;
+    font-size: 3rem;
+}
+
 /* HEADER */
 
 .container-hero{
@@ -196,34 +203,195 @@ html{
 }
 
 /* BANNER */
-
-.banner{
-    background-image: url('/iconos/logo_jpg/logo_grande.jpg'); /* Desbanecer colores despues */
+.banner {
+    background-image: url('/iconos/logo_jpg/logo_grande.jpg');
     height: 60rem;
     background-size: cover;
     background-position: center;
+    position: relative; /* Posicionar contenido dentro */
 }
 
-.content-banner{
-    max-width: 90rem;
-    margin: 0rem auto;
-    padding: 50rem 0rem 0rem 0rem; /* Acomodar boton */
-}
-
-.content-banner h2{
+/* Text container */
+.content-banner {
+    position: absolute; /* Permite mover libremente el cuadro */
+    bottom: 1rem;       /* Distancia borde inferior */
+    left: 65rem;       /* Distancia desde el borde izquierdo al derecho */
+    max-width: 50rem;
     color: #fff;
-    font-size: 3.5rem;
-    font-weight: 500;
-    line-height: 1.2;
+    background-color: rgba(0, 0, 0, 0.45);
+    padding: 1.5rem 1rem; /* Acomodar contorno */
+    border-radius: 3rem;
+    text-align: center;
 }
 
-.content-banner a{
-    margin-top: 2rem;
+/* Text */
+.content-banner p {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 1.3rem;
+}
+
+/* Button */
+.content-banner a {
     text-decoration: none;
     color: #fff;
     background-color: var(--primary-color);
-    display: inline-block;
     padding: 1rem 3rem;
     text-transform: uppercase;
     border-radius: 3rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
 }
+
+/* MAIN CONTENT */
+.main-content{
+    background-color: var(--background-color);
+}
+
+/* FEATURES */
+.container-features{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3rem;
+    padding: 3rem 0rem;
+}
+
+.card-feature{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    background-color: #fff;
+    border-radius: 1.5rem;
+    padding: 1.5rem 0rem;
+}
+
+.card-feature i{
+    font-size: 2.7rem;
+    color: var(--primary-color);
+}
+
+.feature-content{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.feature-content span{
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--dark-color);
+}
+
+.feature-content p{
+    color: #777;
+    font-weight: 500;
+}
+
+/* CATEGORIES */
+
+.top-categories{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.container-categories{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+}
+
+.card-category{
+    height: 20rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2rem;
+    gap: 2rem; /* Separación entre elementos*/
+}
+
+/* Best categories (modify)*/
+
+.category-1{
+    background-image: linear-gradient(#00000030, #00000030), url('/imagenes/productos/dermocosmetica.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat; /* no repetir imagen*/
+}
+
+.category-2{
+    background-image: linear-gradient(#00000030, #00000030), url('/imagenes/productos/salud_sexual.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat; /* no repetir imagen*/
+}
+
+.category-3{
+    background-image: linear-gradient(#00000030, #00000030), url('/imagenes/productos/higiene_bucal.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat; /* no repetir imagen*/
+}
+
+/* modify */
+.card-category p{
+    font-size: 2.5rem;
+    color: #fff;
+    text-transform: capitalize; /* Inicie con mayúscula*/
+    position: relative;
+}
+
+.card-category p::after{
+    content: '';
+    width: 2.5rem;
+    height: 2px;
+    background-color: #fff;
+    position: absolute;
+    bottom: -1rem;
+    left: 50%;
+    transform: translate(-50%,50%);
+}
+
+/* modify */
+.card-category span{
+    font-size: 1.6rem;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* modify */
+.card-category span:hover{
+    color: var(--primary-color);
+}
+
+/* TOP PRODUCTS */
+
+.top-products{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.container-options{
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1rem;
+}
+
+.container-options span{
+    color: #777;
+    background-color: #fff;
+    padding: 0.7rem 3rem;
+    font-size: 1.4rem;
+    text-transform: 1.4rem;
+    border-radius: 2rem;
+    cursor: pointer;
+}
+
+
+
