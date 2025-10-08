@@ -542,5 +542,144 @@ html{
     margin-left: 0.5rem;
 }
 
+/* PROMOTIONS GALLERY */
+
+.gallery{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);  /* Revisar funcionamiento */
+    grid-template-rows: repeat(2, 30rem);   /* Revisar funcionamiento */
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.gallery img{
+    width: 100%;
+    height: 100%;
+    object-fit: center;   /* mirar funcionamiento*/
+}
+
+.gallery-img-1{
+    grid-column: 2/4; /* Desde la columna 2 a la 4 */
+    grid-row: 1/3;    /* Desde la fila 1 a la 3 */
+}
+
+/* NEW PRODUCTS */
+
+.specials{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; /* Separación */
+    margin-bottom: 3rem; 
+}
+
+/* BLOGS */
+
+.blogs{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.container-blogs{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+}
+
+.card-blog{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.card-blog .container-img{
+    border-radius: 2rem;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.button-group-blog{
+    position: absolute;
+    bottom: 1.5rem;
+    right: -2.5rem;
+    display: flex;
+    gap: 0.7rem;
+    z-index: -1; /* Ocultarlo y al dar hover sea visible*/
+    transform: all 0.3s ease;
+}
+
+.card-blog:hover .button-group-blog{
+    z-index: 0;
+    right: 1.5rem;
+}
+
+.button-group-blog span{
+    background-color: #fff;
+    padding: 1.3rem;
+    border-radius: 50%;
+    transition: all 0.4 ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button-group-blog span i{
+    font-size: 1rem;
+}
+
+.button-group-blog span:hover{
+    background-color: var(--primary-color);
+}
+
+.button-group-blog span:hover i{
+    color: #fff;
+}
+
+.content-blog h3{
+    font-size: 1.8rem;
+    margin-bottom: 1.7rem;
+    color: var(--dark-color);
+    font-weight: 500;
+}
+
+.content-blog h3:hover{
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+.content-blog p{
+    margin-top: 1rem;
+    font-size: 1.4rem;
+    color: #777;
+}
+
+.content-blog span{
+    color: var(--primary-color);
+    font-size: 1.3rem;
+}
+
+.btn-read-more a{
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.4rem;
+}
+
+.btn-read-more{
+    padding: 1rem 3rem;
+    background-color: var(--primary-color);
+    border-radius: 2rem;
+    margin: 3rem 0rem 5rem;
+    display: inline-block; /* Para que no ocupe todo el ancho del elemento*/
+    cursor: pointer;
+}
+
+.btn-read-more:hover{
+    background-color: var(--dark-color);
+}
+
+/* FOOTER */
+
+
 
 
