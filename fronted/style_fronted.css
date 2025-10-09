@@ -118,6 +118,10 @@ html{
     padding: 1rem 0rem;
 }
 
+.navbar .bi-list-ul{
+    display: none; /* Desaparece menu hamburgueza */
+}
+
 .navbar .bi-list{
     display: none; /* No mostrar menú en pantalla grande*/
 }
@@ -130,6 +134,9 @@ html{
 .menu li{
     list-style: none; /* Quitar estilo de lista */
 }
+
+
+
 .menu a{
     text-decoration: none;
     font-size: 1.3rem;
@@ -936,6 +943,37 @@ html{
         gap: 1.5rem;
     }
 
+        .navbar .bi-list-ul {
+        display: block;
+        font-size: 3rem;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    /* Ocultar el menú por defecto en móviles */
+    .menu {
+        display: none;
+        flex-direction: column;
+        background-color: var(--primary-color);
+        position: absolute;
+        top: 7rem; /* debajo del navbar */
+        left: 0;
+        width: 100%;
+        padding: 1rem 0;
+        text-align: center;
+        z-index: 100;
+    }
+
+    /* Mostrar el menú cuando se active */
+    .menu.active {
+        display: flex;
+    }
+
+    /* Ajuste opcional del buscador */
+    .search-form {
+        display: none;
+    }
+
 }
 
 
@@ -983,6 +1021,14 @@ html{
     .container-products{
         grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
         gap: 1rem;
+    }
+
+    .container-products {
+        display: none;
+    }
+
+    .container-products.active {
+        display: flex; /* o flex, según tu diseño */
     }
 
     .container-img .discount{
@@ -1041,5 +1087,19 @@ html{
     }
 
 }
+
+/* Show/Hide best products */
+
+/* Se agrega al final para asegurar prioridad sobre otros estilos similares */
+/* El CSS se lee de arriba hacia abajo, así evitamos que otros bloques lo sobrescriban */
+
+    .container-products {
+        display: none;
+    }
+
+    .container-products.active {
+        display: grid; 
+    }
+
 
 

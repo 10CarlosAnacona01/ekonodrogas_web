@@ -44,7 +44,7 @@
         <div class="container-navbar">
             <nav class="navbar container">
                 <!-- Hamburger menu -->
-                <i class="bi bi-list-ul"></i>
+                <i class="bi bi-list-ul" id="menu-toggle"></i>
                 <ul class="menu">
                     <li><a href="/fronted/index_fronted.html">Inicio</a></li>
                     <li><a href="/drogueria/index_drogueria.html">Droguería</a></li>
@@ -133,14 +133,16 @@
 
             <!-- Clase activa, aparece primero y marcada -->
             <div class="container-options">
-                <span class="active">Destacados</span>
-                <span>Más recientes</span>
-                <span>Mejores vendidos</span>
+                <span class="active" data-target="destacados">Destacados</span>
+                <span data-target="recientes">Más recientes</span>
+                <span data-target="vendidos">Más vendidos</span>
             </div>
+
+            <!-- Destacados -->
 
 
             <!-- Producto 1 -->
-            <div class="container-products">
+            <div class="container-products active" id="destacados">
                 <div class="card-product">
                     <div class="container-img">
                         <img src="/imagenes/productos/ibuflash-migran.png" alt="Caja Ibuflash Migran">
@@ -166,8 +168,6 @@
                         <p class="price">$51.100 <span>$61.100</span> </p>
                     </div>
                 </div>
-
-
 
                 <!-- Producto 2 -->
                 <div class="card-product">
@@ -252,6 +252,226 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Más recientes -->
+
+            <div class="container-products" id="recientes">
+
+                <!-- Producto 1 -->
+                <div class="card-product">
+                    <div class="container-img">
+                        <img src="/dermocosmetica/imagenes/Cicatricure-Gel.jpg" alt="Cicatricure Gel">
+                        <div class="button-group">
+                            <span>
+                                <i class="bi bi-eye-fill"></i> <!-- Ojito -->
+                            </span>
+                            <span>
+                                <i class="bi bi-heart"></i> <!-- Corazón -->
+                            </span>
+                            <span>
+                                <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
+                            </span>
+                        </div>
+                    </div>
+                    <div class="content-card-product">
+
+                        <h3>Cicatricure Gel</h3>
+                        <span class="add-cart">
+                            <i class="bi bi-cart4"></i>
+                        </span>
+                        <p class="price">$55.100</p>
+                    </div>
+                </div>
+
+                <!-- Producto 2 -->
+                <div class="card-product">
+                    <div class="container-img">
+                        <img src="/dermocosmetica/imagenes/Cetaphil-Crema.png" alt="Cetaphil Crema">
+                        <div class="button-group">
+                            <span>
+                                <i class="bi bi-eye-fill"></i> <!-- Ojito -->
+                            </span>
+                            <span>
+                                <i class="bi bi-heart"></i> <!-- Corazón -->
+                            </span>
+                            <span>
+                                <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
+                            </span>
+                        </div>
+                    </div>
+                    <div class="content-card-product">
+
+                        <h3>Cetaphil Crema</h3>
+                        <span class="add-cart">
+                            <i class="bi bi-cart4"></i>
+                        </span>
+                        <p class="price">$129.200</p>
+                    </div>
+                </div>
+
+                <!-- Producto 3 -->
+                <div class="card-product">
+                    <div class="container-img">
+                        <img src="/dermocosmetica/imagenes/Nivea-Nutritivo.jpg" alt="Nivea Nutritivo">
+                        <div class="button-group">
+                            <span>
+                                <i class="bi bi-eye-fill"></i> <!-- Ojito -->
+                            </span>
+                            <span>
+                                <i class="bi bi-heart"></i> <!-- Corazón -->
+                            </span>
+                            <span>
+                                <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
+                            </span>
+                        </div>
+                    </div>
+                    <div class="content-card-product">
+
+                        <h3>Nivea Nutritivo</h3>
+                        <span class="add-cart">
+                            <i class="bi bi-cart4"></i>
+                        </span>
+                        <p class="price">$13.600</p>
+                    </div>
+                </div>
+
+                <!-- Producto 4 -->
+                <div class="card-product">
+                    <div class="container-img">
+                        <img src="/dermocosmetica/imagenes/Nivea-Hyaluron.png" alt="Nivea Hyaluron">
+                        <div class="button-group">
+                            <span>
+                                <i class="bi bi-eye-fill"></i> <!-- Ojito -->
+                            </span>
+                            <span>
+                                <i class="bi bi-heart"></i> <!-- Corazón -->
+                            </span>
+                            <span>
+                                <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
+                            </span>
+                        </div>
+                    </div>
+                    <div class="content-card-product">
+
+                        <h3>Nivea Hyaluron</h3>
+                        <span class="add-cart">
+                            <i class="bi bi-cart4"></i>
+                        </span>
+                        <p class="price">$34.600</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Más vendidos -->
+            <div class="container-products" id="vendidos">
+
+                <!-- Producto 1 -->
+                <div class="card-product">
+                    <div class="container-img">
+                        <img src="/maternidad-y-bebes/imagenes/Nan-Expertpro.jpg" alt="Nan Expertpro">
+                        <div class="button-group">
+                            <span>
+                                <i class="bi bi-eye-fill"></i> <!-- Ojito -->
+                            </span>
+                            <span>
+                                <i class="bi bi-heart"></i> <!-- Corazón -->
+                            </span>
+                            <span>
+                                <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
+                            </span>
+                        </div>
+                    </div>
+                    <div class="content-card-product">
+
+                        <h3>Nan Expertpro</h3>
+                        <span class="add-cart">
+                            <i class="bi bi-cart4"></i>
+                        </span>
+                        <p class="price">$79.000</p>
+                    </div>
+                </div>
+
+                <!-- Producto 2 -->
+                <div class="card-product">
+                    <div class="container-img">
+                        <img src="/maternidad-y-bebes/imagenes/Nan-Comfort.jpg" alt="Nan Comfort">
+                        <div class="button-group">
+                            <span>
+                                <i class="bi bi-eye-fill"></i> <!-- Ojito -->
+                            </span>
+                            <span>
+                                <i class="bi bi-heart"></i> <!-- Corazón -->
+                            </span>
+                            <span>
+                                <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
+                            </span>
+                        </div>
+                    </div>
+                    <div class="content-card-product">
+
+                        <h3>Nan Comfort</h3>
+                        <span class="add-cart">
+                            <i class="bi bi-cart4"></i>
+                        </span>
+                        <p class="price">$129.200</p>
+                    </div>
+                </div>
+
+                <!-- Producto 3 -->
+                <div class="card-product">
+                    <div class="container-img">
+                        <img src="/maternidad-y-bebes/imagenes/Baby-Champu.jpg" alt="Baby Champu">
+                        <div class="button-group">
+                            <span>
+                                <i class="bi bi-eye-fill"></i> <!-- Ojito -->
+                            </span>
+                            <span>
+                                <i class="bi bi-heart"></i> <!-- Corazón -->
+                            </span>
+                            <span>
+                                <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
+                            </span>
+                        </div>
+                    </div>
+                    <div class="content-card-product">
+
+                        <h3>Baby Champu</h3>
+                        <span class="add-cart">
+                            <i class="bi bi-cart4"></i>
+                        </span>
+                        <p class="price">$11.200</p>
+                    </div>
+                </div>
+
+                <!-- Producto 4 -->
+                <div class="card-product">
+                    <div class="container-img">
+                        <img src="/maternidad-y-bebes/imagenes/baby-Johnson.jpg" alt="baby Johnson">
+                        <div class="button-group">
+                            <span>
+                                <i class="bi bi-eye-fill"></i> <!-- Ojito -->
+                            </span>
+                            <span>
+                                <i class="bi bi-heart"></i> <!-- Corazón -->
+                            </span>
+                            <span>
+                                <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
+                            </span>
+                        </div>
+                    </div>
+                    <div class="content-card-product">
+
+                        <h3>Baby Johnson</h3>
+                        <span class="add-cart">
+                            <i class="bi bi-cart4"></i>
+                        </span>
+                        <p class="price">$11.200</p>
+                    </div>
+                </div>
+
+            </div>
+
         </section>
 
         <!-- Promociones -->
@@ -488,9 +708,12 @@
                             <li>Email: ekonodrogas@gmail.com</li>
                         </ul>
                         <div class="social-icons">
-                            <span class="facebook"> <a href="https://www.facebook.com/ekonodrogas.droguerias.5"> <i class="bi bi-facebook"></i></a></span>
-                            <span class="whatsapp"> <a href="https://web.whatsapp.com/"> <i class="bi bi-whatsapp"></i></a></span>
-                            <span class="instagram"> <a href="https://www.instagram.com/"> <i class="bi bi-instagram"></i></a></span>
+                            <span class="facebook"> <a href="https://www.facebook.com/ekonodrogas.droguerias.5"> <i
+                                        class="bi bi-facebook"></i></a></span>
+                            <span class="whatsapp"> <a href="https://web.whatsapp.com/"> <i
+                                        class="bi bi-whatsapp"></i></a></span>
+                            <span class="instagram"> <a href="https://www.instagram.com/"> <i
+                                        class="bi bi-instagram"></i></a></span>
                         </div>
                     </div>
 
@@ -539,6 +762,8 @@
         </footer>
 
     </main>
+
+    <script src="/fronted/script_fronted.js"></script>
 </body>
 
 </html>
