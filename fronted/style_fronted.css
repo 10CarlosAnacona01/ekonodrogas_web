@@ -303,6 +303,16 @@ html{
     gap: 3rem;
 }
 
+.container-categories a{
+    text-decoration: none;
+    font-weight: 700;
+    color: var(--background-color);
+}
+.card-category a:hover{
+    color: var(--primary-color);
+}
+
+
 .card-category{
     height: 20rem;
     display: flex;
@@ -323,14 +333,14 @@ html{
 }
 
 .category-2{
-    background-image: linear-gradient(#00000030, #00000030), url('/imagenes/productos/salud_sexual.png');
+    background-image: linear-gradient(#00000030, #00000030), url('/imagenes/productos/rebajas.png');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat; /* no repetir imagen*/
 }
 
 .category-3{
-    background-image: linear-gradient(#00000030, #00000030), url('/imagenes/productos/higiene_bucal.png');
+    background-image: linear-gradient(#00000030, #00000030), url('/imagenes/productos/antigripal.avif');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat; /* no repetir imagen*/
@@ -339,7 +349,8 @@ html{
 /* modify */
 .card-category p{
     font-size: 2.5rem;
-    color: #fff;
+    font-weight: 500;
+    color: var(--background-color);
     text-transform: capitalize; /* Inicie con mayúscula*/
     position: relative;
 }
@@ -348,23 +359,17 @@ html{
     content: '';
     width: 2.5rem;
     height: 2px;
-    background-color: #fff;
     position: absolute;
     bottom: -1rem;
     left: 50%;
     transform: translate(-50%,50%);
 }
 
+
 /* modify */
 .card-category span{
     font-size: 1.6rem;
-    color: #fff;
     cursor: pointer;
-}
-
-/* modify */
-.card-category span:hover{
-    color: var(--primary-color);
 }
 
 /* TOP PRODUCTS */
@@ -639,13 +644,7 @@ html{
 .content-blog h3{
     font-size: 1.8rem;
     margin-bottom: 1.7rem;
-    color: var(--dark-color);
     font-weight: 500;
-}
-
-.content-blog h3:hover{
-    color: var(--primary-color);
-    cursor: pointer;
 }
 
 .content-blog p{
