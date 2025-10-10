@@ -861,14 +861,18 @@ html{
         display: none;
     }
 
+    /* Funcionamiento despligue secciones */
+
     .navbar{
         padding: 1rem, 2rem;
+        position: relative;
     }
 
     .navbar .bi-list-ul{
         display: block;
         color: #fff;
         font-size: 3rem;
+        cursor: pointer;
     }
 
     .menu{
@@ -974,6 +978,13 @@ html{
         display: none;
     }
 
+    /* Encabezado  */
+    .heading-1 {
+        font-size: 2.4rem;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
 }
 
 
@@ -982,6 +993,22 @@ html{
 
     html{
         font-size: 42.5%;
+    }
+
+    /* Logo más compacto */
+    .container-logo h1 a {
+        font-size: 2.2rem;
+    }
+
+    .container-logo i {
+        font-size: 2.5rem;
+    }
+
+    /* Iconos de usuario más pequeños */
+    .container-user .bi-person-fill,
+    .container-user .bi-cart4 {
+        font-size: 2.7rem;
+        padding: 1rem;
     }
 
     .content-banner{
