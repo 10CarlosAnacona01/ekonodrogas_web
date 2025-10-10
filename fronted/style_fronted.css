@@ -584,13 +584,6 @@ html{
     margin-bottom: 3rem; 
 }
 
-/* Modified to be seen */
-.container-products-static{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(20rem,1fr)); /* Revisar funcionamiento y documentación, ayuda a que sea responsivo*/
-    gap: 3rem;
-}
-
 /* BLOGS */
 
 .blogs{
@@ -601,8 +594,8 @@ html{
 
 .container-blogs{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 3rem;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
 .card-blog{
@@ -868,6 +861,8 @@ html{
         display: none;
     }
 
+    
+
     /* Funcionamiento despligue secciones */
 
     .navbar{
@@ -938,13 +933,15 @@ html{
     }
 
     .container-blogs{
-        overflow: hidden;
-        grid-template-columns: 1fr 1fr;
-        height: 52rem;
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .menu-footer{
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .container-footer {
+    grid-template-columns: repeat(2, 1fr);
     }
 
     .copyright{
@@ -1077,13 +1074,17 @@ html{
         grid-template-rows: repeat(2, 20rem);
     }
 
+    .container-footer {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
     .blogs{
         padding: 2rem;
     }
 
     .container-blogs{
         grid-template-columns: 1fr;
-        height: 75rem;
     }
 
     .content-blog h3{
@@ -1105,7 +1106,8 @@ html{
     .contact-info ul,
     .information ul,
     .my-account ul{
-        display: none;
+        display: block;
+    margin-top: 1rem;
     }
 
     .contact-info{

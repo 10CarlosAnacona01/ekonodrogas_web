@@ -14,7 +14,8 @@
     
     // Cambio de productos 
     const botones = document.querySelectorAll('.container-options span');
-    const secciones = document.querySelectorAll('.container-products');
+    // Se agrega esto para que no afecte el active a la sección de nuevos productos
+    const secciones = document.querySelectorAll('.container:not(.specials) .container-products');
 
     botones.forEach(boton => {
         boton.addEventListener('click', () => {
