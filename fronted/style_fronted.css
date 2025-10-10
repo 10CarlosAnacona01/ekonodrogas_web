@@ -211,10 +211,12 @@ html{
 
 /* BANNER */
 .banner {
+    width: 100%;
     background-image: url('/iconos/logo_jpg/logo_grande.jpg');
     height: 60rem;
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
     position: relative; /* Posicionar contenido dentro */
 }
 
@@ -861,7 +863,31 @@ html{
         display: none;
     }
 
-    
+    .banner {
+        height: 40rem;
+    }
+
+        .content-banner {
+            max-width: 90%;
+            left: 50%;
+            bottom: 3rem;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 1.5rem;
+            border-radius: 2rem;
+            text-align: center;
+        }
+
+        .content-banner p {
+            font-size: 1.4rem;
+        }
+
+        .content-banner a {
+            font-size: 1.4rem;
+            padding: 0.8rem 2rem;
+        }
+
+
 
     /* Funcionamiento despligue secciones */
 
@@ -1019,6 +1045,32 @@ html{
         max-width: 50rem;
         padding: 22rem 0rem;
     }
+
+    .banner {
+        height: 30rem;
+    }
+
+            .content-banner {
+                position: absolute;
+                bottom: 2rem;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 85%;
+                background-color: rgba(0, 0, 0, 0.5);
+                padding: 1rem;
+                border-radius: 2rem;
+                text-align: center;
+            }
+
+            .content-banner p {
+                font-size: 1.3rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .content-banner a {
+                font-size: 1.2rem;
+                padding: 0.7rem 1.5rem;
+            }
 
     .heading-1{
         font-size: 2.8rem;
