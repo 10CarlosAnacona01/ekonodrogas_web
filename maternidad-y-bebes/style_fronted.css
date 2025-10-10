@@ -124,6 +124,15 @@ body{
     padding: 1rem 0rem;
 }
 
+/* Remove hamburger menu */
+.navbar .bi-list-ul{
+    display: none; /* Desaparece menu hamburgueza */
+}
+
+.navbar .bi-list{
+    display: none; /* No mostrar menú en pantalla grande*/
+}
+
 .navbar .bi-list{
     display: none; /* No mostrar menú en pantalla grande*/
 }

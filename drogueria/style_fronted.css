@@ -124,6 +124,15 @@ body{
     padding: 1rem 0rem;
 }
 
+/* Remove hamburger menu */
+.navbar .bi-list-ul{
+    display: none; /* Desaparece menu hamburgueza */
+}
+
+.navbar .bi-list{
+    display: none; /* No mostrar menú en pantalla grande*/
+}
+
 .navbar .bi-list{
     display: none; /* No mostrar menú en pantalla grande*/
 }
@@ -388,4 +397,88 @@ body{
     flex-direction: column;
     gap: 2rem; /* Separación */
     margin-bottom: 3rem; 
+}
+
+/* Media queries - 768px */
+@media (max-width: 768px) {
+
+    html {
+        font-size: 55%;
+    }
+
+    .hero{
+        padding: 2rem;
+    }
+
+    .customer-support{
+        display: none;
+    }
+
+    .content-shopping-cart{
+        display: none;
+    }
+
+    /* NAVBAR */
+    
+    .navbar {
+        padding: 1rem 2rem;
+        position: relative;
+    }
+
+    /* Ícono hamburguesa visible */
+    .navbar .bi-list-ul {
+        display: block;
+        font-size: 3rem;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    /* Menú oculto por defecto */
+    .menu {
+        display: none;
+        flex-direction: column;
+        background-color: var(--primary-color);
+        position: absolute;
+        top: 7rem; /* debajo del navbar */
+        left: 0;
+        width: 100%;
+        padding: 1rem 0;
+        text-align: center;
+        z-index: 1; /* Posicionar por encima */
+    }
+
+    /* Mostrar menú cuando esté activo */
+    .menu.active {
+        display: flex;
+    }
+
+    /* Ocultar buscador en pantallas pequeñas */
+    .search-form {
+        display: none;
+    }
+
+    /* --- ENCABEZADO --- */
+    .heading-1 {
+        font-size: 2.4rem;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    /* --- LOGO Y ELEMENTOS SUPERIORES --- */
+    .customer-support,
+    .content-shopping-cart {
+        display: none;
+    }
+
+    .container-logo {
+        justify-content: center;
+        text-align: center;
+    }
+}
+
+
+/* Media queries - 468px */
+@media (max-width: 480px) {
+
+
 }
