@@ -392,12 +392,12 @@ body{
     margin-left: 0.5rem;
 }
 
+/* Mirar funcionamiento */
 .specials{
     display: flex;
     flex-direction: column;
-    gap: 2rem; /* Separación */
-    margin-bottom: 3rem; 
-}
+    gap: 2rem; 
+    margin-bottom: 3rem; }
 
 /* Media queries - 768px */
 @media (max-width: 768px) {
