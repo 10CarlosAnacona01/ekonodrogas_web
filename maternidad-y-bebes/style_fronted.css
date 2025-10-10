@@ -398,3 +398,119 @@ body{
     gap: 2rem; /* Separación */
     margin-bottom: 3rem; 
 }
+
+/* Media queries - 768px */
+@media (max-width: 768px) {
+
+    html {
+        font-size: 55%;
+    }
+
+    .hero{
+        padding: 2rem;
+    }
+
+    .customer-support{
+        display: none;
+    }
+
+    .content-shopping-cart{
+        display: none;
+    }
+
+    /* NAVBAR */
+    
+    .navbar {
+        padding: 1rem 2rem;
+        position: relative;
+    }
+
+    /* Ícono hamburguesa visible */
+    .navbar .bi-list-ul {
+        display: block;
+        font-size: 3rem;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    /* Menú oculto por defecto */
+    .menu {
+        display: none;
+        flex-direction: column;
+        background-color: var(--primary-color);
+        position: absolute;
+        top: 7rem; /* debajo del navbar */
+        left: 0;
+        width: 100%;
+        padding: 1rem 0;
+        text-align: center;
+        z-index: 1; /* Posicionar por encima */
+    }
+
+    /* Mostrar menú cuando esté activo */
+    .menu.active {
+        display: flex;
+    }
+
+    /* Ocultar buscador en pantallas pequeñas */
+    .search-form {
+        display: none;
+    }
+
+    /* Encabezado  */
+    .heading-1 {
+        font-size: 2.4rem;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+}
+
+
+/* Media queries - 468px */
+@media (max-width: 480px) {
+
+    html {
+        font-size: 50%; /* letras un poco más grandes y proporcionales */
+    }
+
+    /* Logo más compacto */
+    .container-logo h1 a {
+        font-size: 2.2rem;
+    }
+
+    .container-logo i {
+        font-size: 2.5rem;
+    }
+
+    /* Espaciado general del header */
+    .hero {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem 0;
+    }
+
+    /* Iconos de usuario más pequeños */
+    .container-user .bi-person-fill,
+    .container-user .bi-cart4 {
+        font-size: 2.5rem;
+        padding: 0;
+    }
+
+    /* Título principal más legible */
+    .heading-1 {
+        font-size: 2rem;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    /* Ajuste del grid de productos */
+    .container-products {
+        grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+        gap: 1.5rem;
+        padding: 0 1rem;
+    }
+
+    .add-cart {
+        padding: 0.7rem;
+    }
+}
