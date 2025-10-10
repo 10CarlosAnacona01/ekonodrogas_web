@@ -298,25 +298,11 @@ form .btn-register{
 }
 
 /* Forms animation */
+
 @keyframes slideIn {
-    from {opacity: 0; transform: translateX(-100%);}
+    from {opacity: 0; transform: translateX(-100%);} /* El formulario aparecie desde la izquierda hacia la derecha en su totalidad */
     to {opacity: 1; transform: translateX(0);}
 }
-
-/* Brounce animation, motion effect on screen*/
-@keyframes brounce-up{
-    0% {transform: translateY(0px);}
-    20% {transform: translateY(-7px);}
-    40% {transform: translateY(2px);}
-    60% {transform: translateY(0px);}
-}
-@keyframes brounce-down{
-    0% {transform: translateY(0px);}
-    20% {transform: translateY(7px);}
-    40% {transform: translateY(-2px);}
-    60% {transform: translateY(0px);}
-}
-
 
 /* Big screens */
 @media (max-width: 1024px) {
