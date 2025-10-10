@@ -584,6 +584,13 @@ html{
     margin-bottom: 3rem; 
 }
 
+/* Modified to be seen */
+.container-products-static{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem,1fr)); /* Revisar funcionamiento y documentación, ayuda a que sea responsivo*/
+    gap: 3rem;
+}
+
 /* BLOGS */
 
 .blogs{
@@ -1124,6 +1131,10 @@ html{
 
     .container-products.active {
         display: grid; 
+    }
+
+    .specials .container-products {
+        display: grid;
     }
 
 
