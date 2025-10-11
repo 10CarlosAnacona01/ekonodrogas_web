@@ -892,7 +892,7 @@ html{
     }
 
     .container-products{
-        grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
     }
 
     .gallery{
@@ -1016,7 +1016,7 @@ html{
     }
 
     .container-products{
-        grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
         gap: 1rem;
     }
 
