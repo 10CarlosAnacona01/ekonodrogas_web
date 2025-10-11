@@ -67,6 +67,18 @@ body{
 }
 
 .container-logo{
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.container-logo i{
+    font-size: 3rem;
+    color: #000;
+}
+
+.container-logo{
     display: flex;
     align-items: center;
     gap: 0.5rem;
