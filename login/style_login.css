@@ -146,12 +146,17 @@ form .btn-register{
     margin-bottom: 1.3rem;
 }
 
+/* Vuelve al inicio color */
+.line-width-text a{
+    color: #6c757d;
+}
+
 .line-width-text::before,
 .line-width-text::after{
     content: ''; /* Contenido vacio*/
     flex: 1;
     border-bottom: 1px solid var(--color-border);
-    margin: 0 0.6rem;
+    margin: 0rem 0.6rem;
 }
 
 /* Other Login */
@@ -212,8 +217,9 @@ form .btn-register{
 
 .banner p{
     color: var(--color-background-form);
-    font-size: 0.8rem;
-    margin-top: 1rem;
+    font-size: 0.9rem;
+    margin-top: 1.5rem;
+    font-weight: 500;
 }
 
 .banner img{
