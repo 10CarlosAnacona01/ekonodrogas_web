@@ -109,12 +109,14 @@ form p a{
     display: flex;
     gap: 0.8rem;
     margin-bottom: 1.7rem;
+    user-select: none; /*No seleccionar texto*/ 
 }
 
 .remember-me label{
     font-size: 0.8rem;
     font-weight: 500;
     color: var(--color-text-secondary);
+    pointer-events: none; /*Al dar clic en el texto no lo tome en el checbox*/
 }
 
 /* Button */
