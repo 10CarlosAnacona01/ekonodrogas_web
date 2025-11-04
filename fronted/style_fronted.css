@@ -630,9 +630,10 @@ html{
     padding: 3rem;
 }
 
+/* División del footer en secciones */
 .menu-footer{
     display: grid;
-    grid-template-columns: repeat(3, 1fr) 30rem;
+    grid-template-columns: repeat(3, 1fr);
     gap: 3rem;
     justify-items: center;
 }
@@ -715,36 +716,6 @@ html{
         #8134AF, 
         #515BD4
         );
-}
-
-.content p{
-    font-size: 1.4rem;
-    color: #fff;
-    font-weight: 300;
-}
-
-.content input{
-    outline: none; /* Quita línea alrededor del elemento*/
-    background: none;
-    border: none;
-    border-bottom: 2px solid #D2B495;
-    cursor: pointer;
-    padding: 0.5rem 0rem 1.2rem;
-    color: var(--dark-color);
-    display: block;
-    margin-bottom: 3rem;
-    margin-top: 2rem;
-    width: 100%;
-    font-family: inherit; /* Hereda del principal*/
-}
-
-.content input::-webkit-input-placeholder{
-    color: #EEE; /* Cambia el color del texto del placeholder (mensaje para el usuario) */
-}
-
-.content button:hover{
-    background-color: var(--background-color);
-    color: var(--primary-color);
 }
 
 .copyright{
@@ -851,11 +822,11 @@ html{
     }
 
     .menu-footer{
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(1, 1fr);
     }
 
     .container-footer {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     }
 
     .copyright{
