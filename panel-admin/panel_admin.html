@@ -16,13 +16,13 @@
             <div class="logo">
                 <h1>Panel Administración</h1>
             </div>
-            <div class="nav-item active" onclick="showSection('dashboard')">
+            <div class="nav-item active" data-section="dashboard">
                 Informes
             </div>
-            <div class="nav-item" onclick="showSection('products')">
+            <div class="nav-item" data-section="products">
                 Productos
             </div>
-            <div class="nav-item" onclick="showSection('sales')">
+            <div class="nav-item" data-section="sales">
                 Ventas
             </div>
             <div class="nav-item">
@@ -69,7 +69,9 @@
                                 <th>Fecha</th>
                             </tr>
                         </thead>
-                        <tbody> <!-- Va info de la tabla --></tbody>
+                        <tbody id="dashboardSalesTable">
+                            <!-- Va info de la tabla -->
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -79,7 +81,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h2>Gestión de Productos</h2>
-                        <button class="btn btn-primary" onclick="openProductModal()">+ Agregar Producto</button>
+                        <button class="btn btn-primary" id="addProductBtn">+ Agregar Producto</button>
                     </div>
                     <table>
                         <thead>
@@ -93,7 +95,9 @@
                                 <th>Acciones</th>
                             </tr>
                         </thead>
-                        <tbody> <!-- Va info de la tabla --> </tbody>
+                        <tbody id="productsTable">
+                            <!-- Va info de la tabla -->
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -115,7 +119,9 @@
                                 <th>Fecha</th>
                             </tr>
                         </thead>
-                        <tbody> <!-- Va info de la tabla --> </tbody>
+                        <tbody id="salesTableBody">
+                            <!-- Va info de la tabla -->
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -127,9 +133,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="modalTitle">Agregar Producto</h2>
-                <span class="close-btn" onclick="closeProductModal()">&times;</span>
+                <span class="close-btn" id="closeModalBtn">&times;</span>
             </div>
-            <form id="productForm" onsubmit="saveProduct(event)">
+            <form id="productForm">
                 <input type="hidden" id="productId">
                 
                 <div class="form-group">
@@ -158,6 +164,7 @@
             </form>
         </div>
     </div>
+
     <script src="panel_admin.js"></script>
 </body>
 
