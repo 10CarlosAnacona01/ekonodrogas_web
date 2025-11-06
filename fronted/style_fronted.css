@@ -51,6 +51,11 @@ html{
     gap: 2rem;
 }
 
+.customer-support a{
+    text-decoration: none;
+    color: inherit;
+}
+
 .customer-support i{
     font-size: 3.3rem;
 }

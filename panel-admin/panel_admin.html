@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Ekonodrogas</title>
+    <link rel="stylesheet" href="panel_admin.css" />
+    <link rel="icon" type="image/png" href="/iconos/logo_jpg/solo_logo.jpg">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <h1>Panel Administración</h1>
+            </div>
+            <div class="nav-item active" onclick="showSection('dashboard')">
+                Informes
+            </div>
+            <div class="nav-item" onclick="showSection('products')">
+                Productos
+            </div>
+            <div class="nav-item" onclick="showSection('sales')">
+                Ventas
+            </div>
+            <div class="nav-item">
+                <a href="/fronted/index_fronted.html">Volver al sitio</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <div>Administrador: <strong>Usuario Principal</strong></div>
+            </div>
+
+            <!-- Dashboard Section -->
+            <div id="dashboard" class="section active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Ventas Totales</h3>
+                        <div class="value">$0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Productos</h3>
+                        <div class="value">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Compras</h3>
+                        <div class="value">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Stock Bajo</h3>
+                        <div class="value">0</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Últimas Ventas</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Total</th>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody> <!-- Va info de la tabla --></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Products Section -->
+            <div id="products" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Gestión de Productos</h2>
+                        <button class="btn btn-primary" onclick="openProductModal()">+ Agregar Producto</button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Categoría</th>
+                                <th>Nombre</th>
+                                <th>Precio</th>
+                                <th>Stock</th>
+                                <th>Disponible</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody> <!-- Va info de la tabla --> </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Sales Section -->
+            <div id="sales" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Historial de Ventas</h2>
+                    </div>
+                    <table id="salesTable">
+                        <thead>
+                            <tr>
+                                <th>ID Venta</th>
+                                <th>Producto</th>
+                                <th>Cliente</th>
+                                <th>Cantidad</th>
+                                <th>Total</th>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody> <!-- Va info de la tabla --> </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Agregar Producto</h2>
+                <span class="close-btn" onclick="closeProductModal()">&times;</span>
+            </div>
+            <form id="productForm" onsubmit="saveProduct(event)">
+                <input type="hidden" id="productId">
+                
+                <div class="form-group">
+                    <label>Categoría</label>
+                    <select id="productCategory" required>
+                        <option value="Drogueria">Droguería</option>
+                        <option value="Maternidad y bebes">Maternidad y Bebés</option>
+                        <option value="Dermocosmetica">Dermocosmética</option>
+                        <option value="Ofertas y descuentos">Ofertas y descuentos</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" id="productName" required>
+                </div>
+                <div class="form-group">
+                    <label>Precio</label>
+                    <input type="number" id="productPrice" required>
+                </div>
+                <div class="form-group">
+                    <label>Stock</label>
+                    <input type="number" id="productStock" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar Producto</button>
+            </form>
+        </div>
+    </div>
+    <script src="panel_admin.js"></script>
+</body>
+
+</html>
