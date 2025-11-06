@@ -16,7 +16,6 @@
     --color-text-secondary: #656565; /* OK */
     --color-border: #CDCDCD; /* OK */
     --color-button-text: #FFF; /* OK */
-    --color-icon-google: #DB4437; /* OK */
     --color-icon-facebook: #4267B2; /* OK */
     --color-title: #F7F3FA; /* OK */
 }
@@ -182,13 +181,6 @@ form .btn-register{
 
 .other-login img{
     width: 1rem;
-}
-
-/* Google */
-.other-login .google{
-    border: 1px solid var(--color-icon-google);
-    color: var(--color-icon-google);
-    cursor: pointer;
 }
 
 /* Facebook */

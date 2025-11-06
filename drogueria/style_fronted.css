@@ -117,6 +117,59 @@ body{
     flex-direction: column;
 }
 
+/* Agregar al resto de estilos*/
+.cart-container {
+    position: relative;
+}
+.buy-card {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 320px;
+    background-color: var(--background-color);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    z-index: 1;
+    padding: 1rem;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.25s ease;
+}
+.buy-card.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+.buy-card .card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    font-size: 1.4rem;
+    list-style: none;
+    border-bottom: solid thin #e1e1e1;
+    padding-bottom: 0.8rem;
+    margin-bottom: 1rem;
+}
+.buy-card .card li {
+    flex: 1;
+    text-align: center;
+}
+.buy-card button {
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+.buy-card button:hover {
+    opacity: 0.9;
+}
+
 /* NAVBAR */
 
 .container-navbar{

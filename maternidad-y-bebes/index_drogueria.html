@@ -31,10 +31,22 @@
                 </div>
 
                 <div class="container-user">
-                    <!-- User logo -->
-                    <a href="/login/index_login.html"><i class="bi bi-person-fill"></i></a>
-                    <!-- Shopping cart icon -->
-                    <i class="bi bi-cart4"></i>
+                    <a href="/login/index_login.html">
+                        <i class="bi bi-person-fill"></i>
+                    </a>
+
+                    <div class="cart-container">
+                        <i class="bi bi-cart4" id="cart-icon"></i>
+                        <div class="buy-card" id="cart-box">
+                            <ul class="card">
+                                <li>Nombre</li>
+                                <li>Cantidad</li>
+                                <li>Precio</li>
+                            </ul>
+                            <button id="empty-cart">PAGAR</button>
+                        </div>
+                    </div>
+
                     <div class="content-shopping-cart">
                         <span class="text">Carrito</span>
                         <span class="number">(0)</span>
@@ -50,7 +62,6 @@
                     <li><a href="/fronted/index_fronted.html">Inicio</a></li>
                     <li><a href="/drogueria/index_drogueria.html">Droguería</a></li>
                     <li><a href="/maternidad-y-bebes/index_drogueria.html">Maternidad y bebes</a></li>
-                    <li><a href="/belleza/index_drogueria.html">Belleza</a></li>
                     <li><a href="/dermocosmetica/index_drogueria.html">Dermocosmetica</a></li>
                     <li><a href="/ofertas-y-descuentos/index_drogueria.html">Ofertas y descuentos</a></li>
                 </ul>
@@ -329,270 +340,11 @@
                     <p class="price">$11.200</p>
                 </div>
             </div>
-
-            <!-- Producto 11 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/maternidad-y-bebes/imagenes/Nan-Optipro.jpg" alt="Nan Optipro">
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Nan Optipro</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$143.500</p>
-                </div>
-            </div>
-
-            <!-- Producto 12 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/maternidad-y-bebes/imagenes/Nestum-Arroz.jpg" alt="Nestum Arroz">
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Nestum Arroz</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$21.000</p>
-                </div>
-            </div>
-
-            <!-- Producto 13 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/maternidad-y-bebes/imagenes/Nestum-Trigo.jpg" alt="Nestum Trigo">
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Nestum Trigo</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$21.200</p>
-                </div>
-            </div>
-
-            <!-- Producto 14 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/maternidad-y-bebes/imagenes/Alula-Gold.jpg" alt="Alula Gold">
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Alula Gold</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$156.600</p>
-                </div>
-            </div>
-
-            <!-- Producto 15 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/maternidad-y-bebes/imagenes/Winny-Etapa-5.jpg" alt="Winny Etapa 5">
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Winny Etapa 5</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$27.200</p>
-                </div>
-            </div>
-
-            <!-- Producto 16 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/maternidad-y-bebes/imagenes/Arrurru-Crema.jpg" alt="Arrurru Crema">
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Arrurru Crema</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$11.500</p>
-                </div>
-            </div>
-
-            <!-- Producto 17 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/maternidad-y-bebes/imagenes/Winny-Toalla.jpg" alt="Winny Toalla">
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Winny Toalla</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$7.000</p>
-                </div>
-            </div>
-
-            <!-- Producto 18 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/maternidad-y-bebes/imagenes/Arrurru-Toalla.jpg" alt="Arrurru Toalla">
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Arrurru Toalla</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$7.600</p>
-                </div>
-            </div>
-
-            <!-- Producto 19 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/maternidad-y-bebes/imagenes/Pequeñin-Pañitos.jpg" alt="Pequeñin Pañitos">
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Pequeñin Pañitos</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$9.200</p>
-                </div>
-            </div>
-
-            <!-- Producto 20 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/maternidad-y-bebes/imagenes/Yodora-Crema.jpg" alt="Yodora Crema">
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Yodora Crema</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$4.000</p>
-                </div>
-            </div>
         </div>
     </section>
 
     <script src="/fronted/script_menu.js"></script>
+    <script src="/fronted/script_carrito.js"></script>
 </body>
 
 </html>

@@ -31,10 +31,22 @@
                 </div>
 
                 <div class="container-user">
-                    <!-- User logo -->
-                    <a href="/login/index_login.html"><i class="bi bi-person-fill"></i></a>
-                    <!-- Shopping cart icon -->
-                    <i class="bi bi-cart4"></i>
+                    <a href="/login/index_login.html">
+                        <i class="bi bi-person-fill"></i>
+                    </a>
+
+                    <div class="cart-container">
+                        <i class="bi bi-cart4" id="cart-icon"></i>
+                        <div class="buy-card" id="cart-box">
+                            <ul class="card">
+                                <li>Nombre</li>
+                                <li>Cantidad</li>
+                                <li>Precio</li>
+                            </ul>
+                            <button id="empty-cart">PAGAR</button>
+                        </div>
+                    </div>
+
                     <div class="content-shopping-cart">
                         <span class="text">Carrito</span>
                         <span class="number">(0)</span>
@@ -50,7 +62,6 @@
                     <li><a href="/fronted/index_fronted.html">Inicio</a></li>
                     <li><a href="/drogueria/index_drogueria.html">Droguería</a></li>
                     <li><a href="/maternidad-y-bebes/index_drogueria.html">Maternidad y bebes</a></li>
-                    <li><a href="/belleza/index_drogueria.html">Belleza</a></li>
                     <li><a href="/dermocosmetica/index_drogueria.html">Dermocosmetica</a></li>
                     <li><a href="/ofertas-y-descuentos/index_drogueria.html">Ofertas y descuentos</a></li>
                 </ul>
@@ -339,280 +350,13 @@
                     <p class="price">$1.900 <span>$2.500</span> </p>
                 </div>
             </div>
-
-            <!-- Producto 11 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/ofertas-y-descuentos/imagenes/Hidraplus-Cereza.png" alt="Hidraplus Cereza">
-                    <span class="discount">-10%</span>
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Hidraplus Cereza</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$9.900 <span>$11.100</span> </p>
-                </div>
-            </div>
-
-            <!-- Producto 12 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/ofertas-y-descuentos/imagenes/Oscillococcinum.png" alt="Oscillococcinum">
-                    <span class="discount">-25%</span>
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Oscillococcinum</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$83.200 <span>$110.900</span> </p>
-                </div>
-            </div>
-
-            <!-- Producto 13 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/ofertas-y-descuentos/imagenes/Vitamina-C-Eferv.png" alt="Vitamina C Eferv">
-                    <span class="discount">-20%</span>
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Vitamina C Eferv</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$31.500 <span>$39.400</span> </p>
-                </div>
-            </div>
-
-            <!-- Producto 14 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/ofertas-y-descuentos/imagenes/Bedoyecta.png" alt="Bedoyecta">
-                    <span class="discount">-16%</span>
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Bedoyecta</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$76.500 <span>$109.200</span> </p>
-                </div>
-            </div>
-
-            <!-- Producto 15 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/ofertas-y-descuentos/imagenes/Noraver-G.png" alt="Noraver G">
-                    <span class="discount">-10%</span>
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Noraver G</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$14.800 <span>$16.500</span> </p>
-                </div>
-            </div>
-
-            <!-- Producto 16 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/ofertas-y-descuentos/imagenes/Minoxidil.png" alt="Minoxidil">
-                    <span class="discount">-20%</span>
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Minoxidil</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$52.000 <span>$65.400</span> </p>
-                </div>
-            </div>
-
-            <!-- Producto 17 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/ofertas-y-descuentos/imagenes/Noxpirin-Jarabe.png" alt="Noxpirin Jarabe">
-                    <span class="discount">-15%</span>
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Noxpirin Jarabe</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$14.600 <span>$17.200</span> </p>
-                </div>
-            </div>
-
-            <!-- Producto 18 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/ofertas-y-descuentos/imagenes/Alcohol.png" alt="Alcohol">
-                    <span class="discount">-10%</span>
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Alcohol</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$5.100 <span>$5.700</span> </p>
-                </div>
-            </div>
-
-            <!-- Producto 19 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/ofertas-y-descuentos/imagenes/Centrum-Advance.png" alt="Centrum Advance">
-                    <span class="discount">-24%</span>
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Centrum Advance</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$39.050 <span>$51.100</span> </p>
-                </div>
-            </div>
-
-            <!-- Producto 20 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/ofertas-y-descuentos/imagenes/Centrum-Women.png" alt="Centrum Women">
-                    <span class="discount">-12%</span>
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Centrum Women</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$45.050 <span>$51.100</span> </p>
-                </div>
-            </div>
         </div>
     </section>
 
     <script src="/fronted/script_menu.js"></script>
+    <script src="/fronted/script_carrito.js"></script>
+
+
 </body>
 
 </html>

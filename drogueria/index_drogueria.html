@@ -31,10 +31,22 @@
                 </div>
 
                 <div class="container-user">
-                    <!-- User logo -->
-                    <a href="/login/index_login.html"><i class="bi bi-person-fill"></i></a>
-                    <!-- Shopping cart icon -->
-                    <i class="bi bi-cart4"></i>
+                    <a href="/login/index_login.html">
+                        <i class="bi bi-person-fill"></i>
+                    </a>
+
+                    <div class="cart-container">
+                        <i class="bi bi-cart4" id="cart-icon"></i>
+                        <div class="buy-card" id="cart-box">
+                            <ul class="card">
+                                <li>Nombre</li>
+                                <li>Cantidad</li>
+                                <li>Precio</li>
+                            </ul>
+                            <button id="empty-cart">PAGAR</button>
+                        </div>
+                    </div>
+
                     <div class="content-shopping-cart">
                         <span class="text">Carrito</span>
                         <span class="number">(0)</span>
@@ -42,7 +54,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-navbar" >
+        <div class="container-navbar">
             <nav class="navbar container">
                 <!-- Hamburger menu -->
                 <i class="bi bi-list-ul" id="menu-toggle"></i>
@@ -50,7 +62,6 @@
                     <li><a href="/fronted/index_fronted.html">Inicio</a></li>
                     <li><a href="/drogueria/index_drogueria.html">Droguería</a></li>
                     <li><a href="/maternidad-y-bebes/index_drogueria.html">Maternidad y bebes</a></li>
-                    <li><a href="/belleza/index_drogueria.html">Belleza</a></li>
                     <li><a href="/dermocosmetica/index_drogueria.html">Dermocosmetica</a></li>
                     <li><a href="/ofertas-y-descuentos/index_drogueria.html">Ofertas y descuentos</a></li>
                 </ul>
@@ -329,270 +340,11 @@
                     <p class="price">$19.800</p>
                 </div>
             </div>
-
-            <!-- Producto 11 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/drogueria/imagenes/Dolex-Gripa.jpg" alt="Dolex Gripa">
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Dolex Gripa</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$128.800</p>
-                </div>
-            </div>
-
-            <!-- Producto 12 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/drogueria/imagenes/Noraver-Noche.jpg" alt="Noraver Noche">
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Noraver Noche</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$69.200</p>
-                </div>
-            </div>
-
-            <!-- Producto 13 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/drogueria/imagenes/Advil-Gripa-Max.jpg" alt="Advil Gripa Max">
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Advil Gripa Max</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$89.200</p>
-                </div>
-            </div>
-
-            <!-- Producto 14 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/drogueria/imagenes/Noraver-Dia.png" alt="Noraver Dia">
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Noraver Dia</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$34.200</p>
-                </div>
-            </div>
-
-            <!-- Producto 15 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/drogueria/imagenes/Noxpirin-Sinus.jpg" alt="Noxpirin Sinus">
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Noxpirin Sinus</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$49.200</p>
-                </div>
-            </div>
-
-            <!-- Producto 16 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/drogueria/imagenes/Noxpirin-Plus.jpg" alt="Noxpirin Plus">
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Noxpirin Plus</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$140.200</p>
-                </div>
-            </div>
-
-            <!-- Producto 17 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/drogueria/imagenes/Propóleo-JGB.jpg" alt="Propóleo JGB">
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Propóleo JGB</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$15.900</p>
-                </div>
-            </div>
-
-            <!-- Producto 18 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/drogueria/imagenes/Privatos.jpg" alt="Privatos">
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Privatos</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$33.050</p>
-                </div>
-            </div>
-
-            <!-- Producto 19 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/drogueria/imagenes/Benzirin-Forte.png" alt="Benzirin Forte">
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Benzirin Forte</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$61.200</p>
-                </div>
-            </div>
-
-            <!-- Producto 20 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/drogueria/imagenes/Bronquisol-Forte.jpg" alt="Bronquisol Forte">
-                    <div class="button-group">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> <!-- Ojito -->
-                        </span>
-                        <span>
-                            <i class="bi bi-heart"></i> <!-- Corazón -->
-                        </span>
-                        <span>
-                            <i class="bi bi-arrow-down-up"></i> <!-- Comparar -->
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Bronquisol Forte</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$35.200</p>
-                </div>
-            </div>
         </div>
     </section>
 
     <script src="/fronted/script_menu.js"></script>
+    <script src="/fronted/script_carrito.js"></script>
 </body>
 
 </html>

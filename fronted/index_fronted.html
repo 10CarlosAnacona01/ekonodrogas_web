@@ -30,15 +30,28 @@
                 </div>
 
                 <div class="container-user">
-                    <!-- User logo -->
-                    <a href="/login/index_login.html"><i class="bi bi-person-fill"></i></a>
-                    <!-- Shopping cart icon -->
-                    <i class="bi bi-cart4"></i>
+                    <a href="/login/index_login.html">
+                        <i class="bi bi-person-fill"></i>
+                    </a>
+
+                    <div class="cart-container">
+                        <i class="bi bi-cart4" id="cart-icon"></i>
+                        <div class="buy-card" id="cart-box">
+                            <ul class="card">
+                                <li>Nombre</li>
+                                <li>Cantidad</li>
+                                <li>Precio</li>
+                            </ul>
+                            <button id="empty-cart">PAGAR</button>
+                        </div>
+                    </div>
+
                     <div class="content-shopping-cart">
                         <span class="text">Carrito</span>
                         <span class="number">(0)</span>
                     </div>
                 </div>
+
             </div>
         </div>
         <div class="container-navbar">
@@ -49,7 +62,6 @@
                     <li><a href="/fronted/index_fronted.html">Inicio</a></li>
                     <li><a href="/drogueria/index_drogueria.html">Droguería</a></li>
                     <li><a href="/maternidad-y-bebes/index_drogueria.html">Maternidad y bebes</a></li>
-                    <li><a href="/belleza/index_drogueria.html">Belleza</a></li>
                     <li><a href="/dermocosmetica/index_drogueria.html">Dermocosmetica</a></li>
                     <li><a href="/ofertas-y-descuentos/index_drogueria.html">Ofertas y descuentos</a></li>
                 </ul>
@@ -718,6 +730,7 @@
     </main>
 
     <script src="/fronted/script_fronted.js"></script>
+    <script src="/fronted/script_carrito.js"></script>
 </body>
 
 </html>
