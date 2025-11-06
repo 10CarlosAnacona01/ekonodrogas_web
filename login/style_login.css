@@ -36,7 +36,7 @@ body{
     grid-template-columns: 4.2fr 5fr 1.1fr; /*Dividir en cuadricula contenedor (3) fr= franciones */
     align-items: center;
     width: 57.25rem;
-    height: 31rem;
+    height: 30rem;
 }
 
 /* Forms Container */
@@ -101,21 +101,6 @@ form p a{
 .input-container .forget{
     display: flex;
     justify-content: space-between;
-}
-
-/* Remember me */
-.remember-me{
-    display: flex;
-    gap: 0.8rem;
-    margin-bottom: 1.7rem;
-    user-select: none; /*No seleccionar texto*/ 
-}
-
-.remember-me label{
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--color-text-secondary);
-    pointer-events: none; /*Al dar clic en el texto no lo tome en el checbox*/
 }
 
 /* Button */
