@@ -123,24 +123,72 @@ body{
     flex-direction: column;
 }
 
-/* Agregar al resto de estilos*/
+/* Carrito de compras */
+.cart-footer {
+    padding: 20px;
+    border-top: 2px solid #e5e7eb;
+    background: #f9fafb;
+}
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+.cart-buttons {
+    display: flex;
+    gap: 10px;
+}
+.btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 14px;
+}
+/*Vaciar carrito*/
+.btn-empty {
+    background: #ef4444;
+    color: white;
+}
+.btn-empty:hover {
+    background: #dc2626;
+}
+.btn-checkout {
+    background: #28a745;
+    color: white;
+}
+.btn-checkout:hover {
+    background: #218838;
+}
+
 .cart-container {
     position: relative;
+}
+.cart-badge.show {
+    display: flex;
 }
 .buy-card {
     display: none;
     position: absolute;
     top: 100%;
     right: 0;
-    width: 320px;
-    background-color: var(--background-color);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    border-radius: 10px;
+    width: 400px;
+    background-color: white;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+    border-radius: 12px;
     z-index: 1;
+    margin-top: 10px;
     padding: 1rem;
     opacity: 0;
     transform: translateY(-10px);
-    transition: all 0.25s ease;
+    transition: all 0.3s ease;
+    user-select: none;
 }
 .buy-card.active {
     display: block;
@@ -161,19 +209,6 @@ body{
 .buy-card .card li {
     flex: 1;
     text-align: center;
-}
-.buy-card button {
-    width: 100%;
-    padding: 1rem;
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.2s ease;
-}
-.buy-card button:hover {
-    opacity: 0.9;
 }
 
 /* NAVBAR */

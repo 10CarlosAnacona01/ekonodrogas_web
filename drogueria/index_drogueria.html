@@ -35,6 +35,7 @@
                         <i class="bi bi-person-fill"></i>
                     </a>
 
+                    <!-- Carrito de compras -->
                     <div class="cart-container">
                         <i class="bi bi-cart4" id="cart-icon"></i>
                         <div class="buy-card" id="cart-box">
@@ -43,29 +44,40 @@
                                 <li>Cantidad</li>
                                 <li>Precio</li>
                             </ul>
-                            <button id="empty-cart">PAGAR</button>
+                            <div class="cart-footer">
+                                <div class="cart-total">
+                                    <span>Total:</span>
+                                    <span class="cart-total-amount">$0</span>
+                                </div>
+                                <div class="cart-buttons">
+                                    <button class="btn btn-empty">Vaciar</button>
+                                    <button class="btn btn-checkout">Pagar</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="content-shopping-cart">
-                        <span class="text">Carrito</span>
-                        <span class="number">(0)</span>
-                    </div>
+                        <div class="content-shopping-cart">
+                            <span class="text">Carrito</span>
+                            <!-- Hacer que aumente el numero cuando se agregue un producto -->
+                            <span class="number" id="cart-count-text">(0)</span>
+                        </div>
                 </div>
             </div>
         </div>
-        <div class="container-navbar">
-            <nav class="navbar container">
-                <!-- Hamburger menu -->
-                <i class="bi bi-list-ul" id="menu-toggle"></i>
-                <ul class="menu">
-                    <li><a href="/fronted/index_fronted.html">Inicio</a></li>
-                    <li><a href="/drogueria/index_drogueria.html">Droguería</a></li>
-                    <li><a href="/maternidad-y-bebes/index_drogueria.html">Maternidad y bebes</a></li>
-                    <li><a href="/dermocosmetica/index_drogueria.html">Dermocosmetica</a></li>
-                    <li><a href="/ofertas-y-descuentos/index_drogueria.html">Ofertas y descuentos</a></li>
-                </ul>
-            </nav>
+            <div class="container-navbar">
+                <nav class="navbar container">
+                    <!-- Hamburger menu -->
+                    <i class="bi bi-list-ul" id="menu-toggle"></i>
+                    <ul class="menu">
+                        <li><a href="/fronted/index_fronted.html">Inicio</a></li>
+                        <li><a href="/drogueria/index_drogueria.html">Droguería</a></li>
+                        <li><a href="/maternidad-y-bebes/index_drogueria.html">Maternidad y bebes</a></li>
+                        <li><a href="/dermocosmetica/index_drogueria.html">Dermocosmetica</a></li>
+                        <li><a href="/ofertas-y-descuentos/index_drogueria.html">Ofertas y descuentos</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </header>
 

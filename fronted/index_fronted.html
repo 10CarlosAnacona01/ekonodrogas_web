@@ -13,6 +13,8 @@
 
 <body>
     <!-- Header -->
+
+    <!-- Solucionar -->
 <header>
     <div class="container-hero">
         <div class="container hero">
@@ -34,30 +36,23 @@
                     <i class="bi bi-person-fill"></i>
                 </a>
 
+                <!-- Carrito de compras -->
                 <div class="cart-container">
                     <i class="bi bi-cart4" id="cart-icon"></i>
-                    <span class="cart-badge" id="cart-count">0</span>
-                    
                     <div class="buy-card" id="cart-box">
-                        <div class="cart-header">
-                            <h3>Carrito de Compras</h3>
-                        </div>
-                        
-                        <div class="cart-items" id="cart-items">
-                            <div class="empty-cart-message">
-                                <i class="bi bi-cart-x"></i>
-                                <p>Tu carrito está vacío</p>
-                            </div>
-                        </div>
-                        
+                        <ul class="card">
+                            <li>Nombre</li>
+                            <li>Cantidad</li>
+                            <li>Precio</li>                    
+                        </ul>
                         <div class="cart-footer">
                             <div class="cart-total">
                                 <span>Total:</span>
-                                <span class="cart-total-amount" id="cart-total">$0</span>
+                                <span class="cart-total-amount">$0</span>
                             </div>
                             <div class="cart-buttons">
-                                <button class="btn btn-empty" id="empty-cart">Vaciar</button>
-                                <button class="btn btn-checkout" id="checkout-btn">Pagar</button>
+                                <button class="btn btn-empty">Vaciar</button>
+                                <button class="btn btn-checkout" >Pagar</button>
                             </div>
                         </div>
                     </div>
@@ -68,7 +63,6 @@
                     <span class="number" id="cart-count-text">(0)</span>
                 </div>
             </div>
-
         </div>
     </div>
     <div class="container-navbar">
@@ -85,6 +79,7 @@
         </nav>
     </div>
 </header>
+
 
     <!-- Banner -->
     <section class="banner">
