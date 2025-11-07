@@ -231,10 +231,6 @@ body{
     display: none; /* No mostrar menú en pantalla grande*/
 }
 
-.navbar .bi-list{
-    display: none; /* No mostrar menú en pantalla grande*/
-}
-
 .menu{
     display: flex;
     gap: 2rem;

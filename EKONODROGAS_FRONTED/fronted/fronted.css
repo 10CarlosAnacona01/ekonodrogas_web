@@ -814,11 +814,6 @@ html{
         cursor: pointer;
     }
 
-    .menu{
-        display: none;
-    }
-
-
     .buy-card {
         width: 300px; /* Reduce el ancho del carrito */
         right: -10px; /* Evita que se salga del borde */
@@ -906,7 +901,7 @@ html{
         gap: 1.5rem;
     }
 
-        .navbar .bi-list-ul {
+    .navbar .bi-list-ul {
         display: block;
         font-size: 3rem;
         color: #fff;
@@ -924,7 +919,7 @@ html{
         width: 100%;
         padding: 1rem 0;
         text-align: center;
-        z-index: 100;
+        z-index: 1;
     }
 
     /* Mostrar el menú cuando se active */
