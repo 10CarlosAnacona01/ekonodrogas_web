@@ -472,9 +472,28 @@ body{
         display: flex;
     }
 
-    /* Ocultar buscador en pantallas pequeñas */
-    .search-form {
-        display: none;
+    .buy-card {
+        width: 300px; /* Reduce el ancho del carrito */
+        right: -10px; /* Evita que se salga del borde */
+        padding: 0.8rem;
+    }
+
+    .buy-card .card {
+        font-size: 1.2rem;
+    }
+
+    .cart-total {
+        font-size: 16px;
+    }
+
+    .btn {
+        font-size: 13px;
+        padding: 10px;
+    }
+
+    .cart-buttons {
+    display: flex;
+    gap: 3px;
     }
 
     /* Encabezado  */
@@ -514,6 +533,25 @@ body{
     .container-user .bi-cart4 {
         font-size: 2.5rem;
         padding: 0;
+    }
+
+    .buy-card {
+        width: 250px; /* Reduce el ancho del carrito */
+        right: -190px; /* Evita que se salga del borde */
+        padding: 0.8rem;
+    }
+
+    .buy-card .card {
+        font-size: 1.5rem;
+    }
+
+    .cart-total {
+        font-size: 10px;
+    }
+
+    .btn {
+        font-size: 13px;
+        padding: 5px;
     }
 
     /* Título principal más legible */
