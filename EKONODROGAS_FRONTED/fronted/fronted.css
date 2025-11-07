@@ -267,7 +267,7 @@ html{
 /* BANNER */
 .banner {
     width: 100%;
-    background-image: url('/iconos/logo_jpg/logo_grande.jpg');
+    background-image: url('/EKONODROGAS_FRONTED/imagenes/logo_grande.jpg');
     height: 60rem;
     background-size: cover;
     background-position: center;
@@ -358,21 +358,21 @@ html{
 /* Best categories (modify)*/
 
 .category-1{
-    background-image: linear-gradient(#00000030, #00000030), url('/imagenes/productos/dermocosmetica.png');
+    background-image: linear-gradient(#00000030, #00000030), url('/EKONODROGAS_FRONTED/imagenes/dermocosmetica.png');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat; /* no repetir imagen*/
 }
 
 .category-2{
-    background-image: linear-gradient(#00000030, #00000030), url('/imagenes/productos/rebajas.png');
+    background-image: linear-gradient(#00000030, #00000030), url('/EKONODROGAS_FRONTED/imagenes/rebajas.png');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat; /* no repetir imagen*/
 }
 
 .category-3{
-    background-image: linear-gradient(#00000030, #00000030), url('/imagenes/productos/antigripal.avif');
+    background-image: linear-gradient(#00000030, #00000030), url('/EKONODROGAS_FRONTED/imagenes/antigripal.avif');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat; /* no repetir imagen*/
