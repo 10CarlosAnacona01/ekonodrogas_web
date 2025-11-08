@@ -30,12 +30,10 @@ public class SecurityConfig {
         http.authorizeHttpRequests( auth -> {
             auth.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll();
             auth.requestMatchers("/login", "/home").permitAll();
-            auth.requestMatchers("/clases").hasAnyRole("RECTOR", "DOCENTE", "ESTUDIANTE");
-            auth.requestMatchers("/clases/crear").hasRole("RECTOR");
-            auth.requestMatchers("/clases/editar").hasRole("RECTOR");
-            auth.requestMatchers("/clases/editar/{id}").access(new WebExpressionAuthorizationManager(
-                    "hasRole('RECTOR') or " +
-                            "(hasRole('DOCENTE') and @claseService.isDocenteOfClase(authentication.name, #id))"));
+            auth.requestMatchers("/clases").hasAnyRole("ADMIN", "USER");
+            auth.requestMatchers("/clases/crear").hasRole("ADMIN");
+            auth.requestMatchers("/clases/editar").hasRole("ADMIN");
+            auth.requestMatchers("/clases/editar/{id}").hasRole("ADMIN");
 
             auth.anyRequest().authenticated();
         })
@@ -52,7 +50,7 @@ public class SecurityConfig {
             logout.logoutUrl("/logout");
             logout.logoutSuccessUrl("/loginPage?logout");
             logout.invalidateHttpSession(true);
-            logout.deleteCookies("JSESSIONID"); // borra cookies, lo que falto en ejercicio de 0.5
+            logout.deleteCookies("JSESSIONID"); // borra cookies
         }).csrf(AbstractHttpConfigurer::disable);
 
 
