@@ -3,6 +3,8 @@ package com.ekonodrogas.ekonodrogas.repository;
 
 import com.ekonodrogas.ekonodrogas.persistence.RolesEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface RoleRepository extends JpaRepository<RolesEntity, Long> {
+@Repository
+public interface RolesRepository extends JpaRepository<RolesEntity, Long> {
 }

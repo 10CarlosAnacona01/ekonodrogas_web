@@ -21,7 +21,7 @@ public class OfertasEntity {
 
     @OneToOne
     @JoinColumn(name = "id_producto", nullable = false, unique = true)
-    private ProductosEntity producto;
+    private ProductosEntity idProducto;
 
     @Column(name = "precio_anterior", nullable = false)
     private Integer precioAnterior;
