@@ -24,7 +24,7 @@ public class UsuariosEntity {
     private Long idUsuario;
 
     // Relación con Rol
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(name = "usuarios_roles",
                 joinColumns = @JoinColumn(name = "id_usuario"),
                 inverseJoinColumns = @JoinColumn(name = "id_rol"))

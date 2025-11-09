@@ -41,8 +41,8 @@ public class DetalleVentasService {
         VentasEntity venta = ventasRepository.findById(dto.getIdVenta())
                 .orElseThrow(() -> new RuntimeException("Venta no encontrada con ID: " + dto.getIdVenta()));
 
-        ProductosEntity producto = productosRepository.findById(dto.getProductos())
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado con ID: " + dto.getProductos()));
+        ProductosEntity producto = productosRepository.findById(dto.getIdProducto())
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado con ID: " + dto.getIdProducto()));
 
         // Calcular subtotal automáticamente
         Integer subtotal = dto.getCantidad() * dto.getPrecioUnitario();
@@ -70,9 +70,9 @@ public class DetalleVentasService {
             entity.setVenta(venta);
         }
 
-        if (dto.getProductos() != null) {
-            ProductosEntity producto = productosRepository.findById(dto.getProductos())
-                    .orElseThrow(() -> new RuntimeException("Producto no encontrado con ID: " + dto.getProductos()));
+        if (dto.getIdProducto() != null) {
+            ProductosEntity producto = productosRepository.findById(dto.getIdProducto())
+                    .orElseThrow(() -> new RuntimeException("Producto no encontrado con ID: " + dto.getIdProducto()));
             entity.setProducto(producto);
         }
 
@@ -97,7 +97,7 @@ public class DetalleVentasService {
         return DetalleVentasDTO.builder()
                 .idDetalleVenta(entity.getIdDetalleVenta())
                 .idVenta(entity.getVenta().getIdVenta())
-                .productos(entity.getProducto().getIdProducto())
+                .idProducto(entity.getProducto().getIdProducto())
                 .cantidad(entity.getCantidad())
                 .precioUnitario(entity.getPrecioUnitario())
                 .subtotal(entity.getSubtotal())

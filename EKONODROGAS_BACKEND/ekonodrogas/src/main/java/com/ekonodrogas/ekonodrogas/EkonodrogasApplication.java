@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.Set;
 
 @SpringBootApplication
@@ -18,22 +19,39 @@ public class EkonodrogasApplication {
     }
 
     @Bean
-    public CommandLineRunner dataLoder(UsuariosRepository usuariosRepository, RolesRepository rolesRepository,
-                                       CategoriasRepository categoriasRepository, PasswordEncoder passwordEncoder) {
+    public CommandLineRunner dataLoader(
+            UsuariosRepository usuariosRepository,
+            RolesRepository rolesRepository,
+            CategoriasRepository categoriasRepository,
+            PasswordEncoder passwordEncoder) {
+
         return args -> {
+            // ROLES
+            // Buscar o crear rol ADMINISTRADOR
+            RolesEntity adminRole;
+            Optional<RolesEntity> adminRoleOpt = rolesRepository.findByNombreRol("ADMINISTRADOR");
+            if (adminRoleOpt.isEmpty()) {
+                adminRole = RolesEntity.builder()
+                        .nombreRol("ADMINISTRADOR")
+                        .build();
+                adminRole = rolesRepository.save(adminRole);
+            } else {
+                adminRole = adminRoleOpt.get();
+            }
 
-            // Roles
+            // Buscar o crear rol USUARIO
+            RolesEntity userRole;
+            Optional<RolesEntity> userRoleOpt = rolesRepository.findByNombreRol("USUARIO");
+            if (userRoleOpt.isEmpty()) {
+                userRole = RolesEntity.builder()
+                        .nombreRol("USUARIO")
+                        .build();
+                userRole = rolesRepository.save(userRole);
+            } else {
+                userRole = userRoleOpt.get();
+            }
 
-            RolesEntity adminRole = RolesEntity.builder()
-                    .nombreRol("ADMINISTRADOR")
-                    .build();
-            RolesEntity userRole = RolesEntity.builder()
-                    .nombreRol("USUARIO")
-                    .build();
-            rolesRepository.saveAll(Set.of(adminRole, userRole));
-
-            // Usuario admin, verificando que el correo no exista antes de crear
-
+            // USUARIO ADMINISTRADOR
             if (!usuariosRepository.existsByCorreo("adminekonodrogas@gmail.com")) {
                 UsuariosEntity administrador = UsuariosEntity.builder()
                         .roles(Set.of(adminRole))
@@ -46,9 +64,10 @@ public class EkonodrogasApplication {
                         .fechaRegistro(LocalDateTime.now())
                         .build();
                 usuariosRepository.save(administrador);
+            }
 
-                // Categorías
-
+            // CATEGORÍAS
+            if (categoriasRepository.count() == 0) {
                 CategoriasEntity categoriaDrogueria = CategoriasEntity.builder()
                         .nombreCategoria("Droguería")
                         .build();
@@ -62,11 +81,14 @@ public class EkonodrogasApplication {
                         .nombreCategoria("Ofertas y descuentos")
                         .build();
 
-                categoriasRepository.saveAll(Set.of(categoriaDrogueria, categoriaMaternidad,
-                        categoriaDermocosmetica, categoriaOferta));
+                categoriasRepository.saveAll(Set.of(
+                        categoriaDrogueria,
+                        categoriaMaternidad,
+                        categoriaDermocosmetica,
+                        categoriaOferta
+                ));
 
             }
-            ;
         };
     }
 }
