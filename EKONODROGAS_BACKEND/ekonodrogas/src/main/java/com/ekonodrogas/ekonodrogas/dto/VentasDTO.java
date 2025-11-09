@@ -1,6 +1,7 @@
 package com.ekonodrogas.ekonodrogas.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,19 +15,23 @@ import java.time.LocalDateTime;
 @Schema(description = "DTO para la transferencia de las ventas")
 public class VentasDTO {
 
-    @Schema(description = "Id de la venta",example = "1")
+    @Schema(description = "Id de la venta", example = "1")
     private Long idVenta;
 
-    @Schema(description = "Id del usuario",example = "1")
+    @NotNull(message = "El usuario es obligatorio")
+    @Schema(description = "Id del usuario", example = "1")
     private Long idUsuario;
 
-    @Schema(description = "Fecha de la venta",example = "9/11/2025")
+    @Schema(description = "Fecha de la venta", example = "2025-11-09T15:45:00")
     private LocalDateTime fechaVenta;
 
-    @Schema(description = "Total de la venta",example = "25000")
+    @NotNull(message = "El total de la venta es obligatorio")
+    @Min(value = 0, message = "El total debe ser mayor o igual a 0")
+    @Schema(description = "Total de la venta", example = "25000")
     private Integer totalVenta;
 
-    @Schema(description = "Como se encuentra la venta",example = "pendiente")
+    @NotBlank(message = "El estado de la venta es obligatorio")
+    @Pattern(regexp = "completada|cancelada|pendiente", message = "Estado debe ser: completada, cancelada o pendiente")
+    @Schema(description = "Como se encuentra la venta", example = "pendiente")
     private String estadoVenta;
-
 }

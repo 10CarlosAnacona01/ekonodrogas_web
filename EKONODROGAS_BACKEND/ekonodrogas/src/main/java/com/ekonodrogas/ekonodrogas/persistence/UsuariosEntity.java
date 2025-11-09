@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Data
@@ -22,9 +24,11 @@ public class UsuariosEntity {
     private Long idUsuario;
 
     // Relación con Rol
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_rol", nullable = false)
-    private RolesEntity rol;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "usuarios_roles",
+                joinColumns = @JoinColumn(name = "id_usuario"),
+                inverseJoinColumns = @JoinColumn(name = "id_rol"))
+    private Set<RolesEntity> roles = new HashSet<>();
 
     @Column(name = "primer_nombre", nullable = false, length = 30)
     private String primerNombre;
