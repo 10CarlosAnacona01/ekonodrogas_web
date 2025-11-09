@@ -2,7 +2,7 @@ package com.ekonodrogas.ekonodrogas.service;
 
 import com.ekonodrogas.ekonodrogas.persistence.RolesEntity;
 import com.ekonodrogas.ekonodrogas.persistence.UsuariosEntity;
-import com.ekonodrogas.ekonodrogas.repository.UserRepository;
+import com.ekonodrogas.ekonodrogas.repository.UsuariosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -16,19 +16,19 @@ import java.util.List;
 
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
-    private final UserRepository userRepository;
+    private final UsuariosRepository usuarioRepository;
 
 
     @Autowired
-    public UserDetailServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder){
-        this.userRepository = userRepository;
+    public UserDetailServiceImpl(UsuariosRepository usuarioRepository, PasswordEncoder passwordEncoder){
+        this.usuarioRepository = usuarioRepository;
     }
 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        UsuariosEntity user = userRepository.findByUsername(username)
+        UsuariosEntity user = usuarioRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>();

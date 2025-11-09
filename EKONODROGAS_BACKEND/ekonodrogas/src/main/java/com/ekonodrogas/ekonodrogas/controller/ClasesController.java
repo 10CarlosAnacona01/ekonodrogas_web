@@ -1,8 +1,5 @@
 package com.ekonodrogas.ekonodrogas.controller;
 
-import com.ekonodrogas.ekonodrogas.dto.ClaseDTO;
-import com.ekonodrogas.ekonodrogas.persistence.ClaseEntity;
-import com.ekonodrogas.ekonodrogas.repository.ClaseRepository;
 import com.ekonodrogas.ekonodrogas.service.ClaseService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

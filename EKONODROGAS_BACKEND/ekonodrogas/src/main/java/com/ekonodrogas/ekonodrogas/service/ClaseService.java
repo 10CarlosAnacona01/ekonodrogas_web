@@ -1,7 +1,5 @@
 package com.ekonodrogas.ekonodrogas.service;
 
-import com.ekonodrogas.ekonodrogas.persistence.ClaseEntity;
-import com.ekonodrogas.ekonodrogas.repository.ClaseRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

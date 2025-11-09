@@ -21,7 +21,7 @@ public class VentasEntity {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
-    private UserEntity usuario;
+    private UsuariosEntity usuario;
 
     @Column(name = "fecha_venta")
     private java.time.LocalDateTime fechaVenta;
@@ -33,6 +33,7 @@ public class VentasEntity {
     @Column(name = "estado_venta")
     private EstadoVenta estadoVenta;
 
+    // En este caso como es Enum String, se tiene que escribir literalmente lo que está en la lista
     public enum EstadoVenta {
         completada, cancelada, pendiente
     }

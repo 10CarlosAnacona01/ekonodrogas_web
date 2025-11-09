@@ -18,7 +18,8 @@ public class UsuariosEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id_usuario")
+    private Long idUsuario;
 
     // Relación con Rol
     @ManyToOne(fetch = FetchType.EAGER)

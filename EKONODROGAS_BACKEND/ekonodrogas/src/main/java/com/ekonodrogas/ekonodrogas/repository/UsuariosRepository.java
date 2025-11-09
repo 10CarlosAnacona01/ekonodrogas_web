@@ -3,8 +3,9 @@ package com.ekonodrogas.ekonodrogas.repository;
 
 import com.ekonodrogas.ekonodrogas.persistence.UsuariosEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.Optional;
+import org.springframework.stereotype.Repository;
 
-public interface UserRepository extends JpaRepository<UsuariosEntity, Long> {
-    Optional<UsuariosEntity> findByUsername(String username);
+@Repository
+public interface UsuariosRepository extends JpaRepository<UsuariosEntity, Long> {
+
 }
