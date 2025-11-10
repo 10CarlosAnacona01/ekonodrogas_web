@@ -159,6 +159,8 @@ body{
 .btn-empty:hover {
     background: #dc2626;
 }
+
+/*Pagar carrito*/
 .btn-checkout {
     background: #28a745;
     color: white;
@@ -510,7 +512,7 @@ body{
 }
 
 
-/* Media queries - 468px */
+/* Media queries - 480px */
 @media (max-width: 480px) {
 
     html {

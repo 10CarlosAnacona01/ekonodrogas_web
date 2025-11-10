@@ -26,19 +26,16 @@ public class SecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Sin sesiones
                 .authorizeHttpRequests(auth -> {
                     // Swagger públicos
-                    auth.requestMatchers(
-                            "/v3/api-docs/**","/swagger-ui/**","/swagger-ui.html").permitAll();
-
+                    // Mirar documentación API
+                    // http://localhost:8080/swagger-ui/index.html
+                    auth.requestMatchers("/v3/api-docs/**","/swagger-ui/**","/swagger-ui.html").permitAll();
                     // Endpoints públicos de la API
-                    auth.requestMatchers(
-                            "/api/productos/**","/api/categorias/**","/api/ofertas/**").permitAll();
-
+                    auth.requestMatchers("/api/productos/**","/api/categorias/**","/api/ofertas/**").permitAll();
                     // Endpoints que requieren autenticación
                     auth.requestMatchers("/api/usuarios/**").hasAnyRole("ADMIN", "USER");
                     auth.requestMatchers("/api/ventas/**").hasAnyRole("ADMIN", "USER");
                     auth.requestMatchers("/api/detalle-ventas/**").hasAnyRole("ADMIN", "USER");
                     auth.requestMatchers("/api/roles/**").hasRole("ADMIN");
-
                     // Resto requiere autenticación
                     auth.anyRequest().authenticated();
                 })

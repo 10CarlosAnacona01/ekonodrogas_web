@@ -1,0 +1,76 @@
+Inserte el siguiente código después correr el proyecto.
+Las otras tablas se llenan conforme se continue el proyecto.
+El proyecto inserta unos datos inicialmente.
+
+INSERT INTO productos (id_categoria, nombre_producto, imagen, precio, stock, disponible, fecha_creacion, fecha_actualizacion) VALUES
+-- Dermocosmética
+(1, 'Alergibon', 'Alergibon.png', 32500, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(1, 'Neutrogena', 'Neutrogena.jpg', 61200, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(1, 'Ponds Facial', 'Pond\'s Facial.png', 15900, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(1, 'Ponds Antiarrugas', 'Pond\'s-Crema.jpg', 20900, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(1, 'Ponds Limpiadora', 'Pond\'s Crema.png', 15200, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(1, 'Ponds Clarant', 'Pond\'s Clarant.jpg', 29200, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(1, 'Cicatricure Porcelana', 'Cicatricure-Porcelana.jpg', 66200, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(1, 'Cicatricure Gel', 'Cicatricure-Gel.jpg', 55100, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(1, 'Cetaphil Crema', 'Cetaphil-Crema.png', 129200, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(1, 'Nivea Nutritivo', 'Nivea-Nutritivo.jpg', 13600, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+-- Maternidad y bebes
+(2, 'Jabon Johnson', 'Jabon-Johnson.jpg', 14000, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(2, 'Crema Johnson', 'Crema-Johnson.jpg', 17800, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(2, 'Jabon Johnson x 3', 'Jabon-Johnsonx3.jpg', 14000, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(2, 'Aceite Johnson', 'Aceite-Johnson.jpg', 14700, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(2, 'Crema Liquida Johnson', 'Crema -Liquida-Johnson.png', 32800, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(2, 'Nan Supremepro', 'Nan-Supremepro.jpg', 87700, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(2, 'Nan Expertpro', 'Nan-Expertpro.jpg', 79000, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(2, 'Nan Comfort', 'Nan-Comfort.jpg', 129200, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(2, 'Baby Champu', 'Baby-Champu.jpg', 11200, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(2, 'Baby Johnson', 'baby-Johnson.jpg', 11200, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+-- Droguería
+(3, 'Neumuc', 'neumic.png', 18050, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(3, 'ResgripFar', 'resgripfarplus.png', 9200, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(3, 'ResgripFar', 'resgripfar.png', 15500, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(3, 'Resfrygrip', 'resfrygrip.jpg', 20500, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(3, 'Vick Drops', 'Vick-Drops.jpg', 13200, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(3, 'Vick Fort-9', 'Vick-Fort-9.jpg', 12700, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(3, 'Vick-44 Jarabe', 'Vick-44-Jarabe.jpg', 35200, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(3, 'Sinutab Plus', 'Sinutab-Plus.jpg', 21500, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(3, 'Advil Gripa', 'Advil-Gripa.jpg', 151700, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(3, 'Descongel Gripa', 'Descongel-Gripa.jpg', 19800, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+-- Ofertas y descuentos
+(4, 'Duraflex', 'duraflex.png', 31100, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(4, 'For Z', 'fordz.png', 26400, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(4, 'Ibuflash Migran', 'ibuflash-migran.png', 51100, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(4, 'X Ray', 'x-ray.png', 19100, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(4, 'Lumbal Forte', 'lumbal_forte.png', 79500, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(4, 'VapoRub', 'VapoRub.jpg', 16500, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(4, 'Abrilar', 'Abrilar.png', 36500, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(4, 'Ciruelax', 'Ciruelax.png', 28700, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(4, 'Vitamina C + Zinc', 'Vitamina C + Zinc.png', 5400, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00'),
+(4, 'Pax Dia', 'Pax Dia.png', 1900, 20, TRUE, '2025-11-05 00:00:00', '2025-11-05 00:00:00');
+
+
+INSERT INTO ofertas (id_producto, precio_anterior, precio_nuevo, descuento_porcentaje, fecha_creacion) VALUES
+(31, 48400, 31100, 36, '2025-11-01 00:00:00'),
+(32, 33000, 26400, 20, '2025-11-01 00:00:00'),
+(33, 61100, 51100, 16, '2025-11-01 00:00:00'),
+(34, 24200, 19100, 21, '2025-11-01 00:00:00'),
+(35, 108700, 79500, 27, '2025-11-01 00:00:00'),
+(36, 23600, 16500, 30, '2025-11-01 00:00:00'),
+(37, 45600, 36500, 20, '2025-11-01 00:00:00'),
+(38, 35900, 28700, 20, '2025-11-01 00:00:00'),
+(39, 6700, 5400, 19, '2025-11-01 00:00:00'),
+(40, 2500, 1900, 24, '2025-11-01 00:00:00');
+
+
+Tablas con insert
+-> categorias
+-> ofertas
+-> productos
+-> roles
+->
+
+Tablas sin insert
+-> detalle_ventas
+-> usuarios (solo el admin está en la tabla)
+-> usuarios_roles
+-> ventas
