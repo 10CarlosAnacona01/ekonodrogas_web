@@ -14,16 +14,13 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <div class="logo">
-                <h1>Panel Administración</h1>
+                <h1>Panel  de Administrador</h1>
             </div>
             <div class="nav-item active" data-section="dashboard" id="navDashboard">
                 📊 Informes
             </div>
             <div class="nav-item" data-section="products" id="navProducts">
                 📦 Productos
-            </div>
-            <div class="nav-item" data-section="sales" id="navSales">
-                💰 Ventas
             </div>
             <div class="nav-item">
                 <a href="/EKONODROGAS_FRONTED/fronted/fronted.html">🏠 Volver al sitio</a>
@@ -34,8 +31,8 @@
         <div class="main-content">
             <div class="header">
                 <div>Administrador: <strong>Usuario Principal</strong></div>
-                <div style="color: #666; font-size: 14px;">
-                    📅 <span id="currentDate"></span>
+                <div class="date-display">
+                    <span id="currentDate"></span>
                 </div>
             </div>
 
@@ -43,32 +40,34 @@
             <div id="dashboard" class="section active">
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <h3>💵 Ventas Totales</h3>
+                        <h3> Ventas Totales</h3>
                         <div class="value">$0</div>
                     </div>
                     <div class="stat-card">
-                        <h3>📦 Productos</h3>
+                        <h3> Productos</h3>
                         <div class="value">0</div>
                     </div>
                     <div class="stat-card">
-                        <h3>🛒 Compras</h3>
+                        <h3> Compras</h3>
                         <div class="value">0</div>
                     </div>
                     <div class="stat-card">
-                        <h3>⚠️ Stock Bajo</h3>
+                        <h3> Stock Bajo</h3>
                         <div class="value">0</div>
                     </div>
                 </div>
 
                 <div class="card">
-                    <h2>📈 Últimas Ventas</h2>
+                    <h2> Ventas</h2>
                     <div class="table-wrapper">
                         <table>
                             <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>Usuario</th>
                                     <th>Producto</th>
                                     <th>Cantidad</th>
+                                    <th>Precio</th>
                                     <th>Total</th>
                                     <th>Fecha</th>
                                 </tr>
@@ -85,8 +84,8 @@
             <div id="products" class="section">
                 <div class="card">
                     <div class="card-header">
-                        <h2>📦 Gestión de Productos</h2>
-                        <button class="btn btn-primary" id="addProductBtn">➕ Agregar Producto</button>
+                        <h2> Gestión de Productos</h2>
+                        <button class="btn btn-primary" id="addProductBtn">Agregar Producto</button>
                     </div>
                     <div class="table-wrapper">
                         <table>
@@ -108,32 +107,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Sales Section (Opcional - descomentado para usar) -->
-            <div id="sales" class="section">
-                <div class="card">
-                    <div class="card-header">
-                        <h2>💰 Historial de Ventas</h2>
-                    </div>
-                    <div class="table-wrapper">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>ID Venta</th>
-                                    <th>Producto</th>
-                                    <th>Cliente</th>
-                                    <th>Cantidad</th>
-                                    <th>Total</th>
-                                    <th>Fecha</th>
-                                </tr>
-                            </thead>
-                            <tbody id="salesTableBody">
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -148,32 +121,35 @@
                 <input type="hidden" id="productId">
 
                 <div class="form-group">
-                    <label>📂 Categoría</label>
+                    <label> Categoría</label>
                     <select id="productCategory" required>
                         <!-- Se carga dinámicamente desde el backend -->
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label>🏷️ Nombre del Producto</label>
+                    <label> Nombre del Producto</label>
                     <input type="text" id="productName" placeholder="Ej: Paracetamol 500mg" required>
                 </div>
 
                 <div class="form-group">
-                    <label>💰 Precio (COP)</label>
+                    <label> Precio (COP)</label>
                     <input type="number" id="productPrice" placeholder="Ej: 5000" min="0" step="100" required>
                 </div>
 
                 <div class="form-group">
-                    <label>📦 Stock (Unidades)</label>
+                    <label> Stock (Unidades)</label>
                     <input type="number" id="productStock" placeholder="Ej: 100" min="0" required>
                 </div>
 
-                <button type="submit" class="btn btn-primary" style="width: 100%;">💾 Guardar Producto</button>
+                <button type="submit" class="btn btn-primary" style="width: 100%;"> Guardar Producto</button>
             </form>
         </div>
     </div>
 
     <script src="/EKONODROGAS_FRONTED/panel-admin/panel_admin.js"></script>
+    <!-- Para modales mas bonitas en acciones como eliminar o guardar -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 </html>
