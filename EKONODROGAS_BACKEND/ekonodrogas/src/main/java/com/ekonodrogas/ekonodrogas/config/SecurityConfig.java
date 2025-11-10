@@ -32,10 +32,16 @@ public class SecurityConfig {
                     // Endpoints públicos de la API
                     auth.requestMatchers("/api/productos/**","/api/categorias/**","/api/ofertas/**").permitAll();
                     // Endpoints que requieren autenticación
-                    auth.requestMatchers("/api/usuarios/**").hasAnyRole("ADMIN", "USER");
-                    auth.requestMatchers("/api/ventas/**").hasAnyRole("ADMIN", "USER");
-                    auth.requestMatchers("/api/detalle-ventas/**").hasAnyRole("ADMIN", "USER");
-                    auth.requestMatchers("/api/roles/**").hasRole("ADMIN");
+                    auth.requestMatchers("/api/usuarios/**", "/api/ventas/**", "/api/detalle-ventas/**",
+                            "/api/roles/**").permitAll();
+
+                    // Revisar si es causante de problemas, el Rol se modifica
+                    // auth.requestMatchers("/api/usuarios/**").hasAnyRole("ADMIN", "USER");
+                    // auth.requestMatchers("/api/ventas/**").hasAnyRole("ADMIN", "USER");
+                    // auth.requestMatchers("/api/detalle-ventas/**").hasAnyRole("ADMIN", "USER");
+                    // auth.requestMatchers("/api/roles/**").hasRole("ADMIN");
+
+
                     // Resto requiere autenticación
                     auth.anyRequest().authenticated();
                 })
