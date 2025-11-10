@@ -1,19 +1,19 @@
-// =============================================
+
 // CONFIGURACIÓN API
-// =============================================
+
 const API_BASE_URL = 'http://localhost:8080/api'; // Cambia el puerto si es necesario
 
-// =============================================
+
 // VARIABLES GLOBALES
-// =============================================
+
 let currentEditingProductId = null;
 let products = [];
 let categorias = [];
 let ventas = [];
 
-// =============================================
+
 // INICIALIZACIÓN
-// =============================================
+
 document.addEventListener('DOMContentLoaded', async function() {
     initializeEventListeners();
     addLoadingAnimations();
@@ -23,7 +23,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     await loadProducts();
     await loadVentas();
     
+    // Muestra la información de la Base de Datos en pantalla
     renderProducts();
+    // Muestra los datos resumidos en el dashboard
     renderDashboard();
 });
 
@@ -35,9 +37,9 @@ document.getElementById('currentDate').textContent = new Date().toLocaleDateStri
     day: 'numeric'
 });
 
-// =============================================
+
 // CARGA DE DATOS DESDE BACKEND
-// =============================================
+
 
 // Cargar categorías
 async function loadCategorias() {
@@ -472,14 +474,13 @@ async function deleteProduct(id) {
     }
 }
 
-// =============================================
 // DASHBOARD
-// =============================================
+
 function renderDashboard() {
     // Calcular estadísticas
-    const totalSales = sales.reduce((sum, sale) => sum + sale.total, 0);
+    const totalSales = ventas.reduce((sum, venta) => sum + venta.total, 0);
     const totalProducts = products.length;
-    const totalPurchases = sales.length;
+    const totalPurchases = ventas.length;
     const lowStock = products.filter(p => p.stock < 10).length;
 
     // Actualizar cards de estadísticas
@@ -502,17 +503,17 @@ function renderRecentSales() {
     tbody.innerHTML = '';
 
     // Mostrar últimas 5 ventas
-    const recentSales = sales.slice(-5).reverse();
+    const recentSales = ventas.slice(-5).reverse();
     
-    recentSales.forEach((sale, index) => {
+    recentSales.forEach((venta, index) => {
         const row = document.createElement('tr');
         row.style.opacity = '0';
         row.innerHTML = `
-            <td>${sale.id}</td>
-            <td>${sale.product}</td>
-            <td>${sale.quantity}</td>
-            <td>${sale.total.toLocaleString('es-CO')}</td>
-            <td>${formatDate(sale.date)}</td>
+            <td>${venta.id}</td>
+            <td>${venta.product}</td>
+            <td>${venta.quantity}</td>
+            <td>${venta.total.toLocaleString('es-CO')}</td>
+            <td>${formatDate(venta.date)}</td>
         `;
         tbody.appendChild(row);
 
