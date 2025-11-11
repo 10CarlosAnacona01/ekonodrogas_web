@@ -156,11 +156,24 @@ async function eliminarDelCarrito(idProducto) {
     }
 }
 
-// Vaciar todo el carrito
+// Vaciar todo el carrito (versión con SweetAlert2)
 async function vaciarCarrito() {
-    if (!confirm('¿Estás seguro de que deseas vaciar el carrito?')) {
-        return;
-    }
+    const result = await Swal.fire({
+        title: '¿Vaciar carrito?',
+        text: 'Esta acción eliminará todos los productos del carrito',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, vaciar carrito',
+        cancelButtonText: 'Cancelar',
+        backdrop: true,
+        customClass: {
+            popup: 'swal-vaciar-carrito'
+        }
+    });
+
+    if (!result.isConfirmed) return;
 
     try {
         const response = await fetch(`${API_URL}/carrito/${ID_USUARIO}`, {
@@ -173,12 +186,29 @@ async function vaciarCarrito() {
 
         carritoActual = await response.json();
         actualizarInterfazCarrito();
-        mostrarNotificacion('Carrito vaciado', 'success');
+
+        // Mensaje de éxito con animación
+        await Swal.fire({
+            title: 'Carrito vaciado',
+            text: 'Tu carrito ha sido vaciado con éxito',
+            icon: 'success',
+            confirmButtonColor: '#28a745',
+            timer: 2000,
+            showConfirmButton: false
+        });
+
     } catch (error) {
         console.error('Error al vaciar carrito:', error);
-        mostrarNotificacion('Error al vaciar el carrito', 'error');
+
+        Swal.fire({
+            title: 'Error',
+            text: error.message || 'No se pudo vaciar el carrito',
+            icon: 'error',
+            confirmButtonColor: '#d33'
+        });
     }
 }
+
 
 // Actualizar la interfaz del carrito
 function actualizarInterfazCarrito() {
@@ -224,8 +254,15 @@ function actualizarListaItems() {
 
     // Si no hay items, mostrar mensaje
     if (!carritoActual.items || carritoActual.items.length === 0) {
-        itemsContainer.innerHTML = '<p class="cart-empty">El carrito está vacío</p>';
-        return;
+    itemsContainer.innerHTML = `
+        <div class="cart-empty">
+            <div class="cart-empty-icon">
+                <i class="bi bi-cart-x"></i>
+            </div>
+            <p class="cart-empty-text">Tu carrito está vacío</p>
+        </div>`;
+    return;
+
     }
 
     // Agregar cada item
@@ -235,19 +272,23 @@ function actualizarListaItems() {
     });
 }
 
-// Crear elemento HTML para un item del carrito
+// Crear elemento HTML para un item del carrito (alineado en columnas)
 function crearElementoItem(item) {
     const itemDiv = document.createElement('div');
     itemDiv.className = 'cart-item';
     itemDiv.innerHTML = `
-        <div class="cart-item-image">
-            <img src="${item.imagen || 'images/default.png'}" alt="${item.nombreProducto}">
+        <div class="cart-item-col cart-item-name">
+            <div class="cart-item-info">
+                <img src="/EKONODROGAS_FRONTED/imagenes/${item.imagen || 'default.png'}" 
+                    alt="${item.nombreProducto}">
+                <div class="cart-item-text">
+                    <h4>${item.nombreProducto}</h4>
+                    <p>${formatearPrecio(item.precioUnitario)}</p>
+                </div>
+            </div>
         </div>
-        <div class="cart-item-details">
-            <h4 class="cart-item-name">${item.nombreProducto}</h4>
-            <p class="cart-item-price">${formatearPrecio(item.precioUnitario)}</p>
-        </div>
-        <div class="cart-item-quantity">
+
+        <div class="cart-item-col cart-item-quantity">
             <button class="btn-quantity" onclick="actualizarCantidad(${item.idProducto}, ${item.cantidad - 1})">
                 <i class="bi bi-dash"></i>
             </button>
@@ -256,8 +297,9 @@ function crearElementoItem(item) {
                 <i class="bi bi-plus"></i>
             </button>
         </div>
-        <div class="cart-item-subtotal">
-            <p>${formatearPrecio(item.subtotal)}</p>
+
+        <div class="cart-item-col cart-item-price">
+            <span>${formatearPrecio(item.subtotal)}</span>
             <button class="btn-remove" onclick="eliminarDelCarrito(${item.idProducto})">
                 <i class="bi bi-trash"></i>
             </button>
@@ -265,6 +307,8 @@ function crearElementoItem(item) {
     `;
     return itemDiv;
 }
+
+
 
 // Actualizar estado de los botones
 function actualizarEstadoBotones() {
