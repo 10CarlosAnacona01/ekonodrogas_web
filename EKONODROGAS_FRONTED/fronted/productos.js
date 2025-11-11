@@ -79,8 +79,8 @@ function crearTarjetaProducto(producto, oferta = null) {
         <div class="container-img">
             ${badgeOferta}
             <img src="/EKONODROGAS_FRONTED/imagenes/${producto.imagen}" 
-                 alt="${producto.nombreProducto}"
-                 onerror="this.src='/EKONODROGAS_FRONTED/imagenes/default.png'">
+                alt="${producto.nombreProducto}"
+                onerror="this.src='/EKONODROGAS_FRONTED/imagenes/default.png'">
         </div>
         <div class="content-card-product">
             <h3>${producto.nombreProducto}</h3>
@@ -172,7 +172,7 @@ function agregarEventListenersCarrito() {
             
             // Si tienes una función global de carrito, llámala aquí
             if (typeof agregarAlCarrito === 'function') {
-                agregarAlCarrito(productoData);
+                agregarAlCarrito(productoData.id, 1);
             }
         });
     });
@@ -246,8 +246,8 @@ function crearTarjetaOferta(productoOferta) {
     cardProduct.innerHTML = `
         <div class="container-img">
             <img src="/EKONODROGAS_FRONTED/imagenes/${productoOferta.imagen}" 
-                 alt="${productoOferta.nombreProducto}"
-                 onerror="this.src='/EKONODROGAS_FRONTED/imagenes/default.png'">
+                alt="${productoOferta.nombreProducto}"
+                onerror="this.src='/EKONODROGAS_FRONTED/imagenes/default.png'">
             <span class="discount">-${productoOferta.descuentoPorcentaje}%</span>
         </div>
         <div class="content-card-product">
