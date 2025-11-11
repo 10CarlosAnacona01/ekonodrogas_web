@@ -84,168 +84,20 @@
     <!-- Productos -->
 
     <section class="container specials">
+        <h1 class="heading-1">DERMOCOSMÉTICA</h1>
 
-        <h1 class="heading-1">DERMOCOSMETICA</h1>
-
-        <!-- Producto 1 -->
-        <div class="container-products">
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/EKONODROGAS_FRONTED/imagenes/" alt="Alergibon">
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Alergibon</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$32.500</p>
-                </div>
-            </div>
-
-
-
-            <!-- Producto 2 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/EKONODROGAS_FRONTED/imagenes/" alt="Neutrogena">
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Neutrogena</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$61.200</p>
-                </div>
-            </div>
-
-
-            <!-- Producto 3 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/EKONODROGAS_FRONTED/imagenes/" alt="Pond's Facial">
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Pond's Facial</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$15.900</p>
-                </div>
-            </div>
-
-
-            <!-- Producto 4 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/EKONODROGAS_FRONTED/imagenes/" alt="Pond's Antiarrugas">
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Pond's Antiarrugas</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$20.900</p>
-                </div>
-            </div>
-
-            <!-- Producto 5 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/EKONODROGAS_FRONTED/imagenes/" alt="Pond's Limpiadora">
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Pond's Limpiadora</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$15.200</p>
-                </div>
-            </div>
-
-            <!-- Producto 6 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/EKONODROGAS_FRONTED/imagenes/" alt="Pond's Clarant">
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Pond's Clarant</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$29.200</p>
-                </div>
-            </div>
-
-            <!-- Producto 7 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/EKONODROGAS_FRONTED/imagenes/" alt="Cicatricure Porcelana">
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Cicatricure Porcelana</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$66.200</p>
-                </div>
-            </div>
-
-            <!-- Producto 8 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/EKONODROGAS_FRONTED/imagenes/" alt="Cicatricure Gel">
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Cicatricure Gel</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$55.100</p>
-                </div>
-            </div>
-
-            <!-- Producto 9 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/EKONODROGAS_FRONTED/imagenes/" alt="Cetaphil Crema">
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Cetaphil Crema</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$129.200</p>
-                </div>
-            </div>
-
-            <!-- Producto 10 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/EKONODROGAS_FRONTED/imagenes/" alt="Nivea Nutritivo">
-                </div>
-                <div class="content-card-product">
-
-                    <h3>Nivea Nutritivo</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$13.600</p>
-                </div>
+        <!-- Contenedor de productos dinámico - SE LLENARÁ CON JS -->
+        <div class="container-products" id="productos-container" data-categoria-id="1">
+            <!-- Los productos se cargarán dinámicamente aquí -->
+            <div class="loading-message">
+                <p>Cargando productos...</p>
             </div>
         </div>
     </section>
 
     <script src="/EKONODROGAS_FRONTED/fronted/menu.js"></script>
     <script src="/EKONODROGAS_FRONTED/fronted/carrito.js"></script>
+    <script src="/EKONODROGAS_FRONTED/fronted/productos.js"></script>
 </body>
 
 </html>

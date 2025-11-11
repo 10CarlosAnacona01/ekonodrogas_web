@@ -27,6 +27,13 @@ public class ProductosService {
     }
 
     @Transactional(readOnly = true)
+    public List<ProductosDTO> obtenerPorCategoria(Long categoriaId) {
+        return productosRepository.findByCategoriaIdCategoria(categoriaId).stream()
+                .map(this::entityToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
     public ProductosDTO obtenerPorId(Long id) {
         ProductosEntity entity = productosRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado con ID: " + id));
