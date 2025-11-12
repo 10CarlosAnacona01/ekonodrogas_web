@@ -31,7 +31,7 @@ public class SecurityConfig {
                     auth.requestMatchers("/v3/api-docs/**","/swagger-ui/**","/swagger-ui.html").permitAll();
                     // Endpoints públicos de la API
                     auth.requestMatchers("/api/productos/**","/api/carrito/**",
-                            "/api/categorias/**","/api/ofertas/**").permitAll();
+                            "/api/categorias/**","/api/ofertas/**", "/api/pagos/**").permitAll();
                     // Endpoints que requieren autenticación
                     auth.requestMatchers("/api/usuarios/**", "/api/ventas/**", "/api/detalle-ventas/**",
                             "/api/roles/**").permitAll();
