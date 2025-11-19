@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administración - Ekonodrogas</title>
-    <link rel="stylesheet" href="panel_admin.css" />
-    <link rel="icon" type="image/png" href="/iconos/logo_jpg/solo_logo.jpg">
+    <link rel="stylesheet" href="/EKONODROGAS_FRONTED/panel-admin/panel_admin.css" />
+    <link rel="icon" type="image/png" href="/EKONODROGAS_FRONTED/imagenes/solo_logo.jpg" />
 </head>
 
 <body>
@@ -14,19 +14,16 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <div class="logo">
-                <h1>Panel Administración</h1>
+                <h1>Panel  de Administrador</h1>
             </div>
-            <div class="nav-item active" data-section="dashboard">
-                Informes
+            <div class="nav-item active" data-section="dashboard" id="navDashboard">
+                📊 Informes
             </div>
-            <div class="nav-item" data-section="products">
-                Productos
-            </div>
-            <div class="nav-item" data-section="sales">
-                Ventas
+            <div class="nav-item" data-section="products" id="navProducts">
+                📦 Productos
             </div>
             <div class="nav-item">
-                <a href="/EKONODROGAS_FRONTED/fronted/fronted.html">Volver al sitio</a>
+                <a href="/EKONODROGAS_FRONTED/fronted/fronted.html">🏠 Volver al sitio</a>
             </div>
         </div>
 
@@ -34,45 +31,52 @@
         <div class="main-content">
             <div class="header">
                 <div>Administrador: <strong>Usuario Principal</strong></div>
+                <div class="date-display">
+                    <span id="currentDate"></span>
+                </div>
             </div>
 
             <!-- Dashboard Section -->
             <div id="dashboard" class="section active">
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <h3>Ventas Totales</h3>
+                        <h3> Ventas Totales</h3>
                         <div class="value">$0</div>
                     </div>
                     <div class="stat-card">
-                        <h3>Productos</h3>
+                        <h3> Productos</h3>
                         <div class="value">0</div>
                     </div>
                     <div class="stat-card">
-                        <h3>Compras</h3>
+                        <h3> Compras</h3>
                         <div class="value">0</div>
                     </div>
                     <div class="stat-card">
-                        <h3>Stock Bajo</h3>
+                        <h3> Stock Bajo</h3>
                         <div class="value">0</div>
                     </div>
                 </div>
 
                 <div class="card">
-                    <h2>Últimas Ventas</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Producto</th>
-                                <th>Cantidad</th>
-                                <th>Total</th>
-                                <th>Fecha</th>
-                            </tr>
-                        </thead>
-                        <tbody id="dashboardSalesTable">
-                            <!-- Va info de la tabla -->
-                        </tbody>
-                    </table>
+                    <h2> Ventas</h2>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Usuario</th>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio</th>
+                                    <th>Total</th>
+                                    <th>Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dashboardSalesTable">
+                                <!-- Datos dinámicos -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -80,49 +84,27 @@
             <div id="products" class="section">
                 <div class="card">
                     <div class="card-header">
-                        <h2>Gestión de Productos</h2>
-                        <button class="btn btn-primary" id="addProductBtn">+ Agregar Producto</button>
+                        <h2> Gestión de Productos</h2>
+                        <button class="btn btn-primary" id="addProductBtn">Agregar Producto</button>
                     </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Categoría</th>
-                                <th>Nombre</th>
-                                <th>Precio</th>
-                                <th>Stock</th>
-                                <th>Disponible</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="productsTable">
-                            <!-- Va info de la tabla -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Sales Section -->
-            <div id="sales" class="section">
-                <div class="card">
-                    <div class="card-header">
-                        <h2>Historial de Ventas</h2>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Categoría</th>
+                                    <th>Nombre</th>
+                                    <th>Precio</th>
+                                    <th>Stock</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTable">
+                                <!-- Datos dinámicos -->
+                            </tbody>
+                        </table>
                     </div>
-                    <table id="salesTable">
-                        <thead>
-                            <tr>
-                                <th>ID Venta</th>
-                                <th>Producto</th>
-                                <th>Cliente</th>
-                                <th>Cantidad</th>
-                                <th>Total</th>
-                                <th>Fecha</th>
-                            </tr>
-                        </thead>
-                        <tbody id="salesTableBody">
-                            <!-- Va info de la tabla -->
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
@@ -137,35 +119,37 @@
             </div>
             <form id="productForm">
                 <input type="hidden" id="productId">
-                
+
                 <div class="form-group">
-                    <label>Categoría</label>
+                    <label> Categoría</label>
                     <select id="productCategory" required>
-                        <option value="Drogueria">Droguería</option>
-                        <option value="Maternidad y bebes">Maternidad y Bebés</option>
-                        <option value="Dermocosmetica">Dermocosmética</option>
-                        <option value="Ofertas y descuentos">Ofertas y descuentos</option>
+                        <!-- Se carga dinámicamente desde el backend -->
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label>Nombre</label>
-                    <input type="text" id="productName" required>
+                    <label> Nombre del Producto</label>
+                    <input type="text" id="productName" placeholder="Ej: Paracetamol 500mg" required>
                 </div>
+
                 <div class="form-group">
-                    <label>Precio</label>
-                    <input type="number" id="productPrice" required>
+                    <label> Precio (COP)</label>
+                    <input type="number" id="productPrice" placeholder="Ej: 5000" min="0" step="100" required>
                 </div>
+
                 <div class="form-group">
-                    <label>Stock</label>
-                    <input type="number" id="productStock" required>
+                    <label> Stock (Unidades)</label>
+                    <input type="number" id="productStock" placeholder="Ej: 100" min="0" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Guardar Producto</button>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;"> Guardar Producto</button>
             </form>
         </div>
     </div>
 
-    <script src="panel_admin.js"></script>
-</body>
+    <script src="/EKONODROGAS_FRONTED/panel-admin/panel_admin.js"></script>
+    <!-- Para modales mas bonitas en acciones como eliminar o guardar -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+</body>
 </html>

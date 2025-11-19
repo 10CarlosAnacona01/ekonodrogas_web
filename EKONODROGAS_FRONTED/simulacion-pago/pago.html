@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/EKONODROGAS_FRONTED/imagenes/solo_logo.jpg" />
+    <link rel="stylesheet" href="/EKONODROGAS_FRONTED/simulacion-pago/pago.css" />
+    <title>Pasarela de Pago - Ekonodrogas</title>
+</head>
+<body>
+    </head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💳 Pasarela de Pago</h1>
+        </div>
+
+        <div class="payment-form">
+            <!-- Vista previa de la tarjeta -->
+            <div class="card-preview">
+                <div class="card-chip"></div>
+                <div class="card-number" id="cardNumberDisplay">•••• •••• •••• ••••</div>
+                <div class="card-info">
+                    <div>
+                        <div style="font-size: 10px; opacity: 0.7;">TITULAR</div>
+                        <div class="card-holder" id="cardHolderDisplay">NOMBRE COMPLETO</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 10px; opacity: 0.7;">VENCE</div>
+                        <div id="cardExpiryDisplay">MM/AA</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total a pagar -->
+            <div class="total-section">
+                <div class="label">Total a Pagar</div>
+                <div class="amount" id="totalAmount">$0</div>
+            </div>
+
+            <!-- Formulario -->
+            <form id="paymentForm">
+                <input type="hidden" id="userId" value="1">
+                
+                <div class="form-group">
+                    <label for="cardHolder">Nombre del Titular</label>
+                    <input type="text" id="cardHolder" placeholder="Como aparece en la tarjeta" required>
+                    <div class="error-message" id="errorHolder">Por favor ingrese el nombre del titular</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="cardNumber">Número de Tarjeta</label>
+                    <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                    <div class="error-message" id="errorNumber">Ingrese un número de tarjeta válido (16 dígitos)</div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label for="cardExpiry">Vencimiento</label>
+                        <input type="text" id="cardExpiry" placeholder="MM/AA" maxlength="5" required>
+                        <div class="error-message" id="errorExpiry">Formato: MM/AA</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cardCvv">CVV</label>
+                        <input type="text" id="cardCvv" placeholder="123" maxlength="4" required>
+                        <div class="error-message" id="errorCvv">CVV de 3 o 4 dígitos</div>
+                    </div>
+                </div>
+
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Procesando pago...</p>
+                </div>
+
+                <button type="submit" class="btn-pay" id="btnPay">
+                    Pagar Ahora
+                </button>
+
+                <div class="security-icons">
+                    <div class="security-icon">🔒 Pago Seguro</div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Éxito/Error -->
+    <div class="modal" id="resultModal">
+        <div class="modal-content">
+            <div id="iconContainer"></div>
+            <h2 id="modalTitle"></h2>
+            <p id="modalMessage"></p>
+            <div id="modalButtons"></div>
+        </div>
+    </div>
+    <script src="/EKONODROGAS_FRONTED/simulacion-pago/pago.js"></script>
+</body>
+</html>

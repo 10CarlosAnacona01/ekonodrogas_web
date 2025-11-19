@@ -5,15 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "ventas")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class VentaEntity {
+@Table(name = "ventas")
+public class VentasEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +21,7 @@ public class VentaEntity {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
-    private UserEntity usuario;
+    private UsuariosEntity usuario;
 
     @Column(name = "fecha_venta")
     private java.time.LocalDateTime fechaVenta;
@@ -34,8 +33,8 @@ public class VentaEntity {
     @Column(name = "estado_venta")
     private EstadoVenta estadoVenta;
 
+    // En este caso como es Enum String, se tiene que escribir literalmente lo que está en la lista
     public enum EstadoVenta {
         completada, cancelada, pendiente
     }
 }
-

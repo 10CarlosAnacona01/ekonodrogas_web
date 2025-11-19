@@ -29,7 +29,8 @@ public class SwaggerConfig {
     public GroupedOpenApi publicApi() {
         return GroupedOpenApi.builder()
                 .group("Gestión_de_droguería")
-                .packagesToScan("com.app.controller", "com.app.dto")
+                .packagesToScan("com.ekonodrogas.ekonodrogas.controller",
+                                "com.ekonodrogas.ekonodrogas.dto")
                 .build();
     }
 }

@@ -84,158 +84,22 @@
     <!-- Productos -->
 
     <section class="container specials">
+        <h1 class="heading-1">MATERNIDAD Y BEBÉS</h1>
 
-        <h1 class="heading-1">MATERNIDAD Y BEBES</h1>
-
-        <!-- Producto 1 -->
-        <div class="container-products">
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/EKONODROGAS_FRONTED/imagenes/" alt="Jabon Johnson">
-                </div>
-                <div class="content-card-product">
-                    <h3>Jabon Johnson</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$14.000</p>
-                </div>
-            </div>
-
-
-
-            <!-- Producto 2 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/EKONODROGAS_FRONTED/imagenes/" alt="Crema Johnson">
-                </div>
-                <div class="content-card-product">
-                    <h3>Crema Johnson</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$17.800</p>
-                </div>
-            </div>
-
-
-            <!-- Producto 3 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/EKONODROGAS_FRONTED/imagenes/" alt="Jabon Johnson x 3">
-                </div>
-                <div class="content-card-product">
-                    <h3>Jabon Johnson x 3</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$14.000</p>
-                </div>
-            </div>
-
-
-            <!-- Producto 4 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/EKONODROGAS_FRONTED/imagenes/" alt="Aceite Johnson">
-                </div>
-                <div class="content-card-product">
-                    <h3>Aceite Johnson</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$14.700</p>
-                </div>
-            </div>
-
-            <!-- Producto 5 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/EKONODROGAS_FRONTED/imagenes/" alt="Crema Liquida Johnson">
-                </div>
-                <div class="content-card-product">
-                    <h3>Crema Liquida Johnson</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$32.800</p>
-                </div>
-            </div>
-
-            <!-- Producto 6 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/EKONODROGAS_FRONTED/imagenes/" alt="Nan Supremepro">
-                </div>
-                <div class="content-card-product">
-                    <h3>Nan Supremepro</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$87.700</p>
-                </div>
-            </div>
-
-            <!-- Producto 7 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/EKONODROGAS_FRONTED/imagenes/" alt="Nan Expertpro">
-                </div>
-                <div class="content-card-product">
-                    <h3>Nan Expertpro</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$79.000</p>
-                </div>
-            </div>
-
-            <!-- Producto 8 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/EKONODROGAS_FRONTED/imagenes/" alt="Nan Comfort">
-                </div>
-                <div class="content-card-product">
-                    <h3>Nan Comfort</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$129.200</p>
-                </div>
-            </div>
-
-            <!-- Producto 9 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/EKONODROGAS_FRONTED/imagenes/" alt="Baby Champu">
-                </div>
-                <div class="content-card-product">
-                    <h3>Baby Champu</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$11.200</p>
-                </div>
-            </div>
-
-            <!-- Producto 10 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/EKONODROGAS_FRONTED/imagenes/" alt="baby Johnson">
-                </div>
-                <div class="content-card-product">
-                    <h3>Baby Johnson</h3>
-                    <span class="add-cart">
-                        <i class="bi bi-cart4"></i>
-                    </span>
-                    <p class="price">$11.200</p>
-                </div>
+        <!-- Contenedor de productos dinámico - SE LLENARÁ CON JS -->
+        <div class="container-products" id="productos-container" data-categoria-id="2">
+            <!-- Los productos se cargarán dinámicamente aquí -->
+            <div class="loading-message">
+                <p>Cargando productos...</p>
             </div>
         </div>
     </section>
 
     <script src="/EKONODROGAS_FRONTED/fronted/menu.js"></script>
     <script src="/EKONODROGAS_FRONTED/fronted/carrito.js"></script>
+    <script src="/EKONODROGAS_FRONTED/fronted/productos.js"></script>
+    <!-- Para modales mas bonitas en acciones como eliminar o guardar -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>
