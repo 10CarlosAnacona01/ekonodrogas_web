@@ -170,8 +170,8 @@ function validarContrasena(contrasena) {
 async function handleLogin(event) {
     event.preventDefault();
 
-    const emailInput = signInForm.querySelector('#email');
-    const passwordInput = signInForm.querySelector('#password');
+    const emailInput = signInForm.querySelector('#email-login');
+    const passwordInput = signInForm.querySelector('#password-login');
     const boton = signInForm.querySelector('button[type="submit"], button:not([type])');
 
     const correo = emailInput.value.trim();
@@ -230,8 +230,8 @@ async function handleRegistro(event) {
     event.preventDefault();
 
     const nameInput = signUpForm.querySelector('#name');
-    const emailInput = signUpForm.querySelector('#email');
-    const passwordInput = signUpForm.querySelector('#password');
+    const emailInput = signUpForm.querySelector('#email-register');
+    const passwordInput = signUpForm.querySelector('#password-register');
     const boton = signUpForm.querySelector('.btn-register');
 
     const nombreCompleto = nameInput.value.trim();
