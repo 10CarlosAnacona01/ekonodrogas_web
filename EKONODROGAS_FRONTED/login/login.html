@@ -15,23 +15,23 @@
         <div class="forms-container">
             <div class="forms" id="forms">
                 <!-- Formulario de Login -->
-                <form action="" id="sign-in">
+                <form id="sign-in">
                     <h2>Iniciar sesión</h2>
                     <p>¿No tienes una cuenta? <a href="#" id="link-sign-in">Regístrate</a></p>
                     <!-- Email -->
                     <div class="input-container">
-                        <label for="email">Correo electrónico</label>
-                        <input id="email" type="email" placeholder="usuario@dominio.com">
+                        <label for="email-login">Correo electrónico</label>
+                        <input id="email" name="email" type="email" placeholder="usuario@dominio.com" required>
                     </div>
 
                     <div class="input-container">
                         <!-- Contraseña -->
                         <div class="forget">
-                            <label for="password">Contraseña</label>
+                            <label for="password-login">Contraseña</label>
                         </div>
-                        <input id="password" type="password" placeholder="Ingresa tu contraseña">
+                        <input id="password" name="password" type="password" placeholder="Ingresa tu contraseña" required>
                     </div>
-                    <button>Iniciar sesión</button>
+                    <button type="submit">Iniciar sesión</button>
 
                     <!-- Volver al inicio desde Iniciar sesión -->
 
@@ -49,24 +49,24 @@
 
 
                 <!-- Formulario de Registro-->
-                <form action="" id="sign-up">
+                <form id="sign-up">
                     <p></p>
                     <h2>Crear cuenta</h2>
                     <p>¿Ya tienes una cuenta? <a href="#" id="link-sign-up">Inicia sesión</a></p>
                     <div class="input-container">
                         <label for="name">Nombre completo</label>
-                        <input id="name" type="text" placeholder="Tu nombre">
+                        <input id="name" name="name" type="text" placeholder="Tu nombre completo" required>
                     </div>
                     <!-- Email -->
                     <div class="input-container">
-                        <label for="email">Correo electrónico</label>
-                        <input id="email" type="email" placeholder="usuario@dominio.com">
+                        <label for="email-register">Correo electrónico</label>
+                        <input id="email" name="email" type="email" placeholder="usuario@dominio.com" required>
                     </div>
 
                     <div class="input-container">
                         <!-- Contraseña -->
-                        <label for="password">Contraseña</label>
-                        <input id="password" type="password" placeholder="Crea una contraseña">
+                        <label for="password-register">Contraseña</label>
+                        <input id="password" name="password" type="password" placeholder="Crea una contraseña (mín. 8 caracteres)" minlength="8" required>
                     </div>
 
                     <!-- Volver al inicio desde Registrarse -->
@@ -75,7 +75,7 @@
                         <span> <a href="/EKONODROGAS_FRONTED/fronted/fronted.html">Vuelve al inicio</a> </span>
                     </div>
 
-                    <button class="btn-register">Registrarse</button>
+                    <button type="submit" class="btn-register">Registrarse</button>
                 </form>
             </div>
         </div>
