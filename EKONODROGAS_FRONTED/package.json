@@ -1,0 +1,16 @@
+{
+  "name": "ekonodrogas_fronted",
+  "version": "1.0.0",
+  "description": "Servidor estático para el frontend de Ekonodrogas",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
