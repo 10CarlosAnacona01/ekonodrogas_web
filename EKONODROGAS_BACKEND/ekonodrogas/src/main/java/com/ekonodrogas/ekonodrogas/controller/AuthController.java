@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,8 +18,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
 
+import java.io.IOException;
 import java.util.Map;
 
 @RestController
@@ -81,35 +82,6 @@ public class AuthController {
             return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             throw new RuntimeException("Error al iniciar sesión: " + e.getMessage());
-        }
-    }
-
-    @GetMapping("/oauth2/callback/google")
-    @Operation(summary = "Callback de Google OAuth2",
-            description = "Endpoint de callback para autenticación con Google")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "302", description = "Redirección al frontend con token"),
-            @ApiResponse(responseCode = "401", description = "Error de autenticación OAuth2"),
-            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
-    })
-    public RedirectView googleCallback(@AuthenticationPrincipal OAuth2User oauth2User) {
-        try {
-            // Extraer información del usuario de Google
-            String email = oauth2User.getAttribute("email");
-            String nombre = oauth2User.getAttribute("given_name");
-            String apellido = oauth2User.getAttribute("family_name");
-
-            // Procesar login/registro
-            UsuariosDTO usuario = authService.procesarLoginGoogle(email, nombre, apellido);
-            String token = authService.generarToken(usuario);
-
-            // Redirigir al frontend con el token
-            String redirectUrl = frontendUrl + "/auth-callback?token=" + token;
-            return new RedirectView(redirectUrl);
-        } catch (Exception e) {
-            // En caso de error, redirigir al frontend con mensaje de error
-            String redirectUrl = frontendUrl + "/auth-callback?error=" + e.getMessage();
-            return new RedirectView(redirectUrl);
         }
     }
 

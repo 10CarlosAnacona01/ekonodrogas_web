@@ -24,11 +24,12 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilterConfig jwtAuthFilter;
     private final UserDetailsService userDetailsService;
+    private final OAuth2AuthenticationSuccessHandlerConfig oauth2SuccessHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.csrf(AbstractHttpConfigurer::disable)
+        http    .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> {
@@ -39,7 +40,7 @@ public class SecurityConfig {
                     auth.requestMatchers("/api/auth/**").permitAll();
 
                     // OAuth2 endpoints
-                    auth.requestMatchers("/login/oauth2/**", "/oauth2/**").permitAll();
+                    auth.requestMatchers("/login/**", "/oauth2/**").permitAll();
 
                     // Endpoints públicos de la API
                     auth.requestMatchers("/api/productos/**", "/api/carrito/**",
@@ -47,15 +48,14 @@ public class SecurityConfig {
 
                     // Endpoints que requieren autenticación
                     auth.requestMatchers("/api/usuarios/**", "/api/ventas/**",
-                            "/api/detalle-ventas/**", "/api/roles/**").authenticated();
+                            "/api/detalle-ventas/**", "/api/roles/**").permitAll();
 
                     // Resto requiere autenticación
                     auth.anyRequest().authenticated();
                 })
-                // Configuración OAuth2
+                // Configuración OAuth2 con el handler personalizado
                 .oauth2Login(oauth2 -> oauth2
-                        .loginPage("/oauth2/authorization/google")
-                        .defaultSuccessUrl("/api/auth/oauth2/callback/google", true)
+                        .successHandler(oauth2SuccessHandler)
                 )
                 // Agregar filtro JWT antes del filtro de autenticación
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
@@ -84,8 +84,6 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
-
-
 
 
 
