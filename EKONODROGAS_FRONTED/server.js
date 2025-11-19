@@ -3,7 +3,7 @@ const path = require('path');
 
 const app = express();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5501;
 const PROJECT_ROOT = __dirname;
 const FRONT_PAGE = path.join(PROJECT_ROOT, 'fronted', 'fronted.html');
 
