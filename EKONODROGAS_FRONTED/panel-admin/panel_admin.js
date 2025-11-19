@@ -1,19 +1,20 @@
-// =============================================
+
 // CONFIGURACIÓN API
-// =============================================
+
 const API_BASE_URL = 'http://localhost:8080/api'; // Cambia el puerto si es necesario
 
-// =============================================
+
 // VARIABLES GLOBALES
-// =============================================
+
 let currentEditingProductId = null;
 let products = [];
 let categorias = [];
 let ventas = [];
+let usuarios = [];
 
-// =============================================
+
 // INICIALIZACIÓN
-// =============================================
+
 document.addEventListener('DOMContentLoaded', async function() {
     initializeEventListeners();
     addLoadingAnimations();
@@ -21,9 +22,13 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Cargar datos desde el backend
     await loadCategorias();
     await loadProducts();
+    // Cargar usuarios antes de las ventas para que estén disponibles al procesar ventas y no aparezca "Cliente desconocido"
+    await loadUsuarios();
     await loadVentas();
-    
+
+    // Muestra la información de la Base de Datos en pantalla
     renderProducts();
+    // Muestra los datos resumidos en el dashboard
     renderDashboard();
 });
 
@@ -35,9 +40,9 @@ document.getElementById('currentDate').textContent = new Date().toLocaleDateStri
     day: 'numeric'
 });
 
-// =============================================
+
 // CARGA DE DATOS DESDE BACKEND
-// =============================================
+
 
 // Cargar categorías
 async function loadCategorias() {
@@ -49,6 +54,19 @@ async function loadCategorias() {
     } catch (error) {
         console.error('Error al cargar categorías:', error);
         showNotification('Error al cargar categorías', 'error');
+    }
+}
+
+// Cargar usuarios
+async function loadUsuarios() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/usuarios`);
+        if (!response.ok) throw new Error('Error al cargar usuarios');
+        usuarios = await response.json();
+        console.log('Usuarios cargados:', usuarios);
+    } catch (error) {
+        console.error('Error al cargar usuarios:', error);
+        showNotification('Error al cargar usuarios', 'error');
     }
 }
 
@@ -81,44 +99,58 @@ async function loadProducts() {
 // Cargar ventas
 async function loadVentas() {
     try {
+        // Obtener ventas
         const response = await fetch(`${API_BASE_URL}/ventas`);
         if (!response.ok) throw new Error('Error al cargar ventas');
         const ventasDTO = await response.json();
-        
-        // Transformar DTO del backend
-        ventas = await Promise.all(ventasDTO.map(async (venta) => {
-            // Obtener detalles de la venta
-            const detallesResponse = await fetch(`${API_BASE_URL}/detalle-ventas`);
-            const todosDetalles = await detallesResponse.json();
+
+        // Obtener todos los detalles de venta una sola vez
+        const detallesResponse = await fetch(`${API_BASE_URL}/detalle-ventas`);
+        if (!detallesResponse.ok) throw new Error('Error al cargar detalles de venta');
+        const todosDetalles = await detallesResponse.json();
+
+        // Transformar DTO del backend a formato del frontend
+        ventas = ventasDTO.map(venta => {
             const detallesVenta = todosDetalles.filter(d => d.idVenta === venta.idVenta);
-            
-            // Obtener nombre del primer producto (simplificado)
+
+            // Buscar usuario (asegúrate que la variable `usuarios` exista y esté cargada)
+            const usuario = usuarios && usuarios.find(u => u.id === venta.idUsuario || u.idUsuario === venta.idUsuario);
+
+            // Obtener nombre del primer producto y cantidad total
             let productName = 'Varios productos';
             let quantity = 0;
-            
+            let precioUnitario = 0;
+
             if (detallesVenta.length > 0) {
                 const primerDetalle = detallesVenta[0];
                 const producto = products.find(p => p.id === primerDetalle.idProducto);
                 productName = producto ? producto.name : 'Producto desconocido';
-                quantity = detallesVenta.reduce((sum, d) => sum + d.cantidad, 0);
+                quantity = detallesVenta.reduce((sum, d) => sum + (d.cantidad || 0), 0);
+                // usar el campo que tenga tu detalle; aquí asumo 'precioUnitario'
+                precioUnitario = primerDetalle.precioUnitario ?? primerDetalle.precio_unitario ?? 0;
             }
-            
+
             return {
                 id: venta.idVenta,
+                usuario: usuario
+                    ? `${usuario.primerNombre || usuario.primer_nombre || ''} ${usuario.segundoNombre || usuario.segundo_nombre || ''} ${usuario.primerApellido || usuario.primer_apellido || ''} ${usuario.segundoApellido || usuario.segundo_apellido || ''}`.replace(/\s+/g, ' ').trim()
+                    : 'Cliente desconocido',
                 product: productName,
                 quantity: quantity,
-                total: venta.totalVenta,
+                price: precioUnitario,
+                total: venta.totalVenta ?? venta.total_venta ?? 0,
                 date: venta.fechaVenta ? venta.fechaVenta.split('T')[0] : new Date().toISOString().split('T')[0],
-                estado: venta.estadoVenta
+                estado: venta.estadoVenta ?? venta.estado_venta ?? ''
             };
-        }));
-        
+        });
+
         console.log('Ventas cargadas:', ventas);
     } catch (error) {
         console.error('Error al cargar ventas:', error);
         showNotification('Error al cargar ventas', 'error');
     }
 }
+
 
 // Obtener nombre de categoría por ID
 function getCategoryNameById(idCategoria) {
@@ -178,9 +210,8 @@ function initializeEventListeners() {
     createMobileMenu();
 }
 
-// =============================================
 // NAVEGACIÓN
-// =============================================
+
 function showSection(sectionId, element) {
     // Animación de salida
     const activeSections = document.querySelectorAll('.section.active');
@@ -214,13 +245,9 @@ function showSection(sectionId, element) {
     }, 300);
 }
 
-// =============================================
 // EVENT LISTENERS
-// =============================================
 
-// =============================================
 // GESTIÓN DE PRODUCTOS
-// =============================================
 
 // Renderizar tabla de productos
 function renderProducts() {
@@ -253,15 +280,15 @@ function renderProducts() {
             <td>${product.id}</td>
             <td>${product.categoryName || 'Sin categoría'}</td>
             <td>${product.name}</td>
-            <td>${product.price.toLocaleString('es-CO')}</td>
+            <td>$${product.price.toLocaleString('es-CO')}</td>
             <td>${product.stock}</td>
             <td>${stockBadge}</td>
             <td>
                 <button class="btn btn-success btn-sm" onclick="editProduct(${product.id})" title="Editar">
-                    ✏️ Editar
+                    Editar
                 </button>
                 <button class="btn btn-danger btn-sm" onclick="deleteProduct(${product.id})" title="Eliminar">
-                    🗑️ Eliminar
+                    Eliminar
                 </button>
             </td>
         `;
@@ -436,11 +463,20 @@ async function deleteProduct(id) {
         showNotification('Producto no encontrado', 'error');
         return;
     }
-    
-    // Confirmación
-    if (!confirm(`¿Estás seguro de eliminar "${product.name}"?\n\nEsta acción no se puede deshacer.`)) {
-        return;
-    }
+
+    // Confirmación más bonita con SweetAlert2 para eliminar
+    const result = await Swal.fire({
+        title: `¿Eliminar "${product.name}"?`,
+        text: "Esta acción no se puede deshacer",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar"
+    });
+
+    if (!result.isConfirmed) return;
     
     try {
         const response = await fetch(`${API_BASE_URL}/productos/${id}`, {
@@ -452,7 +488,7 @@ async function deleteProduct(id) {
         }
         
         // Animación de salida
-        const row = event.target.closest('tr');
+        const row = document.querySelector(`tr[data-id="${id}"]`);
         if (row) {
             row.style.transition = 'all 0.3s ease';
             row.style.opacity = '0';
@@ -472,14 +508,13 @@ async function deleteProduct(id) {
     }
 }
 
-// =============================================
 // DASHBOARD
-// =============================================
+
 function renderDashboard() {
     // Calcular estadísticas
-    const totalSales = sales.reduce((sum, sale) => sum + sale.total, 0);
+    const totalSales = ventas.reduce((sum, venta) => sum + venta.total, 0);
     const totalProducts = products.length;
-    const totalPurchases = sales.length;
+    const totalPurchases = ventas.length;
     const lowStock = products.filter(p => p.stock < 10).length;
 
     // Actualizar cards de estadísticas
@@ -501,18 +536,20 @@ function renderRecentSales() {
 
     tbody.innerHTML = '';
 
-    // Mostrar últimas 5 ventas
-    const recentSales = sales.slice(-5).reverse();
+    // Mostrar todas las ventas siendo las más recientes primero
+    const recentSales = ventas.slice().reverse();
     
-    recentSales.forEach((sale, index) => {
+    recentSales.forEach((venta, index) => {
         const row = document.createElement('tr');
         row.style.opacity = '0';
         row.innerHTML = `
-            <td>${sale.id}</td>
-            <td>${sale.product}</td>
-            <td>${sale.quantity}</td>
-            <td>${sale.total.toLocaleString('es-CO')}</td>
-            <td>${formatDate(sale.date)}</td>
+            <td>${venta.id}</td>
+            <td>${venta.usuario}</td>
+            <td>${venta.product}</td>
+            <td>${venta.quantity}</td>
+            <td>$${venta.price.toLocaleString('es-CO')}</td>
+            <td>$${venta.total.toLocaleString('es-CO')}</td>
+            <td>${formatDate(venta.date)}</td>
         `;
         tbody.appendChild(row);
 
@@ -523,9 +560,7 @@ function renderRecentSales() {
     });
 }
 
-// =============================================
 // ANIMACIONES Y EFECTOS
-// =============================================
 
 // Animación de contador numérico
 function animateValue(element, start, end, duration, isCurrency = false) {
@@ -607,9 +642,8 @@ function showNotification(message, type = 'success') {
     }, 3000);
 }
 
-// =============================================
 // MENÚ MÓVIL
-// =============================================
+
 function createMobileMenu() {
     const sidebar = document.querySelector('.sidebar');
     if (!sidebar) return;
@@ -673,9 +707,8 @@ function closeMobileMenu() {
     if (overlay) overlay.style.display = 'none';
 }
 
-// =============================================
 // UTILIDADES
-// =============================================
+
 function formatDate(dateString) {
     if (!dateString) return '-';
     const date = new Date(dateString);

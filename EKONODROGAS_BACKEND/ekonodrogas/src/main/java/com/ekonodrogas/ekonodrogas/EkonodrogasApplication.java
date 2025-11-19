@@ -63,6 +63,7 @@ public class EkonodrogasApplication {
                         .contrasena(passwordEncoder.encode("EKONODROGAS2025."))
                         .fechaRegistro(LocalDateTime.now())
                         .build();
+
                 usuariosRepository.save(administrador);
             }
 

@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -29,6 +28,17 @@ public class ProductosController {
     })
     public ResponseEntity<List<ProductosDTO>> obtenerTodos() {
         return ResponseEntity.ok(productosService.obtenerTodos());
+    }
+
+    @GetMapping("/categoria/{categoriaId}")
+    @Operation(summary = "Obtener productos por categoría", description = "Retorna todos los productos de una categoría específica")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista de productos obtenida exitosamente"),
+            @ApiResponse(responseCode = "404", description = "Categoría no encontrada"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
+    public ResponseEntity<List<ProductosDTO>> obtenerPorCategoria(@PathVariable Long categoriaId) {
+        return ResponseEntity.ok(productosService.obtenerPorCategoria(categoriaId));
     }
 
     @GetMapping("/{id}")

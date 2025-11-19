@@ -37,5 +37,4 @@ public class VentasEntity {
     public enum EstadoVenta {
         completada, cancelada, pendiente
     }
-
 }

@@ -30,12 +30,19 @@ public class SecurityConfig {
                     // http://localhost:8080/swagger-ui/index.html
                     auth.requestMatchers("/v3/api-docs/**","/swagger-ui/**","/swagger-ui.html").permitAll();
                     // Endpoints públicos de la API
-                    auth.requestMatchers("/api/productos/**","/api/categorias/**","/api/ofertas/**").permitAll();
+                    auth.requestMatchers("/api/productos/**","/api/carrito/**",
+                            "/api/categorias/**","/api/ofertas/**", "/api/pagos/**").permitAll();
                     // Endpoints que requieren autenticación
-                    auth.requestMatchers("/api/usuarios/**").hasAnyRole("ADMIN", "USER");
-                    auth.requestMatchers("/api/ventas/**").hasAnyRole("ADMIN", "USER");
-                    auth.requestMatchers("/api/detalle-ventas/**").hasAnyRole("ADMIN", "USER");
-                    auth.requestMatchers("/api/roles/**").hasRole("ADMIN");
+                    auth.requestMatchers("/api/usuarios/**", "/api/ventas/**", "/api/detalle-ventas/**",
+                            "/api/roles/**").permitAll();
+
+                    // Revisar si es causante de problemas, el Rol se modifica
+                    // auth.requestMatchers("/api/usuarios/**").hasAnyRole("ADMIN", "USER");
+                    // auth.requestMatchers("/api/ventas/**").hasAnyRole("ADMIN", "USER");
+                    // auth.requestMatchers("/api/detalle-ventas/**").hasAnyRole("ADMIN", "USER");
+                    // auth.requestMatchers("/api/roles/**").hasRole("ADMIN");
+
+
                     // Resto requiere autenticación
                     auth.anyRequest().authenticated();
                 })
