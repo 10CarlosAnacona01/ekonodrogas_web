@@ -1,5 +1,6 @@
 package com.ekonodrogas.ekonodrogas.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,48 +11,69 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableMethodSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final JwtAuthenticationFilterConfig jwtAuthFilter;
+    private final UserDetailsService userDetailsService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.csrf(AbstractHttpConfigurer::disable) // Desactivar CSRF para API REST
+        http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Sin sesiones
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> {
                     // Swagger públicos
-                    // Mirar documentación API
-                    // http://localhost:8080/swagger-ui/index.html
-                    auth.requestMatchers("/v3/api-docs/**","/swagger-ui/**","/swagger-ui.html").permitAll();
+                    auth.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll();
+
+                    // Endpoints de autenticación públicos
+                    auth.requestMatchers("/api/auth/**").permitAll();
+
+                    // OAuth2 endpoints
+                    auth.requestMatchers("/login/oauth2/**", "/oauth2/**").permitAll();
+
                     // Endpoints públicos de la API
-                    auth.requestMatchers("/api/productos/**","/api/carrito/**",
-                            "/api/categorias/**","/api/ofertas/**", "/api/pagos/**").permitAll();
+                    auth.requestMatchers("/api/productos/**", "/api/carrito/**",
+                            "/api/categorias/**", "/api/ofertas/**", "/api/pagos/**").permitAll();
+
                     // Endpoints que requieren autenticación
-                    auth.requestMatchers("/api/usuarios/**", "/api/ventas/**", "/api/detalle-ventas/**",
-                            "/api/roles/**").permitAll();
-
-                    // Revisar si es causante de problemas, el Rol se modifica
-                    // auth.requestMatchers("/api/usuarios/**").hasAnyRole("ADMIN", "USER");
-                    // auth.requestMatchers("/api/ventas/**").hasAnyRole("ADMIN", "USER");
-                    // auth.requestMatchers("/api/detalle-ventas/**").hasAnyRole("ADMIN", "USER");
-                    // auth.requestMatchers("/api/roles/**").hasRole("ADMIN");
-
+                    auth.requestMatchers("/api/usuarios/**", "/api/ventas/**",
+                            "/api/detalle-ventas/**", "/api/roles/**").authenticated();
 
                     // Resto requiere autenticación
                     auth.anyRequest().authenticated();
                 })
-                .httpBasic(httpBasic -> {}); // Autenticación HTTP Basic para desarrollo
+                // Configuración OAuth2
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/oauth2/authorization/google")
+                        .defaultSuccessUrl("/api/auth/oauth2/callback/google", true)
+                )
+                // Agregar filtro JWT antes del filtro de autenticación
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                // Configurar el provider de autenticación
+                .authenticationProvider(authenticationProvider());
 
         return http.build();
     }
 
-    @Bean //Administra las autenticaciones en general
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
+    }
+
+    @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
@@ -59,7 +81,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // Cifra password con algoritmo BCrypt
+        return new BCryptPasswordEncoder();
     }
 }
 
