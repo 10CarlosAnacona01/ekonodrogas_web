@@ -33,22 +33,20 @@ public class SecurityConfig {
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> {
+
                     // Swagger públicos
                     auth.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll();
 
-                    // Endpoints de autenticación públicos
-                    auth.requestMatchers("/api/auth/**").permitAll();
-
-                    // OAuth2 endpoints
-                    auth.requestMatchers("/login/**", "/oauth2/**").permitAll();
+                    // Endpoints de autenticación, OAuth2 y ver productos públicos
+                    auth.requestMatchers("/api/productos/**","/api/auth/**", "/api/categorias/**", "/api/ofertas/**",
+                            "/login/**", "/oauth2/**").permitAll();
 
                     // Endpoints públicos de la API
-                    auth.requestMatchers("/api/productos/**", "/api/carrito/**",
-                            "/api/categorias/**", "/api/ofertas/**", "/api/pagos/**").permitAll();
+                    auth.requestMatchers("/api/carrito/**","/api/pagos/**").hasAnyRole("ADMINISTRADOR", "USUARIO");
 
                     // Endpoints que requieren autenticación
                     auth.requestMatchers("/api/usuarios/**", "/api/ventas/**",
-                            "/api/detalle-ventas/**", "/api/roles/**").permitAll();
+                            "/api/detalle-ventas/**", "/api/roles/**").hasAnyRole("ADMINISTRADOR");
 
                     // Resto requiere autenticación
                     auth.anyRequest().authenticated();

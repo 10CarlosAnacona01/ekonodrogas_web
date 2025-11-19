@@ -4,99 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://localhost:8080 http://localhost:5501; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self';">
-    <title>Autenticando...</title>
+    <title>Autenticación</title>
     <link rel="icon" type="image/png" href="/EKONODROGAS_FRONTED/imagenes/solo_logo.jpg" />
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .loader-container {
-            background: white;
-            padding: 50px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            max-width: 400px;
-        }
-
-        .loader {
-            border: 6px solid #f3f3f3;
-            border-top: 6px solid #667eea;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 30px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        h2 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 24px;
-        }
-
-        p {
-            color: #666;
-            font-size: 16px;
-        }
-
-        .logo {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="/EKONODROGAS_FRONTED/login/auth-callback.css">
 </head>
 <body>
+
     <div class="loader-container">
         <img src="/EKONODROGAS_FRONTED/imagenes/solo_logo.jpg" alt="Logo" class="logo">
         <div class="loader"></div>
         <h2>Autenticando con Google</h2>
-        <p>Por favor espera un momento...</p>
+        <p>Por favor espere un momento....</p>
     </div>
 
-    <script>
-        // Obtener parámetros de la URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token');
-        const error = urlParams.get('error');
-
-        if (token) {
-            // Guardar el token en localStorage
-            localStorage.setItem('token', token);
-            
-            // Redirigir a la página principal
-            setTimeout(() => {
-                window.location.href = '/EKONODROGAS_FRONTED/fronted/fronted.html';
-            }, 1000);
-        } else if (error) {
-            // Si hay un error, redirigir a la página de login con el mensaje de error
-            setTimeout(() => {
-                window.location.href = `/EKONODROGAS_FRONTED/login/login.html?error=${encodeURIComponent(error)}`;
-            }, 1000);
-        } else {
-            // Si no hay token ni error, redirigir al login
-            setTimeout(() => {
-                window.location.href = '/EKONODROGAS_FRONTED/login/login.html';
-            }, 1000);
-        }
-    </script>
+    <script src="/EKONODROGAS_FRONTED/login/auth-callback.js"></script>
 </body>
 </html>
