@@ -1,32 +1,44 @@
-// Configuración de la API
-const API_URL = 'http://localhost:8080/api';
-const ID_USUARIO = 1; // Este ID debería venir de la sesión/autenticación
+// ========================================
+// CARRITO DE COMPRAS - USUARIO DINÁMICO
+// ========================================
+// IMPORTANTE: Este archivo NO debe declarar API_URL ni API_BASE_URL
+// Usa la variable ya declarada en productos.js
 
-// Estado del carrito
-let carritoActual = {
-    idUsuario: ID_USUARIO,
-    items: [],
-    total: 0,
-    cantidadTotal: 0
-};
-
-// Función para formatear precios
-function formatearPrecio(precio) {
-    return new Intl.NumberFormat('es-CO', {
-        style: 'currency',
-        currency: 'COP',
-        minimumFractionDigits: 0
-    }).format(precio);
+// Estado del carrito (ÚNICA declaración)
+if (typeof carritoActual === 'undefined') {
+    var carritoActual = {
+        idUsuario: null,
+        items: [],
+        total: 0,
+        cantidadTotal: 0
+    };
 }
+
+// Usar API_BASE_URL de productos.js o del config
+const CARRITO_API_URL = window.APP_CONFIG?.API_URL || (typeof API_BASE_URL !== 'undefined' ? API_BASE_URL : 'http://localhost:8080/api');
 
 // Cargar carrito al iniciar
 document.addEventListener('DOMContentLoaded', async () => {
-    await cargarCarrito();
-    inicializarEventos();
+    setTimeout(async () => {
+        if (typeof authManager !== 'undefined' && authManager.estaAutenticado()) {
+            await cargarCarrito();
+        } else {
+            mostrarCarritoVacio();
+        }
+        inicializarEventosCarrito();
+    }, 100);
 });
 
+// Obtener ID del usuario actual
+function obtenerIdUsuario() {
+    if (typeof authManager === 'undefined' || !authManager.estaAutenticado()) {
+        return null;
+    }
+    return authManager.obtenerIdUsuario();
+}
+
 // Inicializar eventos del carrito
-function inicializarEventos() {
+function inicializarEventosCarrito() {
     const cartIcon = document.getElementById('cart-icon');
     const cartBox = document.getElementById('cart-box');
     const btnVaciar = document.querySelector('.btn-empty');
@@ -35,6 +47,11 @@ function inicializarEventos() {
     if (cartIcon && cartBox) {
         cartIcon.addEventListener('click', (e) => {
             e.stopPropagation();
+            
+            if (typeof authManager === 'undefined' || !authManager.requiereAutenticacion()) {
+                return;
+            }
+            
             cartBox.classList.toggle('active');
         });
 
@@ -49,23 +66,52 @@ function inicializarEventos() {
     if (btnCheckout) btnCheckout.addEventListener('click', procesarCompra);
 }
 
+// Mostrar carrito vacío
+function mostrarCarritoVacio() {
+    const cartCountText = document.getElementById('cart-count-text');
+    if (cartCountText) cartCountText.textContent = '(0)';
+
+    const cartTotalAmount = document.querySelector('.cart-total-amount');
+    if (cartTotalAmount) {
+        const precio = window.formatearPrecio ? window.formatearPrecio(0) : '$0';
+        cartTotalAmount.textContent = precio;
+    }
+
+    actualizarListaItems();
+    actualizarEstadoBotones();
+}
+
 // Cargar carrito desde el backend
 async function cargarCarrito() {
+    const idUsuario = obtenerIdUsuario();
+    
+    if (!idUsuario) {
+        mostrarCarritoVacio();
+        return;
+    }
+
     try {
-        const response = await fetch(`${API_URL}/carrito/${ID_USUARIO}`);
+        const response = await fetchConAuth(`${CARRITO_API_URL}/carrito/${idUsuario}`);
         if (!response.ok) throw new Error('Error al cargar el carrito');
         carritoActual = await response.json();
+        carritoActual.idUsuario = idUsuario;
         actualizarInterfazCarrito();
     } catch (error) {
         console.error('Error al cargar carrito:', error);
-        mostrarNotificacion('Error al cargar el carrito', 'error');
+        mostrarCarritoVacio();
     }
 }
 
 // Agregar producto al carrito
 async function agregarAlCarrito(idProducto, cantidad = 1) {
+    if (typeof authManager === 'undefined' || !authManager.requiereAutenticacion()) {
+        return;
+    }
+
+    const idUsuario = obtenerIdUsuario();
+    
     try {
-        const response = await fetch(`${API_URL}/carrito/${ID_USUARIO}/items`, {
+        const response = await fetchConAuth(`${CARRITO_API_URL}/carrito/${idUsuario}/items`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ idProducto, cantidad })
@@ -77,6 +123,7 @@ async function agregarAlCarrito(idProducto, cantidad = 1) {
         }
 
         carritoActual = await response.json();
+        carritoActual.idUsuario = idUsuario;
         actualizarInterfazCarrito();
         mostrarNotificacion('Producto agregado al carrito', 'success');
         animarIconoCarrito();
@@ -88,13 +135,17 @@ async function agregarAlCarrito(idProducto, cantidad = 1) {
 
 // Actualizar cantidad de un producto
 async function actualizarCantidad(idProducto, nuevaCantidad) {
+    if (typeof authManager === 'undefined' || !authManager.estaAutenticado()) return;
+
+    const idUsuario = obtenerIdUsuario();
+
     if (nuevaCantidad < 1) {
         await eliminarDelCarrito(idProducto);
         return;
     }
 
     try {
-        const response = await fetch(`${API_URL}/carrito/${ID_USUARIO}/items/${idProducto}`, {
+        const response = await fetchConAuth(`${CARRITO_API_URL}/carrito/${idUsuario}/items/${idProducto}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ cantidad: nuevaCantidad })
@@ -102,6 +153,7 @@ async function actualizarCantidad(idProducto, nuevaCantidad) {
 
         if (!response.ok) throw new Error('Error al actualizar cantidad');
         carritoActual = await response.json();
+        carritoActual.idUsuario = idUsuario;
         actualizarInterfazCarrito();
     } catch (error) {
         console.error('Error al actualizar cantidad:', error);
@@ -111,13 +163,18 @@ async function actualizarCantidad(idProducto, nuevaCantidad) {
 
 // Eliminar producto del carrito
 async function eliminarDelCarrito(idProducto) {
+    if (typeof authManager === 'undefined' || !authManager.estaAutenticado()) return;
+
+    const idUsuario = obtenerIdUsuario();
+
     try {
-        const response = await fetch(`${API_URL}/carrito/${ID_USUARIO}/items/${idProducto}`, {
+        const response = await fetchConAuth(`${CARRITO_API_URL}/carrito/${idUsuario}/items/${idProducto}`, {
             method: 'DELETE'
         });
 
         if (!response.ok) throw new Error('Error al eliminar del carrito');
         carritoActual = await response.json();
+        carritoActual.idUsuario = idUsuario;
         actualizarInterfazCarrito();
         mostrarNotificacion('Producto eliminado del carrito', 'success');
     } catch (error) {
@@ -128,40 +185,58 @@ async function eliminarDelCarrito(idProducto) {
 
 // Vaciar carrito con confirmación
 async function vaciarCarrito() {
-    const result = await Swal.fire({
-        title: '¿Vaciar carrito?',
-        text: 'Esta acción eliminará todos los productos del carrito',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Sí, vaciar carrito',
-        cancelButtonText: 'Cancelar',
-        backdrop: true,
-        customClass: { popup: 'swal-vaciar-carrito' }
-    });
+    if (typeof authManager === 'undefined' || !authManager.estaAutenticado()) return;
 
-    if (!result.isConfirmed) return;
+    const idUsuario = obtenerIdUsuario();
 
-    try {
-        const response = await fetch(`${API_URL}/carrito/${ID_USUARIO}`, { method: 'DELETE' });
-        if (!response.ok) throw new Error('Error al vaciar el carrito');
-        carritoActual = await response.json();
-        actualizarInterfazCarrito();
-
-        await Swal.fire({
-            title: 'Carrito vaciado',
-            text: 'Tu carrito ha sido vaciado con éxito',
-            icon: 'success',
-            confirmButtonColor: '#28a745',
-            timer: 2000,
-            showConfirmButton: false
+    if (typeof Swal !== 'undefined') {
+        const result = await Swal.fire({
+            title: '¿Vaciar carrito?',
+            text: 'Esta acción eliminará todos los productos del carrito',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, vaciar carrito',
+            cancelButtonText: 'Cancelar'
         });
 
+        if (!result.isConfirmed) return;
+    } else {
+        if (!confirm('¿Vaciar el carrito?')) return;
+    }
+    
+    try {
+        const response = await fetchConAuth(`${CARRITO_API_URL}/carrito/${idUsuario}`, { method: 'DELETE' });
+        if (!response.ok) throw new Error('Error al vaciar el carrito');
+        carritoActual = await response.json();
+        carritoActual.idUsuario = idUsuario;
+        actualizarInterfazCarrito();
+
+        if (typeof Swal !== 'undefined') {
+            await Swal.fire({
+                title: 'Carrito vaciado',
+                text: 'Tu carrito ha sido vaciado con éxito',
+                icon: 'success',
+                confirmButtonColor: '#28a745',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        }
     } catch (error) {
         console.error('Error al vaciar carrito:', error);
-        Swal.fire({ title: 'Error', text: error.message || 'No se pudo vaciar el carrito', icon: 'error', confirmButtonColor: '#d33' });
     }
+}
+
+// Limpiar carrito local
+function limpiarCarritoLocal() {
+    carritoActual = {
+        idUsuario: null,
+        items: [],
+        total: 0,
+        cantidadTotal: 0
+    };
+    mostrarCarritoVacio();
 }
 
 // Actualizar interfaz del carrito
@@ -170,7 +245,10 @@ function actualizarInterfazCarrito() {
     if (cartCountText) cartCountText.textContent = `(${carritoActual.cantidadTotal || 0})`;
 
     const cartTotalAmount = document.querySelector('.cart-total-amount');
-    if (cartTotalAmount) cartTotalAmount.textContent = formatearPrecio(carritoActual.total || 0);
+    if (cartTotalAmount) {
+        const precio = window.formatearPrecio ? window.formatearPrecio(carritoActual.total || 0) : `$${(carritoActual.total || 0).toLocaleString('es-CO')}`;
+        cartTotalAmount.textContent = precio;
+    }
 
     actualizarListaItems();
     actualizarEstadoBotones();
@@ -210,13 +288,16 @@ function actualizarListaItems() {
 function crearElementoItem(item) {
     const itemDiv = document.createElement('div');
     itemDiv.className = 'cart-item';
+    
+    const formatPrecio = window.formatearPrecio || ((p) => `$${p.toLocaleString('es-CO')}`);
+    
     itemDiv.innerHTML = `
         <div class="cart-item-col cart-item-name">
             <div class="cart-item-info">
                 <img src="/EKONODROGAS_FRONTED/imagenes/${item.imagen || 'default.png'}" alt="${item.nombreProducto}">
                 <div class="cart-item-text">
                     <h4>${item.nombreProducto}</h4>
-                    <p>${formatearPrecio(item.precioUnitario)}</p>
+                    <p>${formatPrecio(item.precioUnitario)}</p>
                 </div>
             </div>
         </div>
@@ -228,7 +309,7 @@ function crearElementoItem(item) {
         </div>
 
         <div class="cart-item-col cart-item-price">
-            <span>${formatearPrecio(item.subtotal)}</span>
+            <span>${formatPrecio(item.subtotal)}</span>
             <button class="btn-remove" onclick="eliminarDelCarrito(${item.idProducto})"><i class="bi bi-trash"></i></button>
         </div>`;
     return itemDiv;
@@ -243,21 +324,27 @@ function actualizarEstadoBotones() {
     if (btnCheckout) btnCheckout.disabled = !hayItems;
 }
 
-// Procesar compra (redirige a pago.html)
+// Procesar compra
 async function procesarCompra() {
+    if (typeof authManager === 'undefined' || !authManager.requiereAutenticacion()) {
+        return;
+    }
+
     if (!carritoActual.items || carritoActual.items.length === 0) {
         mostrarNotificacion('El carrito está vacío', 'warning');
         return;
     }
 
+    const idUsuario = obtenerIdUsuario();
+
     try {
-        const validacionResponse = await fetch(`${API_URL}/carrito/${ID_USUARIO}/validar`);
+        const validacionResponse = await fetchConAuth(`${CARRITO_API_URL}/carrito/${idUsuario}/validar`);
         if (!validacionResponse.ok) {
             const error = await validacionResponse.json();
             throw new Error(error.error || 'Error al validar stock');
         }
 
-        window.location.href = `/EKONODROGAS_FRONTED/simulacion-pago/pago.html?usuario=${ID_USUARIO}`;
+        window.location.href = `/EKONODROGAS_FRONTED/simulacion-pago/pago.html?usuario=${idUsuario}`;
     } catch (error) {
         console.error('Error al procesar compra:', error);
         mostrarNotificacion(error.message || 'Error al procesar la compra', 'error');
@@ -278,21 +365,42 @@ function mostrarNotificacion(mensaje, tipo = 'info') {
     const notificacion = document.createElement('div');
     notificacion.className = `notificacion notificacion-${tipo}`;
     notificacion.innerHTML = `<i class="bi bi-${tipo==='success'?'check-circle':tipo==='error'?'x-circle':'info-circle'}"></i><span>${mensaje}</span>`;
+    notificacion.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        background: ${tipo === 'success' ? '#d4edda' : tipo === 'error' ? '#f8d7da' : '#d1ecf1'};
+        color: ${tipo === 'success' ? '#155724' : tipo === 'error' ? '#721c24' : '#0c5460'};
+        border: 1px solid ${tipo === 'success' ? '#c3e6cb' : tipo === 'error' ? '#f5c6cb' : '#bee5eb'};
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        z-index: 10000;
+        opacity: 0;
+        transform: translateX(100px);
+        transition: all 0.3s ease;
+    `;
+    
     document.body.appendChild(notificacion);
-    setTimeout(() => notificacion.classList.add('show'), 10);
-    setTimeout(() => { notificacion.classList.remove('show'); setTimeout(()=>document.body.removeChild(notificacion),300); }, 3000);
-}
-
-// Agregar botones de productos
-function agregarBotonesCarrito() {
-    const productos = document.querySelectorAll('.producto-card');
-    productos.forEach(producto => {
-        const btnAgregar = producto.querySelector('.btn-agregar-carrito');
-        if (btnAgregar) {
-            const idProducto = btnAgregar.dataset.idProducto;
-            btnAgregar.addEventListener('click', () => agregarAlCarrito(parseInt(idProducto)));
-        }
-    });
+    
+    setTimeout(() => {
+        notificacion.style.opacity = '1';
+        notificacion.style.transform = 'translateX(0)';
+    }, 10);
+    
+    setTimeout(() => {
+        notificacion.style.opacity = '0';
+        notificacion.style.transform = 'translateX(100px)';
+        setTimeout(() => {
+            if (notificacion.parentNode) {
+                document.body.removeChild(notificacion);
+            }
+        }, 300);
+    }, 3000);
 }
 
 // Exportar funciones
@@ -301,4 +409,4 @@ window.actualizarCantidad = actualizarCantidad;
 window.eliminarDelCarrito = eliminarDelCarrito;
 window.vaciarCarrito = vaciarCarrito;
 window.procesarCompra = procesarCompra;
-
+window.limpiarCarritoLocal = limpiarCarritoLocal;   

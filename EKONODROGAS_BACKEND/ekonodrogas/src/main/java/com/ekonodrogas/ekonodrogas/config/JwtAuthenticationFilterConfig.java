@@ -29,6 +29,12 @@ public class JwtAuthenticationFilterConfig extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
 
+        // ⚠️ CRÍTICO: Permitir peticiones OPTIONS (preflight) sin validación JWT
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String userEmail;
@@ -39,7 +45,7 @@ public class JwtAuthenticationFilterConfig extends OncePerRequestFilter {
             return;
         }
 
-        // Extraer el token
+        // Extraer el token (quitando "Bearer ")
         jwt = authHeader.substring(7);
 
         try {
@@ -59,6 +65,8 @@ public class JwtAuthenticationFilterConfig extends OncePerRequestFilter {
                     );
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
+
+                    logger.info("Usuario autenticado: " + userEmail);
                 }
             }
         } catch (Exception e) {
