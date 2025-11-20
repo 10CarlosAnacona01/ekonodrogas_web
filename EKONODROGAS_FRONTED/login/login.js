@@ -327,6 +327,9 @@ async function handleRegistro(event) {
  */
 function loginConGoogle(event) {
     event.preventDefault();
+
+    console.log('Iniciando login con Google...');
+
     // Redirigir al endpoint de OAuth2 de Google
     window.location.href = `${API_URL.replace('/api', '')}/oauth2/authorization/google`;
 }
@@ -346,6 +349,29 @@ const googleLoginBtn = signInForm.querySelector('.google');
 if (googleLoginBtn) {
     googleLoginBtn.addEventListener('click', loginConGoogle);
 }
+
+// ========================================
+// VERIFICAR ERRORES EN LA URL AL CARGAR
+// ========================================
+window.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const error = urlParams.get('error');
+
+    // Mostrar error si viene de un callback fallido
+    if (error) {
+        const errorMsg = decodeURIComponent(error).replace(/_/g, ' ');
+        mostrarMensaje('Error de autenticación: ' + errorMsg, 'error', signInForm);
+        
+        // Limpiar la URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    // Verificar si el usuario ya está autenticado
+    const tokenGuardado = localStorage.getItem('token');
+    if (tokenGuardado) {
+        validarToken(tokenGuardado);
+    }
+});
 
 // ========================================
 // VERIFICAR SI HAY TOKEN EN LA URL (OAuth2 Callback)

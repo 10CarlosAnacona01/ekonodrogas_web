@@ -84,19 +84,37 @@ async function cargarDatosIniciales() {
         mostrarCargando(true);
         
         // Cargar datos en orden
+        console.log('1. Cargando categorías...');
         await loadCategorias();
+        
+        console.log('2. Cargando productos...');
         await loadProducts();
+        
+        console.log('3. Cargando usuarios...');
         await loadUsuarios();
+        
+        console.log('4. Cargando ventas...');
         await loadVentas();
 
-        // Renderizar interfaz
+        console.log('5. Renderizando productos...');
         renderProducts();
+        
+        console.log('6. Renderizando dashboard...');
         renderDashboard();
         
-        console.log('✓ Datos cargados exitosamente');
+        console.log('Todos los datos cargados y renderizados exitosamente');
+        console.log('Estado actual:');
+        console.log('- Categorías:', categorias.length);
+        console.log('- Productos:', products.length);
+        console.log('- Usuarios:', usuarios.length);
+        console.log('- Ventas:', ventas.length);
+        
+        if (ventas.length > 0) {
+            console.log('Primera venta:', ventas[0]);
+        }
         
     } catch (error) {
-        console.error('Error al cargar datos iniciales:', error);
+        console.error(' Error al cargar datos iniciales:', error);
         Swal.fire({
             title: 'Error de Carga',
             text: 'No se pudieron cargar los datos. Verifica tu conexión.',
@@ -109,7 +127,7 @@ async function cargarDatosIniciales() {
 }
 
 function mostrarCargando(mostrar) {
-    // Podrías agregar un overlay de carga aquí si lo deseas
+
     if (mostrar) {
         console.log('Cargando datos...');
     }
@@ -131,7 +149,7 @@ async function loadCategorias() {
         }
         
         categorias = await response.json();
-        console.log('✓ Categorías cargadas:', categorias.length);
+        console.log(' Categorías cargadas:', categorias.length);
         
     } catch (error) {
         console.error('Error al cargar categorías:', error);
@@ -151,7 +169,7 @@ async function loadUsuarios() {
         }
         
         usuarios = await response.json();
-        console.log('✓ Usuarios cargados:', usuarios.length);
+        console.log(' Usuarios cargados:', usuarios.length);
         
     } catch (error) {
         console.error('Error al cargar usuarios:', error);
@@ -184,7 +202,7 @@ async function loadProducts() {
             imagen: dto.imagen
         }));
         
-        console.log('✓ Productos cargados:', products.length);
+        console.log(' Productos cargados:', products.length);
         
     } catch (error) {
         console.error('Error al cargar productos:', error);
@@ -192,10 +210,56 @@ async function loadProducts() {
     }
 }
 
-// Cargar ventas
+// Cargar ventas (VERSIÓN COMPATIBLE CON AMBOS ENDPOINTS)
 async function loadVentas() {
     try {
-        // Obtener ventas
+        console.log('Intentando cargar ventas...');
+        
+        // INTENTAR PRIMERO CON EL NUEVO ENDPOINT
+        try {
+            const responseCompletas = await authManager.fetchConAuth(
+                `${window.APP_CONFIG.API_URL}/ventas/completas`
+            );
+            
+            if (responseCompletas.ok) {
+                const ventasCompletas = await responseCompletas.json();
+                console.log(' Usando endpoint /ventas/completas');
+                console.log('Datos recibidos:', ventasCompletas);
+
+                // Transformar a formato del frontend
+                ventas = ventasCompletas.map(venta => {
+                    let productosDescripcion = '';
+                    if (venta.detalles && venta.detalles.length > 0) {
+                        if (venta.detalles.length === 1) {
+                            productosDescripcion = venta.detalles[0].nombreProducto;
+                        } else {
+                            productosDescripcion = `${venta.detalles.length} productos diferentes`;
+                        }
+                    }
+
+                    return {
+                        id: venta.idVenta,
+                        usuario: venta.nombreUsuario,
+                        productosDescripcion: productosDescripcion,
+                        detalles: venta.detalles || [],
+                        cantidadProductos: venta.cantidadProductosDiferentes || 0,
+                        cantidadUnidades: venta.cantidadTotalUnidades || 0,
+                        total: venta.totalVenta,
+                        date: venta.fechaVenta ? venta.fechaVenta.split('T')[0] : new Date().toISOString().split('T')[0],
+                        estado: venta.estadoVenta
+                    };
+                });
+
+                console.log(' Ventas completas cargadas:', ventas.length);
+                return;
+            }
+        } catch (errorCompletas) {
+            console.warn('Endpoint /ventas/completas no disponible, usando método alternativo');
+        }
+
+        // SI FALLA, USAR MÉTODO TRADICIONAL
+        console.log('Usando método tradicional con dos peticiones...');
+        
         const responseVentas = await authManager.fetchConAuth(
             `${window.APP_CONFIG.API_URL}/ventas`
         );
@@ -205,8 +269,8 @@ async function loadVentas() {
         }
         
         const ventasDTO = await responseVentas.json();
+        console.log('Ventas básicas obtenidas:', ventasDTO.length);
 
-        // Obtener todos los detalles de venta
         const responseDetalles = await authManager.fetchConAuth(
             `${window.APP_CONFIG.API_URL}/detalle-ventas`
         );
@@ -216,6 +280,7 @@ async function loadVentas() {
         }
         
         const todosDetalles = await responseDetalles.json();
+        console.log('Detalles de ventas obtenidos:', todosDetalles.length);
 
         // Transformar DTO del backend a formato del frontend
         ventas = ventasDTO.map(venta => {
@@ -224,32 +289,46 @@ async function loadVentas() {
                 u.id === venta.idUsuario || u.idUsuario === venta.idUsuario
             );
 
-            // Obtener información del producto
-            let productName = 'Varios productos';
-            let quantity = 0;
-            let precioUnitario = 0;
+            // Construir lista completa de detalles
+            const detallesCompletos = detallesVenta.map(detalle => {
+                const producto = products.find(p => p.id === detalle.idProducto);
+                return {
+                    idProducto: detalle.idProducto,
+                    nombreProducto: producto ? producto.name : 'Producto desconocido',
+                    categoria: producto ? producto.categoryName : 'Sin categoría',
+                    cantidad: detalle.cantidad,
+                    precioUnitario: detalle.precioUnitario,
+                    subtotal: detalle.subtotal
+                };
+            });
 
-            if (detallesVenta.length > 0) {
-                const primerDetalle = detallesVenta[0];
-                const producto = products.find(p => p.id === primerDetalle.idProducto);
-                productName = producto ? producto.name : 'Producto desconocido';
-                quantity = detallesVenta.reduce((sum, d) => sum + (d.cantidad || 0), 0);
-                precioUnitario = primerDetalle.precioUnitario ?? primerDetalle.precio_unitario ?? 0;
+            // Calcular totales
+            const cantidadTotalUnidades = detallesVenta.reduce((sum, d) => sum + d.cantidad, 0);
+
+            // Descripción de productos
+            let productosDescripcion = '';
+            if (detallesCompletos.length === 1) {
+                productosDescripcion = detallesCompletos[0].nombreProducto;
+            } else if (detallesCompletos.length > 1) {
+                productosDescripcion = `${detallesCompletos.length} productos diferentes`;
+            } else {
+                productosDescripcion = 'Sin productos';
             }
 
             return {
                 id: venta.idVenta,
                 usuario: usuario ? formatNombreUsuario(usuario) : 'Cliente desconocido',
-                product: productName,
-                quantity: quantity,
-                price: precioUnitario,
+                productosDescripcion: productosDescripcion,
+                detalles: detallesCompletos,
+                cantidadProductos: detallesCompletos.length,
+                cantidadUnidades: cantidadTotalUnidades,
                 total: venta.totalVenta ?? venta.total_venta ?? 0,
                 date: venta.fechaVenta ? venta.fechaVenta.split('T')[0] : new Date().toISOString().split('T')[0],
                 estado: venta.estadoVenta ?? venta.estado_venta ?? ''
             };
         });
 
-        console.log('✓ Ventas cargadas:', ventas.length);
+        console.log(' Ventas cargadas con método tradicional:', ventas.length);
         
     } catch (error) {
         console.error('Error al cargar ventas:', error);
@@ -629,35 +708,168 @@ function renderDashboard() {
 
 function renderRecentSales() {
     const tbody = document.getElementById('dashboardSalesTable');
-    if (!tbody) return;
+    if (!tbody) {
+        console.error('No se encontró el elemento dashboardSalesTable');
+        return;
+    }
 
     tbody.innerHTML = '';
 
-    const recentSales = ventas.slice().reverse();
-    
-    if (recentSales.length === 0) {
+    if (ventas.length === 0) {
         tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 30px; color: #666;">No hay ventas registradas</td></tr>';
         return;
     }
+
+    const recentSales = ventas.slice().reverse();
+    console.log('Renderizando ventas:', recentSales.length);
     
     recentSales.forEach((venta, index) => {
+        console.log(`Venta ${index}:`, venta); // Debug
+        
         const row = document.createElement('tr');
         row.style.opacity = '0';
+        row.style.cursor = 'pointer';
+        row.title = 'Clic para ver detalles completos';
+        
+        // Validar y crear descripción de productos
+        let productosInfo = 'Sin información';
+        let cantidadMostrar = 0;
+        
+        if (venta.detalles && Array.isArray(venta.detalles) && venta.detalles.length > 0) {
+            cantidadMostrar = venta.cantidadUnidades || 0;
+            
+            if (venta.detalles.length === 1) {
+                const detalle = venta.detalles[0];
+                productosInfo = `${detalle.nombreProducto || 'Producto'} (${detalle.cantidad || 0} unidades)`;
+            } else {
+                productosInfo = `${venta.cantidadProductos || venta.detalles.length} productos (${cantidadMostrar} unidades)`;
+            }
+        } else if (venta.productosDescripcion) {
+            productosInfo = venta.productosDescripcion;
+            cantidadMostrar = venta.cantidadUnidades || 0;
+        }
+        
+        // Validar usuario
+        const usuarioMostrar = venta.usuario || 'Usuario desconocido';
+        
+        // Validar total
+        const totalMostrar = venta.total || 0;
+        
+        // Validar fecha
+        const fechaMostrar = venta.date || new Date().toISOString().split('T')[0];
+        
         row.innerHTML = `
-            <td>${venta.id}</td>
-            <td>${venta.usuario}</td>
-            <td>${venta.product}</td>
-            <td>${venta.quantity}</td>
-            <td>${window.formatearPrecio(venta.price)}</td>
-            <td>${window.formatearPrecio(venta.total)}</td>
-            <td>${formatDate(venta.date)}</td>
+            <td>${venta.id || '-'}</td>
+            <td>${usuarioMostrar}</td>
+            <td>${productosInfo}</td>
+            <td>${cantidadMostrar}</td>
+            <td><span style="color: #10b981; cursor: pointer; font-weight: 600;">Ver detalles</span></td>
+            <td>${window.formatearPrecio(totalMostrar)}</td>
+            <td>${formatDate(fechaMostrar)}</td>
         `;
+        
+        // Agregar evento click para mostrar detalles
+        row.addEventListener('click', () => mostrarDetallesVenta(venta));
+        
         tbody.appendChild(row);
 
         setTimeout(() => {
             row.style.transition = 'all 0.3s ease';
             row.style.opacity = '1';
-        }, index * 100);
+        }, index * 50);
+    });
+    
+    console.log(' Tabla de ventas renderizada con', recentSales.length, 'filas');
+}
+
+// Nueva función para mostrar detalles completos de una venta
+function mostrarDetallesVenta(venta) {
+    console.log('Mostrando detalles de venta:', venta);
+    
+    if (!venta.detalles || !Array.isArray(venta.detalles) || venta.detalles.length === 0) {
+        Swal.fire({
+            title: 'Sin detalles',
+            text: 'Esta venta no tiene productos asociados',
+            icon: 'info',
+            confirmButtonColor: '#C2AB2D'
+        });
+        return;
+    }
+    
+    // Crear tabla HTML con todos los productos
+    let productosHTML = `
+        <div style="max-height: 400px; overflow-y: auto;">
+            <table style="width: 100%; text-align: left; border-collapse: collapse;">
+                <thead style="position: sticky; top: 0; background: #f9fafb;">
+                    <tr>
+                        <th style="padding: 10px; border-bottom: 2px solid #e5e7eb;">Producto</th>
+                        <th style="padding: 10px; border-bottom: 2px solid #e5e7eb;">Categoría</th>
+                        <th style="padding: 10px; border-bottom: 2px solid #e5e7eb; text-align: center;">Cantidad</th>
+                        <th style="padding: 10px; border-bottom: 2px solid #e5e7eb; text-align: right;">Precio Unit.</th>
+                        <th style="padding: 10px; border-bottom: 2px solid #e5e7eb; text-align: right;">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+    
+    venta.detalles.forEach(detalle => {
+        const nombreProducto = detalle.nombreProducto || 'Producto sin nombre';
+        const categoria = detalle.categoria || 'Sin categoría';
+        const cantidad = detalle.cantidad || 0;
+        const precioUnitario = detalle.precioUnitario || 0;
+        const subtotal = detalle.subtotal || (cantidad * precioUnitario);
+        
+        productosHTML += `
+            <tr style="border-bottom: 1px solid #f3f4f6;">
+                <td style="padding: 10px;">${nombreProducto}</td>
+                <td style="padding: 10px;">${categoria}</td>
+                <td style="padding: 10px; text-align: center;">${cantidad}</td>
+                <td style="padding: 10px; text-align: right;">${window.formatearPrecio(precioUnitario)}</td>
+                <td style="padding: 10px; text-align: right; font-weight: 600;">${window.formatearPrecio(subtotal)}</td>
+            </tr>
+        `;
+    });
+    
+    const totalVenta = venta.total || 0;
+    
+    productosHTML += `
+                </tbody>
+                <tfoot style="border-top: 2px solid #e5e7eb;">
+                    <tr>
+                        <td colspan="4" style="padding: 15px; text-align: right; font-weight: bold;">TOTAL:</td>
+                        <td style="padding: 15px; text-align: right; font-weight: bold; color: #10b981; font-size: 18px;">
+                            ${window.formatearPrecio(totalVenta)}
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    `;
+    
+    const fechaVenta = formatDate(venta.date || new Date().toISOString().split('T')[0]);
+    const estadoVenta = venta.estado || 'completada';
+    const usuarioVenta = venta.usuario || 'Usuario desconocido';
+    const cantidadProductos = venta.cantidadProductos || venta.detalles.length;
+    const cantidadUnidades = venta.cantidadUnidades || venta.detalles.reduce((sum, d) => sum + (d.cantidad || 0), 0);
+    
+    Swal.fire({
+        title: `Detalle de Venta #${venta.id}`,
+        html: `
+            <div style="text-align: left; margin-bottom: 15px;">
+                <p><strong>Cliente:</strong> ${usuarioVenta}</p>
+                <p><strong>Fecha:</strong> ${fechaVenta}</p>
+                <p><strong>Estado:</strong> <span style="color: #10b981;">${estadoVenta}</span></p>
+                <p><strong>Total de productos:</strong> ${cantidadProductos} diferentes</p>
+                <p><strong>Total de unidades:</strong> ${cantidadUnidades}</p>
+            </div>
+            ${productosHTML}
+        `,
+        width: '800px',
+        confirmButtonText: 'Cerrar',
+        confirmButtonColor: '#C2AB2D',
+        customClass: {
+            popup: 'swal-wide'
+        }
     });
 }
 

@@ -75,6 +75,16 @@ public class AuthService {
     }
 
     /**
+     * Obtiene un usuario por su correo electrónico
+     */
+    @Transactional(readOnly = true)
+    public UsuariosDTO obtenerUsuarioPorCorreo(String correo) {
+        UsuariosEntity usuario = usuariosRepository.findByCorreo(correo)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con correo: " + correo));
+        return entityToDto(usuario);
+    }
+
+    /**
      * Procesa el login de Google OAuth2
      */
     @Transactional

@@ -5,6 +5,7 @@ import com.ekonodrogas.ekonodrogas.dto.LoginRequestDTO;
 import com.ekonodrogas.ekonodrogas.dto.RegistroRequestDTO;
 import com.ekonodrogas.ekonodrogas.dto.UsuariosDTO;
 import com.ekonodrogas.ekonodrogas.service.AuthService;
+import com.ekonodrogas.ekonodrogas.service.JwtService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -15,10 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
-
 import java.io.IOException;
 import java.util.Map;
 
@@ -29,6 +27,7 @@ import java.util.Map;
 public class AuthController {
 
     private final AuthService authService;
+    private final JwtService jwtService;
 
     @Value("${app.frontend.url}")
     private String frontendUrl;
@@ -85,6 +84,44 @@ public class AuthController {
         }
     }
 
+    @GetMapping("/callback")
+    @Operation(summary = "Callback de autenticación OAuth2",
+            description = "Maneja el callback después de la autenticación con Google")
+    public void handleOAuthCallback(
+            @RequestParam(required = false) String token,
+            @RequestParam(required = false) String error,
+            HttpServletResponse response) throws IOException {
+
+        if (token != null) {
+            response.sendRedirect(frontendUrl + "?token=" + token);
+        } else {
+            String errorMsg = error != null ? error : "authentication_failed";
+            response.sendRedirect(frontendUrl + "?error=" + errorMsg);
+        }
+    }
+
+    @GetMapping("/me")
+    @Operation(summary = "Obtener usuario autenticado",
+            description = "Retorna la información del usuario actual basado en el token JWT")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuario encontrado"),
+            @ApiResponse(responseCode = "401", description = "Token inválido o no autenticado"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
+    public ResponseEntity<?> obtenerUsuarioActual(@RequestHeader("Authorization") String authHeader) {
+        try {
+            String token = authHeader.substring(7);
+            String correo = jwtService.extraerCorreo(token);
+            UsuariosDTO usuario = authService.obtenerUsuarioPorCorreo(correo);
+            return ResponseEntity.ok(usuario);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(
+                    "error", "Token inválido o expirado",
+                    "mensaje", e.getMessage()
+            ));
+        }
+    }
+
     @GetMapping("/validar")
     @Operation(summary = "Validar token JWT",
             description = "Verifica si un token JWT es válido y retorna información del usuario")
@@ -95,14 +132,21 @@ public class AuthController {
     })
     public ResponseEntity<Map<String, Object>> validarToken(@RequestHeader("Authorization") String authHeader) {
         try {
-            // Extraer el token del header (formato: "Bearer <token>")
             String token = authHeader.substring(7);
-            // Aquí puedes agregar lógica adicional de validación si lo necesitas
+            String correo = jwtService.extraerCorreo(token);
 
-            return ResponseEntity.ok(Map.of(
-                    "valido", true,
-                    "mensaje", "Token válido"
-            ));
+            if (jwtService.validarToken(token, correo)) {
+                return ResponseEntity.ok(Map.of(
+                        "valido", true,
+                        "mensaje", "Token válido",
+                        "correo", correo
+                ));
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(
+                        "valido", false,
+                        "mensaje", "Token inválido o expirado"
+                ));
+            }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(
                     "valido", false,

@@ -13,15 +13,25 @@ class AuthManager {
         const token = localStorage.getItem('token');
         const usuarioStr = localStorage.getItem('usuario');
 
+        console.log('AuthManager inicializando...', {
+            token: token ? 'presente' : 'ausente',
+            usuario: usuarioStr ? 'presente' : 'ausente'
+        });
+
         if (token && usuarioStr) {
             this.token = token;
             this.usuario = JSON.parse(usuarioStr);
+            console.log('✓ Sesión restaurada:', this.usuario.correo);
             this.validarTokenAutomaticamente();
+        } else {
+            console.log('⚠ No hay sesión guardada');
         }
     }
 
     estaAutenticado() {
-        return this.token !== null && this.usuario !== null;
+        const autenticado = this.token !== null && this.usuario !== null;
+        console.log('Verificación de autenticación:', autenticado);
+        return autenticado;
     }
 
     obtenerUsuario() {
@@ -65,10 +75,11 @@ class AuthManager {
         this.usuario = usuario;
         localStorage.setItem('token', token);
         localStorage.setItem('usuario', JSON.stringify(usuario));
-        console.log('Sesión guardada:', { usuario: usuario.correo, id: usuario.idUsuario });
+        console.log('✓ Sesión guardada:', { usuario: usuario.correo, id: usuario.idUsuario });
     }
 
     cerrarSesion() {
+        console.log('Cerrando sesión...');
         this.token = null;
         this.usuario = null;
         localStorage.removeItem('token');
@@ -78,25 +89,33 @@ class AuthManager {
             limpiarCarritoLocal();
         }
         
-        console.log('Sesión cerrada');
+        console.log('✓ Sesión cerrada');
         window.location.href = '/EKONODROGAS_FRONTED/login/login.html';
     }
 
     async validarToken() {
-        if (!this.token) return false;
+        if (!this.token) {
+            console.log('No hay token para validar');
+            return false;
+        }
 
         try {
             const response = await fetch(`${window.APP_CONFIG.API_URL}/auth/validar`, {
                 method: 'GET',
-                headers: { 'Authorization': `Bearer ${this.token}` }
+                headers: { 
+                    'Authorization': `Bearer ${this.token}`,
+                    'Content-Type': 'application/json'
+                }
             });
 
             if (!response.ok) {
+                console.error('Token inválido, cerrando sesión');
                 this.cerrarSesion();
                 return false;
             }
 
             const data = await response.json();
+            console.log('Token validado:', data.valido);
             return data.valido === true;
         } catch (error) {
             console.error('Error al validar token:', error);
@@ -108,12 +127,21 @@ class AuthManager {
     async validarTokenAutomaticamente() {
         const esValido = await this.validarToken();
         if (!esValido) {
-            console.log('Token inválido, cerrando sesión...');
+            console.log('⚠ Token inválido, cerrando sesión...');
         }
     }
 
     requiereAutenticacion(mostrarMensaje = true) {
-        if (!this.estaAutenticado()) {
+        const autenticado = this.estaAutenticado();
+        
+        console.log('Requiere autenticación:', {
+            autenticado,
+            mostrarMensaje,
+            token: this.token ? 'presente' : 'ausente',
+            usuario: this.usuario ? this.usuario.correo : 'ausente'
+        });
+        
+        if (!autenticado) {
             if (mostrarMensaje) {
                 this.mostrarMensajeLogin();
             }
@@ -166,12 +194,13 @@ class AuthManager {
         }
 
         options.headers['Authorization'] = `Bearer ${this.token}`;
+        options.headers['Content-Type'] = 'application/json';
 
         try {
             const response = await fetch(url, options);
 
             if (response.status === 401) {
-                console.error('Token inválido, cerrando sesión');
+                console.error('❌ Token inválido (401), cerrando sesión');
                 this.cerrarSesion();
                 throw new Error('Sesión expirada');
             }
@@ -196,4 +225,16 @@ window.requiereAutenticacion = (mostrarMensaje = true) => authManager.requiereAu
 window.cerrarSesion = () => authManager.cerrarSesion();
 window.fetchConAuth = (url, options) => authManager.fetchConAuth(url, options);
 
-console.log('AuthManager inicializado');
+// Verificar estado al cargar
+window.addEventListener('DOMContentLoaded', function() {
+    const token = localStorage.getItem('token');
+    const usuario = localStorage.getItem('usuario');
+    
+    console.log('=== ESTADO DE AUTENTICACIÓN ===');
+    console.log('Token:', token ? `presente (${token.substring(0, 20)}...)` : 'ausente');
+    console.log('Usuario:', usuario ? JSON.parse(usuario).correo : 'ausente');
+    console.log('AuthManager autenticado:', authManager.estaAutenticado());
+    console.log('===============================');
+});
+
+console.log('✓ AuthManager inicializado globalmente');

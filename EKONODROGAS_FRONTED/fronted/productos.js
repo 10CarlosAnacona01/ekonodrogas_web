@@ -156,13 +156,38 @@ async function renderizarProductos() {
 function agregarEventListenersCarrito() {
     const botonesCarrito = document.querySelectorAll('.add-cart');
     
+    console.log(`Inicializando ${botonesCarrito.length} botones de carrito`);
+    
     botonesCarrito.forEach(boton => {
         boton.addEventListener('click', function(e) {
             e.preventDefault();
+            e.stopPropagation();
+            
             const productoData = JSON.parse(this.dataset.producto);
             
-            // Aquí se integraría con tu lógica de carrito existente
-            console.log('Producto agregado al carrito:', productoData);
+            console.log('=== CLICK EN AGREGAR AL CARRITO ===');
+            console.log('Producto:', productoData.nombre);
+            console.log('AuthManager disponible:', typeof authManager !== 'undefined');
+            console.log('Token en localStorage:', localStorage.getItem('token') ? 'presente' : 'ausente');
+            console.log('Usuario autenticado:', typeof authManager !== 'undefined' ? authManager.estaAutenticado() : false);
+            console.log('===================================');
+            
+            // VERIFICACIÓN 1: AuthManager existe
+            if (typeof authManager === 'undefined') {
+                console.error('❌ AuthManager no está disponible');
+                alert('Error: Sistema de autenticación no disponible. Recarga la página.');
+                return;
+            }
+            
+            // VERIFICACIÓN 2: Usuario autenticado
+            if (!authManager.estaAutenticado()) {
+                console.log('⚠ Usuario NO autenticado, mostrando modal de login');
+                authManager.requiereAutenticacion(true);
+                return;
+            }
+            
+            // Usuario autenticado, proceder
+            console.log('✓ Usuario autenticado, agregando producto al carrito...');
             
             // Animación visual
             this.style.transform = 'scale(1.2)';
@@ -170,9 +195,12 @@ function agregarEventListenersCarrito() {
                 this.style.transform = 'scale(1)';
             }, 200);
             
-            // Si tienes una función global de carrito, llámala aquí
+            // Llamar a la función de carrito
             if (typeof agregarAlCarrito === 'function') {
                 agregarAlCarrito(productoData.id, 1);
+            } else {
+                console.error('❌ Función agregarAlCarrito no disponible');
+                alert('Error: No se puede agregar al carrito. Recarga la página.');
             }
         });
     });
