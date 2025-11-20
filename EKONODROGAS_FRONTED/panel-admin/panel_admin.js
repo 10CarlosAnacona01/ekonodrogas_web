@@ -1,80 +1,175 @@
-
-// CONFIGURACIÓN API
-
-const API_BASE_URL = 'http://localhost:8080/api'; // Cambia el puerto si es necesario
-
+// ========================================
+// PANEL DE ADMINISTRACIÓN - VERSIÓN CORREGIDA
+// ========================================
 
 // VARIABLES GLOBALES
-
 let currentEditingProductId = null;
 let products = [];
 let categorias = [];
 let ventas = [];
 let usuarios = [];
 
-
 // INICIALIZACIÓN
-
 document.addEventListener('DOMContentLoaded', async function() {
+    // 1. VERIFICAR AUTENTICACIÓN Y PERMISOS
+    if (!verificarAccesoAdmin()) {
+        return; // Detener ejecución si no es admin
+    }
+    
+    // 2. MOSTRAR INFORMACIÓN DEL ADMINISTRADOR
+    mostrarInfoAdmin();
+    
+    // 3. INICIALIZAR INTERFAZ
     initializeEventListeners();
     addLoadingAnimations();
     
-    // Cargar datos desde el backend
-    await loadCategorias();
-    await loadProducts();
-    // Cargar usuarios antes de las ventas para que estén disponibles al procesar ventas y no aparezca "Cliente desconocido"
-    await loadUsuarios();
-    await loadVentas();
-
-    // Muestra la información de la Base de Datos en pantalla
-    renderProducts();
-    // Muestra los datos resumidos en el dashboard
-    renderDashboard();
+    // 4. CARGAR DATOS DESDE EL BACKEND
+    await cargarDatosIniciales();
 });
 
-// Mostrar fecha actual
-document.getElementById('currentDate').textContent = new Date().toLocaleDateString('es-CO', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-});
+// ========================================
+// VERIFICACIÓN DE ACCESO
+// ========================================
 
+function verificarAccesoAdmin() {
+    // Verificar que el usuario esté autenticado
+    if (!authManager.estaAutenticado()) {
+        console.error('Usuario no autenticado');
+        Swal.fire({
+            title: 'Acceso Denegado',
+            text: 'Debes iniciar sesión para acceder al panel de administración',
+            icon: 'error',
+            confirmButtonText: 'Ir al login',
+            confirmButtonColor: '#C2AB2D'
+        }).then(() => {
+            window.location.href = '/EKONODROGAS_FRONTED/login/login.html';
+        });
+        return false;
+    }
+    
+    // Verificar que sea administrador
+    if (!authManager.esAdministrador()) {
+        console.error('Usuario no es administrador');
+        Swal.fire({
+            title: 'Acceso Denegado',
+            text: 'No tienes permisos para acceder al panel de administración',
+            icon: 'error',
+            confirmButtonText: 'Volver al inicio',
+            confirmButtonColor: '#C2AB2D'
+        }).then(() => {
+            window.location.href = '/EKONODROGAS_FRONTED/fronted/fronted.html';
+        });
+        return false;
+    }
+    
+    console.log('✓ Acceso autorizado como administrador');
+    return true;
+}
 
-// CARGA DE DATOS DESDE BACKEND
+function mostrarInfoAdmin() {
+    const nombreAdmin = authManager.obtenerNombreCompleto();
+    const headerUser = document.querySelector('.header div:first-child');
+    if (headerUser) {
+        headerUser.innerHTML = `Administrador: <strong>${nombreAdmin}</strong>`;
+    }
+}
 
+// ========================================
+// CARGA DE DATOS INICIAL
+// ========================================
+
+async function cargarDatosIniciales() {
+    try {
+        // Mostrar indicador de carga
+        mostrarCargando(true);
+        
+        // Cargar datos en orden
+        await loadCategorias();
+        await loadProducts();
+        await loadUsuarios();
+        await loadVentas();
+
+        // Renderizar interfaz
+        renderProducts();
+        renderDashboard();
+        
+        console.log('✓ Datos cargados exitosamente');
+        
+    } catch (error) {
+        console.error('Error al cargar datos iniciales:', error);
+        Swal.fire({
+            title: 'Error de Carga',
+            text: 'No se pudieron cargar los datos. Verifica tu conexión.',
+            icon: 'error',
+            confirmButtonColor: '#C2AB2D'
+        });
+    } finally {
+        mostrarCargando(false);
+    }
+}
+
+function mostrarCargando(mostrar) {
+    // Podrías agregar un overlay de carga aquí si lo deseas
+    if (mostrar) {
+        console.log('Cargando datos...');
+    }
+}
+
+// ========================================
+// CARGA DE DATOS DESDE BACKEND (CON AUTH)
+// ========================================
 
 // Cargar categorías
 async function loadCategorias() {
     try {
-        const response = await fetch(`${API_BASE_URL}/categorias`);
-        if (!response.ok) throw new Error('Error al cargar categorías');
+        const response = await authManager.fetchConAuth(
+            `${window.APP_CONFIG.API_URL}/categorias`
+        );
+        
+        if (!response.ok) {
+            throw new Error(`Error HTTP: ${response.status}`);
+        }
+        
         categorias = await response.json();
-        console.log('Categorías cargadas:', categorias);
+        console.log('✓ Categorías cargadas:', categorias.length);
+        
     } catch (error) {
         console.error('Error al cargar categorías:', error);
-        showNotification('Error al cargar categorías', 'error');
+        throw error;
     }
 }
 
 // Cargar usuarios
 async function loadUsuarios() {
     try {
-        const response = await fetch(`${API_BASE_URL}/usuarios`);
-        if (!response.ok) throw new Error('Error al cargar usuarios');
+        const response = await authManager.fetchConAuth(
+            `${window.APP_CONFIG.API_URL}/usuarios`
+        );
+        
+        if (!response.ok) {
+            throw new Error(`Error HTTP: ${response.status}`);
+        }
+        
         usuarios = await response.json();
-        console.log('Usuarios cargados:', usuarios);
+        console.log('✓ Usuarios cargados:', usuarios.length);
+        
     } catch (error) {
         console.error('Error al cargar usuarios:', error);
-        showNotification('Error al cargar usuarios', 'error');
+        throw error;
     }
 }
 
 // Cargar productos
 async function loadProducts() {
     try {
-        const response = await fetch(`${API_BASE_URL}/productos`);
-        if (!response.ok) throw new Error('Error al cargar productos');
+        const response = await authManager.fetchConAuth(
+            `${window.APP_CONFIG.API_URL}/productos`
+        );
+        
+        if (!response.ok) {
+            throw new Error(`Error HTTP: ${response.status}`);
+        }
+        
         const productosDTO = await response.json();
         
         // Transformar DTO del backend a formato del frontend
@@ -89,10 +184,11 @@ async function loadProducts() {
             imagen: dto.imagen
         }));
         
-        console.log('Productos cargados:', products);
+        console.log('✓ Productos cargados:', products.length);
+        
     } catch (error) {
         console.error('Error al cargar productos:', error);
-        showNotification('Error al cargar productos', 'error');
+        throw error;
     }
 }
 
@@ -100,23 +196,35 @@ async function loadProducts() {
 async function loadVentas() {
     try {
         // Obtener ventas
-        const response = await fetch(`${API_BASE_URL}/ventas`);
-        if (!response.ok) throw new Error('Error al cargar ventas');
-        const ventasDTO = await response.json();
+        const responseVentas = await authManager.fetchConAuth(
+            `${window.APP_CONFIG.API_URL}/ventas`
+        );
+        
+        if (!responseVentas.ok) {
+            throw new Error(`Error HTTP ventas: ${responseVentas.status}`);
+        }
+        
+        const ventasDTO = await responseVentas.json();
 
-        // Obtener todos los detalles de venta una sola vez
-        const detallesResponse = await fetch(`${API_BASE_URL}/detalle-ventas`);
-        if (!detallesResponse.ok) throw new Error('Error al cargar detalles de venta');
-        const todosDetalles = await detallesResponse.json();
+        // Obtener todos los detalles de venta
+        const responseDetalles = await authManager.fetchConAuth(
+            `${window.APP_CONFIG.API_URL}/detalle-ventas`
+        );
+        
+        if (!responseDetalles.ok) {
+            throw new Error(`Error HTTP detalles: ${responseDetalles.status}`);
+        }
+        
+        const todosDetalles = await responseDetalles.json();
 
         // Transformar DTO del backend a formato del frontend
         ventas = ventasDTO.map(venta => {
             const detallesVenta = todosDetalles.filter(d => d.idVenta === venta.idVenta);
+            const usuario = usuarios.find(u => 
+                u.id === venta.idUsuario || u.idUsuario === venta.idUsuario
+            );
 
-            // Buscar usuario (asegúrate que la variable `usuarios` exista y esté cargada)
-            const usuario = usuarios && usuarios.find(u => u.id === venta.idUsuario || u.idUsuario === venta.idUsuario);
-
-            // Obtener nombre del primer producto y cantidad total
+            // Obtener información del producto
             let productName = 'Varios productos';
             let quantity = 0;
             let precioUnitario = 0;
@@ -126,15 +234,12 @@ async function loadVentas() {
                 const producto = products.find(p => p.id === primerDetalle.idProducto);
                 productName = producto ? producto.name : 'Producto desconocido';
                 quantity = detallesVenta.reduce((sum, d) => sum + (d.cantidad || 0), 0);
-                // usar el campo que tenga tu detalle; aquí asumo 'precioUnitario'
                 precioUnitario = primerDetalle.precioUnitario ?? primerDetalle.precio_unitario ?? 0;
             }
 
             return {
                 id: venta.idVenta,
-                usuario: usuario
-                    ? `${usuario.primerNombre || usuario.primer_nombre || ''} ${usuario.segundoNombre || usuario.segundo_nombre || ''} ${usuario.primerApellido || usuario.primer_apellido || ''} ${usuario.segundoApellido || usuario.segundo_apellido || ''}`.replace(/\s+/g, ' ').trim()
-                    : 'Cliente desconocido',
+                usuario: usuario ? formatNombreUsuario(usuario) : 'Cliente desconocido',
                 product: productName,
                 quantity: quantity,
                 price: precioUnitario,
@@ -144,27 +249,45 @@ async function loadVentas() {
             };
         });
 
-        console.log('Ventas cargadas:', ventas);
+        console.log('✓ Ventas cargadas:', ventas.length);
+        
     } catch (error) {
         console.error('Error al cargar ventas:', error);
-        showNotification('Error al cargar ventas', 'error');
+        throw error;
     }
 }
 
+// ========================================
+// FUNCIONES AUXILIARES
+// ========================================
 
-// Obtener nombre de categoría por ID
+function formatNombreUsuario(usuario) {
+    const nombres = [
+        usuario.primerNombre || usuario.primer_nombre || '',
+        usuario.segundoNombre || usuario.segundo_nombre || '',
+        usuario.primerApellido || usuario.primer_apellido || '',
+        usuario.segundoApellido || usuario.segundo_apellido || ''
+    ];
+    
+    return nombres.filter(n => n).join(' ');
+}
+
 function getCategoryNameById(idCategoria) {
     const categoria = categorias.find(c => c.idCategoria === idCategoria);
     return categoria ? categoria.nombreCategoria : 'Sin categoría';
 }
 
-// Obtener ID de categoría por nombre
 function getCategoryIdByName(nombreCategoria) {
     const categoria = categorias.find(c => 
         c.nombreCategoria.toLowerCase() === nombreCategoria.toLowerCase()
     );
     return categoria ? categoria.idCategoria : null;
 }
+
+// ========================================
+// EVENT LISTENERS
+// ========================================
+
 function initializeEventListeners() {
     // Navegación entre secciones
     const navItems = document.querySelectorAll('.nav-item[data-section]');
@@ -210,10 +333,11 @@ function initializeEventListeners() {
     createMobileMenu();
 }
 
+// ========================================
 // NAVEGACIÓN
+// ========================================
 
 function showSection(sectionId, element) {
-    // Animación de salida
     const activeSections = document.querySelectorAll('.section.active');
     activeSections.forEach(s => {
         s.style.opacity = '0';
@@ -221,35 +345,26 @@ function showSection(sectionId, element) {
     });
 
     setTimeout(() => {
-        // Ocultar todas las secciones
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-        
-        // Quitar active de items de navegación
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
         
-        // Mostrar sección seleccionada
         const targetSection = document.getElementById(sectionId);
         targetSection.classList.add('active');
-        
-        // Activar item de navegación
         element.classList.add('active');
 
-        // Animación de entrada
         setTimeout(() => {
             targetSection.style.opacity = '1';
             targetSection.style.transform = 'translateY(0)';
         }, 50);
 
-        // Cerrar menú móvil si está abierto
         closeMobileMenu();
     }, 300);
 }
 
-// EVENT LISTENERS
-
+// ========================================
 // GESTIÓN DE PRODUCTOS
+// ========================================
 
-// Renderizar tabla de productos
 function renderProducts() {
     const tbody = document.getElementById('productsTable');
     if (!tbody) return;
@@ -265,8 +380,8 @@ function renderProducts() {
         const row = document.createElement('tr');
         row.style.opacity = '0';
         row.style.transform = 'translateX(-20px)';
+        row.setAttribute('data-id', product.id);
         
-        // Determinar badge de stock
         let stockBadge = '';
         if (product.stock === 0) {
             stockBadge = '<span class="badge badge-danger">Sin stock</span>';
@@ -280,7 +395,7 @@ function renderProducts() {
             <td>${product.id}</td>
             <td>${product.categoryName || 'Sin categoría'}</td>
             <td>${product.name}</td>
-            <td>$${product.price.toLocaleString('es-CO')}</td>
+            <td>${window.formatearPrecio(product.price)}</td>
             <td>${product.stock}</td>
             <td>${stockBadge}</td>
             <td>
@@ -295,7 +410,6 @@ function renderProducts() {
 
         tbody.appendChild(row);
 
-        // Animación de entrada
         setTimeout(() => {
             row.style.transition = 'all 0.3s ease';
             row.style.opacity = '1';
@@ -304,14 +418,12 @@ function renderProducts() {
     });
 }
 
-// Abrir modal de producto (nuevo o editar)
 function openProductModal(id = null) {
     currentEditingProductId = id;
     const modal = document.getElementById('productModal');
     const form = document.getElementById('productForm');
     const selectCategoria = document.getElementById('productCategory');
     
-    // Poblar select de categorías
     selectCategoria.innerHTML = '<option value="">Selecciona una categoría</option>';
     categorias.forEach(cat => {
         selectCategoria.innerHTML += `<option value="${cat.idCategoria}">${cat.nombreCategoria}</option>`;
@@ -320,7 +432,6 @@ function openProductModal(id = null) {
     modal.classList.add('active');
     
     if (id) {
-        // Modo edición
         const product = products.find(p => p.id === id);
         if (!product) {
             showNotification('Producto no encontrado', 'error');
@@ -334,13 +445,11 @@ function openProductModal(id = null) {
         document.getElementById('productPrice').value = product.price;
         document.getElementById('productStock').value = product.stock;
     } else {
-        // Modo creación
         document.getElementById('modalTitle').textContent = 'Agregar Producto';
         form.reset();
         document.getElementById('productId').value = '';
     }
 
-    // Animación de entrada del modal
     const modalContent = modal.querySelector('.modal-content');
     modalContent.style.transform = 'scale(0.9)';
     modalContent.style.opacity = '0';
@@ -351,12 +460,10 @@ function openProductModal(id = null) {
     }, 10);
 }
 
-// Cerrar modal de producto
 function closeProductModal() {
     const modal = document.getElementById('productModal');
     const modalContent = modal.querySelector('.modal-content');
     
-    // Animación de salida
     modalContent.style.transform = 'scale(0.9)';
     modalContent.style.opacity = '0';
     
@@ -366,7 +473,6 @@ function closeProductModal() {
     }, 300);
 }
 
-// Guardar producto (crear o editar)
 async function saveProduct(event) {
     event.preventDefault();
     
@@ -375,7 +481,6 @@ async function saveProduct(event) {
     const precio = parseInt(document.getElementById('productPrice').value);
     const stock = parseInt(document.getElementById('productStock').value);
     
-    // Validaciones
     if (!idCategoria) {
         showNotification('Debes seleccionar una categoría', 'error');
         return;
@@ -396,49 +501,45 @@ async function saveProduct(event) {
         return;
     }
     
-    // Preparar DTO para el backend
     const productoDTO = {
         idCategoria: idCategoria,
         nombreProducto: nombre,
-        imagen: null, // Se puede agregar después funcionalidad de carga de imágenes
+        imagen: null,
         precio: precio,
         stock: stock,
-        disponible: stock > 0 // Automático según stock
+        disponible: stock > 0
     };
     
     try {
         let response;
         
         if (currentEditingProductId) {
-            // Actualizar producto existente
             productoDTO.idProducto = currentEditingProductId;
-            response = await fetch(`${API_BASE_URL}/productos/${currentEditingProductId}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(productoDTO)
-            });
+            response = await authManager.fetchConAuth(
+                `${window.APP_CONFIG.API_URL}/productos/${currentEditingProductId}`,
+                {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(productoDTO)
+                }
+            );
             
-            if (!response.ok) {
-                throw new Error('Error al actualizar producto');
-            }
-            
+            if (!response.ok) throw new Error('Error al actualizar producto');
             showNotification('Producto actualizado exitosamente', 'success');
         } else {
-            // Crear nuevo producto
-            response = await fetch(`${API_BASE_URL}/productos`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(productoDTO)
-            });
+            response = await authManager.fetchConAuth(
+                `${window.APP_CONFIG.API_URL}/productos`,
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(productoDTO)
+                }
+            );
             
-            if (!response.ok) {
-                throw new Error('Error al crear producto');
-            }
-            
+            if (!response.ok) throw new Error('Error al crear producto');
             showNotification('Producto creado exitosamente', 'success');
         }
         
-        // Recargar productos y actualizar interfaz
         await loadProducts();
         renderProducts();
         renderDashboard();
@@ -450,12 +551,10 @@ async function saveProduct(event) {
     }
 }
 
-// Editar producto
 function editProduct(id) {
     openProductModal(id);
 }
 
-// Eliminar producto
 async function deleteProduct(id) {
     const product = products.find(p => p.id === id);
     
@@ -464,7 +563,6 @@ async function deleteProduct(id) {
         return;
     }
 
-    // Confirmación más bonita con SweetAlert2 para eliminar
     const result = await Swal.fire({
         title: `¿Eliminar "${product.name}"?`,
         text: "Esta acción no se puede deshacer",
@@ -479,15 +577,15 @@ async function deleteProduct(id) {
     if (!result.isConfirmed) return;
     
     try {
-        const response = await fetch(`${API_BASE_URL}/productos/${id}`, {
-            method: 'DELETE'
-        });
+        const response = await authManager.fetchConAuth(
+            `${window.APP_CONFIG.API_URL}/productos/${id}`,
+            {
+                method: 'DELETE'
+            }
+        );
         
-        if (!response.ok) {
-            throw new Error('Error al eliminar producto');
-        }
+        if (!response.ok) throw new Error('Error al eliminar producto');
         
-        // Animación de salida
         const row = document.querySelector(`tr[data-id="${id}"]`);
         if (row) {
             row.style.transition = 'all 0.3s ease';
@@ -508,16 +606,16 @@ async function deleteProduct(id) {
     }
 }
 
+// ========================================
 // DASHBOARD
+// ========================================
 
 function renderDashboard() {
-    // Calcular estadísticas
     const totalSales = ventas.reduce((sum, venta) => sum + venta.total, 0);
     const totalProducts = products.length;
     const totalPurchases = ventas.length;
     const lowStock = products.filter(p => p.stock < 10).length;
 
-    // Actualizar cards de estadísticas
     const statsCards = document.querySelectorAll('.stat-card .value');
     if (statsCards.length >= 4) {
         animateValue(statsCards[0], 0, totalSales, 1000, true);
@@ -526,7 +624,6 @@ function renderDashboard() {
         animateValue(statsCards[3], 0, lowStock, 1000, false);
     }
 
-    // Renderizar últimas ventas
     renderRecentSales();
 }
 
@@ -536,8 +633,12 @@ function renderRecentSales() {
 
     tbody.innerHTML = '';
 
-    // Mostrar todas las ventas siendo las más recientes primero
     const recentSales = ventas.slice().reverse();
+    
+    if (recentSales.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 30px; color: #666;">No hay ventas registradas</td></tr>';
+        return;
+    }
     
     recentSales.forEach((venta, index) => {
         const row = document.createElement('tr');
@@ -547,8 +648,8 @@ function renderRecentSales() {
             <td>${venta.usuario}</td>
             <td>${venta.product}</td>
             <td>${venta.quantity}</td>
-            <td>$${venta.price.toLocaleString('es-CO')}</td>
-            <td>$${venta.total.toLocaleString('es-CO')}</td>
+            <td>${window.formatearPrecio(venta.price)}</td>
+            <td>${window.formatearPrecio(venta.total)}</td>
             <td>${formatDate(venta.date)}</td>
         `;
         tbody.appendChild(row);
@@ -560,9 +661,10 @@ function renderRecentSales() {
     });
 }
 
+// ========================================
 // ANIMACIONES Y EFECTOS
+// ========================================
 
-// Animación de contador numérico
 function animateValue(element, start, end, duration, isCurrency = false) {
     let startTimestamp = null;
     const step = (timestamp) => {
@@ -571,7 +673,7 @@ function animateValue(element, start, end, duration, isCurrency = false) {
         const value = Math.floor(progress * (end - start) + start);
         
         if (isCurrency) {
-            element.textContent = '$' + value.toLocaleString('es-CO');
+            element.textContent = window.formatearPrecio(value);
         } else {
             element.textContent = value;
         }
@@ -583,7 +685,6 @@ function animateValue(element, start, end, duration, isCurrency = false) {
     window.requestAnimationFrame(step);
 }
 
-// Animaciones de carga inicial
 function addLoadingAnimations() {
     const sections = document.querySelectorAll('.section');
     sections.forEach(section => {
@@ -602,9 +703,7 @@ function addLoadingAnimations() {
     });
 }
 
-// Notificaciones
 function showNotification(message, type = 'success') {
-    // Remover notificaciones anteriores
     const existingNotifications = document.querySelectorAll('.notification');
     existingNotifications.forEach(n => n.remove());
     
@@ -642,13 +741,14 @@ function showNotification(message, type = 'success') {
     }, 3000);
 }
 
+// ========================================
 // MENÚ MÓVIL
+// ========================================
 
 function createMobileMenu() {
     const sidebar = document.querySelector('.sidebar');
     if (!sidebar) return;
 
-    // Crear botón hamburguesa
     const menuBtn = document.createElement('button');
     menuBtn.className = 'mobile-menu-btn';
     menuBtn.innerHTML = '☰';
@@ -670,10 +770,8 @@ function createMobileMenu() {
     `;
 
     document.body.appendChild(menuBtn);
-
     menuBtn.addEventListener('click', toggleMobileMenu);
 
-    // Agregar overlay
     const overlay = document.createElement('div');
     overlay.className = 'mobile-overlay';
     overlay.style.cssText = `
@@ -687,7 +785,6 @@ function createMobileMenu() {
         z-index: 999;
     `;
     document.body.appendChild(overlay);
-
     overlay.addEventListener('click', closeMobileMenu);
 }
 
@@ -707,7 +804,9 @@ function closeMobileMenu() {
     if (overlay) overlay.style.display = 'none';
 }
 
+// ========================================
 // UTILIDADES
+// ========================================
 
 function formatDate(dateString) {
     if (!dateString) return '-';
@@ -718,3 +817,15 @@ function formatDate(dateString) {
         day: 'numeric' 
     });
 }
+
+// Mostrar fecha actual en header
+document.getElementById('currentDate').textContent = new Date().toLocaleDateString('es-CO', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+});
+
+// Exponer funciones globales necesarias
+window.editProduct = editProduct;
+window.deleteProduct = deleteProduct;
