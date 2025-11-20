@@ -1,8 +1,11 @@
 package com.ekonodrogas.ekonodrogas.service;
 
+import com.ekonodrogas.ekonodrogas.dto.VentaCompletaDTO;
 import com.ekonodrogas.ekonodrogas.dto.VentasDTO;
+import com.ekonodrogas.ekonodrogas.persistence.DetalleVentasEntity;
 import com.ekonodrogas.ekonodrogas.persistence.UsuariosEntity;
 import com.ekonodrogas.ekonodrogas.persistence.VentasEntity;
+import com.ekonodrogas.ekonodrogas.repository.DetalleVentasRepository;
 import com.ekonodrogas.ekonodrogas.repository.UsuariosRepository;
 import com.ekonodrogas.ekonodrogas.repository.VentasRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +21,46 @@ public class VentasService {
 
     private final VentasRepository ventasRepository;
     private final UsuariosRepository usuariosRepository;
+    private final DetalleVentasRepository detalleVentasRepository;
+
+    /**
+     * NUEVO MÉTODO: Obtiene todas las ventas con sus detalles completos
+     * Este es el método que debe usar el panel de administración
+     */
+    @Transactional(readOnly = true)
+    public List<VentaCompletaDTO> obtenerTodasCompletas() {
+        List<VentasEntity> ventas = ventasRepository.findAll();
+
+        return ventas.stream()
+                .map(this::entityToVentaCompletaDTO)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * NUEVO MÉTODO: Obtiene una venta completa por ID
+     */
+    @Transactional(readOnly = true)
+    public VentaCompletaDTO obtenerCompletaPorId(Long id) {
+        VentasEntity entity = ventasRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Venta no encontrada con ID: " + id));
+        return entityToVentaCompletaDTO(entity);
+    }
+
+    /**
+     * NUEVO MÉTODO: Obtiene ventas completas de un usuario específico
+     */
+    @Transactional(readOnly = true)
+    public List<VentaCompletaDTO> obtenerVentasCompletasPorUsuario(Long idUsuario) {
+        List<VentasEntity> ventas = ventasRepository.findByUsuarioIdUsuario(idUsuario);
+
+        return ventas.stream()
+                .map(this::entityToVentaCompletaDTO)
+                .collect(Collectors.toList());
+    }
+
+    // ========================================
+    // MÉTODOS ORIGINALES (mantener compatibilidad)
+    // ========================================
 
     @Transactional(readOnly = true)
     public List<VentasDTO> obtenerTodas() {
@@ -91,7 +134,61 @@ public class VentasService {
         ventasRepository.deleteById(id);
     }
 
-    // Conversión Entity <-> DTO
+    // ========================================
+    // MÉTODOS DE CONVERSIÓN
+    // ========================================
+
+    /**
+     * NUEVO: Convierte Entity a VentaCompletaDTO con todos los detalles
+     */
+    private VentaCompletaDTO entityToVentaCompletaDTO(VentasEntity entity) {
+        // Obtener todos los detalles de esta venta
+        List<DetalleVentasEntity> detalles = detalleVentasRepository
+                .findByVentaIdVenta(entity.getIdVenta());
+
+        // Convertir cada detalle a DTO
+        List<VentaCompletaDTO.DetalleProductoDTO> detallesDTO = detalles.stream()
+                .map(detalle -> VentaCompletaDTO.DetalleProductoDTO.builder()
+                        .idProducto(detalle.getProducto().getIdProducto())
+                        .nombreProducto(detalle.getProducto().getNombreProducto())
+                        .categoria(detalle.getProducto().getCategoria().getNombreCategoria())
+                        .cantidad(detalle.getCantidad())
+                        .precioUnitario(detalle.getPrecioUnitario())
+                        .subtotal(detalle.getSubtotal())
+                        .build())
+                .collect(Collectors.toList());
+
+        // Calcular totales
+        int cantidadProductosDiferentes = detalles.size();
+        int cantidadTotalUnidades = detalles.stream()
+                .mapToInt(DetalleVentasEntity::getCantidad)
+                .sum();
+
+        // Construir nombre completo del usuario
+        UsuariosEntity usuario = entity.getUsuario();
+        String nombreCompleto = String.format("%s %s %s %s",
+                usuario.getPrimerNombre() != null ? usuario.getPrimerNombre() : "",
+                usuario.getSegundoNombre() != null ? usuario.getSegundoNombre() : "",
+                usuario.getPrimerApellido() != null ? usuario.getPrimerApellido() : "",
+                usuario.getSegundoApellido() != null ? usuario.getSegundoApellido() : ""
+        ).replaceAll("\\s+", " ").trim();
+
+        return VentaCompletaDTO.builder()
+                .idVenta(entity.getIdVenta())
+                .idUsuario(entity.getUsuario().getIdUsuario())
+                .nombreUsuario(nombreCompleto)
+                .fechaVenta(entity.getFechaVenta())
+                .totalVenta(entity.getTotalVenta())
+                .estadoVenta(entity.getEstadoVenta().name())
+                .detalles(detallesDTO)
+                .cantidadProductosDiferentes(cantidadProductosDiferentes)
+                .cantidadTotalUnidades(cantidadTotalUnidades)
+                .build();
+    }
+
+    /**
+     * Conversión simple Entity -> DTO (mantener para compatibilidad)
+     */
     private VentasDTO entityToDto(VentasEntity entity) {
         return VentasDTO.builder()
                 .idVenta(entity.getIdVenta())

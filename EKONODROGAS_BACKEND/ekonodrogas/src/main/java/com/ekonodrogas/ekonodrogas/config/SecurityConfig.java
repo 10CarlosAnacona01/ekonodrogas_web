@@ -19,9 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 import java.util.Arrays;
-import java.util.List;
 
 @Configuration
 @EnableMethodSecurity
@@ -49,7 +47,10 @@ public class SecurityConfig {
                 // Configuración de autorización
                 .authorizeHttpRequests(auth -> {
                     // Swagger públicos
-                    auth.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll();
+                    auth.requestMatchers("/v3/api-docs/**",
+                                         "/swagger-ui/**",
+                                         "/swagger-ui.html"
+                    ).permitAll();
 
                     // Endpoints de autenticación, OAuth2 y ver productos públicos
                     auth.requestMatchers(
@@ -91,9 +92,9 @@ public class SecurityConfig {
         return http.build();
     }
 
-    /**
-     * Configuración CORS integrada con Spring Security
-     * CRÍTICO: Debe estar dentro de SecurityConfig para funcionar con JWT
+    /*
+     * Configuración CORS integrada con Spring Security.
+     * Debe estar dentro de SecurityConfig para funcionar con JWT
      */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

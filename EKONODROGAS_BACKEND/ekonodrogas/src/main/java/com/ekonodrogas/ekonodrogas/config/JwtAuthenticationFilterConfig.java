@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import java.io.IOException;
 
 @Component
@@ -29,7 +28,7 @@ public class JwtAuthenticationFilterConfig extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
 
-        // ⚠️ CRÍTICO: Permitir peticiones OPTIONS (preflight) sin validación JWT
+        // CRÍTICO: Permitir peticiones OPTIONS (preflight) sin validación JWT
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
             filterChain.doFilter(request, response);
             return;
