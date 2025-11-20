@@ -1,65 +1,132 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');   
-        
-        :root {
-            --background-color: #F9F5F0; /* OK */
-            --dark-color: #151515; /* OK */
-            --color-secondary: #C9A208;  /* OK */
-            --color-background: #F9E79F; /* OK */
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--color-background);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+:root {
+    --background-color: #F9F5F0;
+    --dark-color: #151515;
+    --color-secondary: #C9A208;
+    --color-background: #F9E79F;
+}
 
-        .loader-container {
-            background: var(--background-color);
-            padding: 50px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            max-width: 400px;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        .loader {
-            border: 6px solid #f3f3f3;
-            border-top: 6px solid var(--color-secondary);
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 30px;
-        }
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--color-background);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-        h2 {
-            color: var(--dark-color);
-            margin-bottom: 15px;
-            font-size: 24px;
-        }
+.loader-container {
+    background: var(--background-color);
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 400px;
+    animation: fadeIn 0.5s ease;
+}
 
-        p {
-            color: var(--dark-color);
-            font-size: 16px;
-        }
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-        .logo {
-            width: 90px;
-            height: 90px;
-            margin-bottom: 20px;
-        }
+.logo {
+    width: 90px;
+    height: 90px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
 
-        /* Animación del loader (giro 360) */
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+.loader {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid var(--color-secondary);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 30px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ICONOS DE ÉXITO Y ERROR */
+.success-icon {
+    font-size: 70px;
+    color: #4caf50;
+    margin: 20px 0;
+    animation: scaleIn 0.5s ease;
+}
+
+.error-icon {
+    font-size: 70px;
+    color: #f44336;
+    margin: 20px 0;
+    animation: shake 0.5s ease;
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+h2 {
+    color: var(--dark-color);
+    margin-bottom: 15px;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+p {
+    color: var(--dark-color);
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .loader-container {
+        padding: 30px;
+        max-width: 90%;
+    }
+    
+    h2 {
+        font-size: 20px;
+    }
+    
+    p {
+        font-size: 14px;
+    }
+    
+    .logo {
+        width: 70px;
+        height: 70px;
+    }
+}

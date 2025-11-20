@@ -20,6 +20,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableMethodSecurity
@@ -46,27 +47,41 @@ public class SecurityConfig {
 
                 // Configuración de autorización
                 .authorizeHttpRequests(auth -> {
-                    // Swagger públicos
-                    auth.requestMatchers("/v3/api-docs/**",
-                                         "/swagger-ui/**",
-                                         "/swagger-ui.html"
+                    // http://localhost:8080/swagger-ui.html
+                    auth.requestMatchers(
+                            "/v3/api-docs/**",
+                            "/swagger-ui/**",
+                            "/swagger-ui.html",
+                            "/swagger-resources/**",
+                            "/webjars/**"
                     ).permitAll();
 
-                    // Endpoints de autenticación, OAuth2 y ver productos públicos
+                    // ENDPOINTS PÚBLICOS
                     auth.requestMatchers(
                             "/api/productos/**",
-                            "/api/auth/**",
                             "/api/categorias/**",
                             "/api/ofertas/**",
+                            "/api/auth/login",
+                            "/api/auth/registro",
+                            "/api/auth/callback",
                             "/login/**",
-                            "/oauth2/**"
+                            "/oauth2/**",
+                            "/error"
                     ).permitAll();
 
-                    // Endpoints que requieren USUARIO o ADMINISTRADOR
-                    auth.requestMatchers("/api/carrito/**", "/api/pagos/**")
-                            .hasAnyRole("ADMINISTRADOR", "USUARIO");
+                    // ENDPOINTS PROTEGIDOS QUE REQUIEREN AUTENTICACIÓN
+                    auth.requestMatchers(
+                            "/api/auth/me",
+                            "/api/auth/validar"
+                    ).authenticated();
 
-                    // Endpoints solo para ADMINISTRADOR
+                    // ENDPOINTS PARA USUARIOS Y ADMINISTRADORES
+                    auth.requestMatchers(
+                            "/api/carrito/**",
+                            "/api/pagos/**"
+                    ).hasAnyRole("ADMINISTRADOR", "USUARIO");
+
+                    // ENDPOINTS SOLO PARA ADMINISTRADOR
                     auth.requestMatchers(
                             "/api/usuarios/**",
                             "/api/ventas/**",
@@ -74,7 +89,7 @@ public class SecurityConfig {
                             "/api/roles/**"
                     ).hasRole("ADMINISTRADOR");
 
-                    // Resto requiere autenticación
+                    //  RESTO REQUIERE AUTENTICACIÓN
                     auth.anyRequest().authenticated();
                 })
 
@@ -105,7 +120,8 @@ public class SecurityConfig {
                 "http://localhost:5501",
                 "http://127.0.0.1:5501",
                 "http://localhost:5500",
-                "http://127.0.0.1:5500"
+                "http://127.0.0.1:5500",
+                "http://localhost:8080"
         ));
 
         // Métodos HTTP permitidos
@@ -114,13 +130,7 @@ public class SecurityConfig {
         ));
 
         // Headers permitidos (IMPORTANTE: incluir Authorization para JWT)
-        configuration.setAllowedHeaders(Arrays.asList(
-                "Authorization",
-                "Content-Type",
-                "Accept",
-                "Origin",
-                "X-Requested-With"
-        ));
+        configuration.setAllowedHeaders(List.of("*"));
 
         // Headers expuestos (visible para el frontend)
         configuration.setExposedHeaders(Arrays.asList(
@@ -134,11 +144,9 @@ public class SecurityConfig {
         // Tiempo de caché para preflight (1 hora)
         configuration.setMaxAge(3600L);
 
-        // Aplicar configuración a todos los endpoints /api/**
+        // Aplicar configuración a TODOS los endpoints
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/api/**", configuration);
-        source.registerCorsConfiguration("/oauth2/**", configuration);
-        source.registerCorsConfiguration("/login/**", configuration);
+        source.registerCorsConfiguration("/**", configuration);
 
         return source;
     }
