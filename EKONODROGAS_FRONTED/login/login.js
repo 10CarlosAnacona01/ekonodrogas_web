@@ -210,7 +210,7 @@ async function handleLogin(event) {
 
             // Redirigir después de 1.5 segundos
             setTimeout(() => {
-                window.location.href = '/EKONODROGAS_FRONTED/fronted/fronted.html';
+                window.location.href = '/EKONODROGAS_FRONTED/fronted/index.html';
             }, 1500);
         } else {
             mostrarMensaje(data.mensaje || 'Credenciales incorrectas', 'error', signInForm);
@@ -309,7 +309,7 @@ async function handleRegistro(event) {
 
             // Redirigir después de 1.5 segundos
             setTimeout(() => {
-                window.location.href = '/EKONODROGAS_FRONTED/fronted/fronted.html';
+                window.location.href = '/EKONODROGAS_FRONTED/fronted/index.html';
             }, 1500);
         } else {
             mostrarMensaje(data.mensaje || 'Error al registrar usuario', 'error', signUpForm);
@@ -386,7 +386,7 @@ window.addEventListener('DOMContentLoaded', () => {
         mostrarMensaje('¡Login con Google exitoso! Redirigiendo...', 'exito', signInForm);
 
         setTimeout(() => {
-            window.location.href = '/EKONODROGAS_FRONTED/fronted/fronted.html';
+            window.location.href = '/EKONODROGAS_FRONTED/fronted/index.html';
         }, 1500);
     } else if (error) {
         mostrarMensaje('Error al iniciar sesión con Google: ' + error, 'error', signInForm);

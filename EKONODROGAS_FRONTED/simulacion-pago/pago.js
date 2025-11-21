@@ -283,5 +283,5 @@ function downloadPDF(base64) {
 // Cerrar modal
 function closeModal() {
     document.getElementById("resultModal").classList.remove("show");
-    window.location.href = '/EKONODROGAS_FRONTED/fronted/fronted.html';
+    window.location.href = '/EKONODROGAS_FRONTED/fronted/index.html';
 }

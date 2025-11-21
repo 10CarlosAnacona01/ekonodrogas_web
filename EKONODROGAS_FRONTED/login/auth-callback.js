@@ -53,14 +53,14 @@ console.log('auth-callback.js cargado');
                 
                 // PASO 5: Redirigir después de 1.5 segundos
                 setTimeout(() => {
-                    window.location.href = '/EKONODROGAS_FRONTED/fronted/fronted.html';
+                    window.location.href = '/EKONODROGAS_FRONTED/fronted/index.html';
                 }, 1500);
             })
             .catch(err => {
                 console.error('Error al obtener usuario:', err);
                 // Continuar de todos modos si hay token
                 setTimeout(() => {
-                    window.location.href = '/EKONODROGAS_FRONTED/fronted/fronted.html';
+                    window.location.href = '/EKONODROGAS_FRONTED/fronted/index.html';
                 }, 1500);
             });
         

@@ -57,7 +57,7 @@ function verificarAccesoAdmin() {
             confirmButtonText: 'Volver al inicio',
             confirmButtonColor: '#C2AB2D'
         }).then(() => {
-            window.location.href = '/EKONODROGAS_FRONTED/fronted/fronted.html';
+            window.location.href = '/EKONODROGAS_FRONTED/fronted/index.html';
         });
         return false;
     }
