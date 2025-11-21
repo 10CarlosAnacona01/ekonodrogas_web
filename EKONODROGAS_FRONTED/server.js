@@ -5,7 +5,7 @@ const app = express();
 
 const PORT = process.env.PORT || 5501;
 const PROJECT_ROOT = __dirname;
-const FRONT_PAGE = path.join(PROJECT_ROOT, 'fronted', 'fronted.html');
+const FRONT_PAGE = path.join(PROJECT_ROOT, 'fronted', 'index.html');
 
 // Serve everything under /EKONODROGAS_FRONTED exactly like the file structure on disk
 app.use(
@@ -15,7 +15,7 @@ app.use(
   })
 );
 
-// Helpful aliases so visiting /fronted/fronted.html also works without the prefix
+// Helpful aliases so visiting /fronted/index.html also works without the prefix
 app.use(
   express.static(PROJECT_ROOT, {
     extensions: ['html'],

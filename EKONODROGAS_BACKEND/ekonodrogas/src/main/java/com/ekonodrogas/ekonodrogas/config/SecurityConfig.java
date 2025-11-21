@@ -47,7 +47,9 @@ public class SecurityConfig {
 
                 // Configuración de autorización
                 .authorizeHttpRequests(auth -> {
+                    // Mirar y probar
                     // http://localhost:8080/swagger-ui.html
+
                     auth.requestMatchers(
                             "/v3/api-docs/**",
                             "/swagger-ui/**",
