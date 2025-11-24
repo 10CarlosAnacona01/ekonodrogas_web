@@ -24,7 +24,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
-    /**
+    /*
      * Registra un nuevo usuario en el sistema
      */
     @Transactional
@@ -57,7 +57,7 @@ public class AuthService {
         return entityToDto(guardado);
     }
 
-    /**
+    /*
      * Autentica un usuario con credenciales
      */
     @Transactional(readOnly = true)
@@ -74,7 +74,7 @@ public class AuthService {
         return entityToDto(usuario);
     }
 
-    /**
+    /*
      * Obtiene un usuario por su correo electrónico
      */
     @Transactional(readOnly = true)
@@ -84,7 +84,7 @@ public class AuthService {
         return entityToDto(usuario);
     }
 
-    /**
+    /*
      * Procesa el login de Google OAuth2
      */
     @Transactional
@@ -126,7 +126,7 @@ public class AuthService {
                 });
     }
 
-    /**
+    /*
      * Genera un token JWT para el usuario
      */
     public String generarToken(UsuariosDTO usuario) {
@@ -138,7 +138,7 @@ public class AuthService {
         return jwtService.generarToken(usuario.getCorreo(), usuario.getIdUsuario(), nombreCompleto);
     }
 
-    /**
+    /*
      * Convierte Entity a DTO
      */
     private UsuariosDTO entityToDto(UsuariosEntity entity) {

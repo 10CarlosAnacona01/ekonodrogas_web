@@ -23,8 +23,8 @@ public class VentasService {
     private final UsuariosRepository usuariosRepository;
     private final DetalleVentasRepository detalleVentasRepository;
 
-    /**
-     * NUEVO MÉTODO: Obtiene todas las ventas con sus detalles completos
+    /*
+     * Obtiene todas las ventas con sus detalles completos
      * Este es el método que debe usar el panel de administración
      */
     @Transactional(readOnly = true)
@@ -36,8 +36,8 @@ public class VentasService {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * NUEVO MÉTODO: Obtiene una venta completa por ID
+    /*
+     * Obtiene una venta completa por ID
      */
     @Transactional(readOnly = true)
     public VentaCompletaDTO obtenerCompletaPorId(Long id) {
@@ -46,8 +46,8 @@ public class VentasService {
         return entityToVentaCompletaDTO(entity);
     }
 
-    /**
-     * NUEVO MÉTODO: Obtiene ventas completas de un usuario específico
+    /*
+     * Obtiene ventas completas de un usuario específico
      */
     @Transactional(readOnly = true)
     public List<VentaCompletaDTO> obtenerVentasCompletasPorUsuario(Long idUsuario) {
@@ -57,10 +57,6 @@ public class VentasService {
                 .map(this::entityToVentaCompletaDTO)
                 .collect(Collectors.toList());
     }
-
-    // ========================================
-    // MÉTODOS ORIGINALES (mantener compatibilidad)
-    // ========================================
 
     @Transactional(readOnly = true)
     public List<VentasDTO> obtenerTodas() {
@@ -134,12 +130,8 @@ public class VentasService {
         ventasRepository.deleteById(id);
     }
 
-    // ========================================
-    // MÉTODOS DE CONVERSIÓN
-    // ========================================
-
-    /**
-     * NUEVO: Convierte Entity a VentaCompletaDTO con todos los detalles
+    /*
+     * Convierte Entity a VentaCompletaDTO con todos los detalles
      */
     private VentaCompletaDTO entityToVentaCompletaDTO(VentasEntity entity) {
         // Obtener todos los detalles de esta venta
@@ -186,7 +178,7 @@ public class VentasService {
                 .build();
     }
 
-    /**
+    /*
      * Conversión simple Entity -> DTO (mantener para compatibilidad)
      */
     private VentasDTO entityToDto(VentasEntity entity) {

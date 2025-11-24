@@ -1,6 +1,5 @@
-// ========================================
+
 // MOSTRAR ESTADO DE AUTENTICACIÓN EN HEADER
-// ========================================
 
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
@@ -30,9 +29,8 @@ function actualizarHeaderAutenticacion() {
     }
 }
 
-/*
- * Muestra el menú cuando el usuario está autenticado
- */
+// Muestra el menú cuando el usuario está autenticado
+
 function mostrarUsuarioAutenticado(usuario) {
     const containerUser = document.querySelector('.container-user');
     const userLink = containerUser.querySelector('a[href*="login"]');
@@ -77,9 +75,8 @@ function mostrarUsuarioNoAutenticado() {
     console.log('Usuario no autenticado');
 }
 
-/**
- * Inicializa los eventos del dropdown de usuario
- */
+// Inicializa los eventos del dropdown de usuario
+
 function inicializarDropdownUsuario() {
     const toggle = document.getElementById('user-info-toggle');
     const menu = document.getElementById('user-dropdown-menu');

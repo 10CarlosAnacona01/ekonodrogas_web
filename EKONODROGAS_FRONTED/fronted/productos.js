@@ -228,7 +228,7 @@ async function actualizarStockProducto(productoId, nuevoStock) {
     }
 }
 
-// ========== FUNCIONES ESPECÍFICAS PARA OFERTAS ==========
+// FUNCIONES ESPECÍFICAS PARA OFERTAS
 
 // Función para obtener productos con ofertas (información combinada)
 async function obtenerProductosConOfertas() {

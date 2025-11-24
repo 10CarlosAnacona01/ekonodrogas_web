@@ -12,6 +12,7 @@ import java.util.List;
  * DTO que representa una venta completa con todos sus detalles
  * Incluye la información de la venta principal y todos los productos comprados
  */
+
 @Data
 @Builder
 @NoArgsConstructor

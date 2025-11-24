@@ -67,8 +67,7 @@ Tablas con insert
 -> ofertas
 -> productos
 -> roles
-->
-
+    
 Tablas sin insert
 -> detalle_ventas
 -> usuarios (solo el admin está en la tabla)

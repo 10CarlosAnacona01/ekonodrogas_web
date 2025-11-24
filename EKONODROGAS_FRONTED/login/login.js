@@ -1,11 +1,9 @@
-// ========================================
+
 // CONFIGURACIÓN
-// ========================================
 const API_URL = 'http://localhost:8080/api';
 
-// ========================================
+
 // ELEMENTOS DEL DOM
-// ========================================
 const btnSignIn = document.getElementById('btn-sign-in');
 const btnSignUp = document.getElementById('btn-sign-up');
 const forms = document.getElementById('forms');
@@ -16,9 +14,9 @@ const container = document.getElementById('container');
 const linkSignIn = document.getElementById('link-sign-in');
 const linkSignUp = document.getElementById('link-sign-up');
 
-// ========================================
+
 // EVENT LISTENERS PARA CAMBIAR FORMULARIOS
-// ========================================
+
 linkSignUp.addEventListener('click', (e) => {
     e.preventDefault();
     changeSignIn();
@@ -37,9 +35,8 @@ btnSignUp.addEventListener('click', () => {
     changeSignUp();
 });
 
-// ========================================
+
 // FUNCIONES DE ANIMACIÓN
-// ========================================
 
 // Cambiar formulario Inicio de sesión 
 function changeSignIn() {
@@ -77,9 +74,8 @@ function transition(parent) {
     }, 300);
 }
 
-// ========================================
+
 // FUNCIONES DE AUTENTICACIÓN
-// ========================================
 
 /**
  * Muestra un mensaje de alerta temporal
@@ -128,9 +124,7 @@ function mostrarMensaje(mensaje, tipo, formulario) {
     }, 5000);
 }
 
-/**
- * Deshabilita un botón durante una operación
- */
+// Deshabilita un botón durante una operación
 function deshabilitarBoton(boton, texto = 'Procesando...') {
     boton.disabled = true;
     boton.dataset.textoOriginal = boton.textContent;
@@ -139,9 +133,7 @@ function deshabilitarBoton(boton, texto = 'Procesando...') {
     boton.style.cursor = 'not-allowed';
 }
 
-/**
- * Habilita un botón después de una operación
- */
+// Habilita un botón después de una operación
 function habilitarBoton(boton) {
     boton.disabled = false;
     boton.textContent = boton.dataset.textoOriginal || 'Enviar';
@@ -149,24 +141,18 @@ function habilitarBoton(boton) {
     boton.style.cursor = 'pointer';
 }
 
-/**
- * Valida el formato del email
- */
+// Valida el formato del email
 function validarEmail(email) {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
 }
 
-/**
- * Valida la contraseña (mínimo 8 caracteres)
- */
+// Valida la longitud de la contraseña
 function validarContrasena(contrasena) {
     return contrasena.length >= 8;
 }
 
-/**
- * Maneja el inicio de sesión
- */
+// Maneja el inicio de sesión
 async function handleLogin(event) {
     event.preventDefault();
 
@@ -223,9 +209,7 @@ async function handleLogin(event) {
     }
 }
 
-/**
- * Maneja el registro de usuario
- */
+// Maneja el registro de un nuevo usuario
 async function handleRegistro(event) {
     event.preventDefault();
 
@@ -322,9 +306,7 @@ async function handleRegistro(event) {
     }
 }
 
-/**
- * Maneja el login con Google
- */
+// Maneja el login con Google
 function loginConGoogle(event) {
     event.preventDefault();
 
@@ -334,9 +316,8 @@ function loginConGoogle(event) {
     window.location.href = `${API_URL.replace('/api', '')}/oauth2/authorization/google`;
 }
 
-// ========================================
+
 // ASIGNAR EVENT LISTENERS A LOS FORMULARIOS
-// ========================================
 
 // Formulario de Login
 signInForm.addEventListener('submit', handleLogin);
@@ -350,9 +331,8 @@ if (googleLoginBtn) {
     googleLoginBtn.addEventListener('click', loginConGoogle);
 }
 
-// ========================================
+
 // VERIFICAR ERRORES EN LA URL AL CARGAR
-// ========================================
 window.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const error = urlParams.get('error');
@@ -373,9 +353,8 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// ========================================
+
 // VERIFICAR SI HAY TOKEN EN LA URL (OAuth2 Callback)
-// ========================================
 window.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('token');
@@ -400,9 +379,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-/**
- * Valida el token guardado
- */
+// Valida el token guardado
 async function validarToken(token) {
     try {
         const response = await fetch(`${API_URL}/auth/validar`, {
@@ -425,13 +402,10 @@ async function validarToken(token) {
     }
 }
 
-// ========================================
-// FUNCIÓN AUXILIAR PARA PETICIONES AUTENTICADAS
-// ========================================
 
-/**
- * Realiza una petición fetch con el token de autenticación
- */
+// FUNCIÓN AUXILIAR PARA PETICIONES AUTENTICADAS
+
+// Realiza una petición fetch con el token de autenticación
 async function fetchConToken(url, options = {}) {
     const token = localStorage.getItem('token');
 

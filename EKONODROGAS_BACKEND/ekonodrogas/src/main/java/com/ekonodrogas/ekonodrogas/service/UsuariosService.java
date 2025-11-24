@@ -37,9 +37,8 @@ public class UsuariosService {
 
     @Transactional
     public UsuariosDTO crear(UsuariosDTO dto, String contrasena) {
-        // Validar que el correo no exista
-        // Se recomienda agregar un método en el repository: Optional<UsuariosEntity> findByCorreo(String correo)
 
+        // Validar que el correo no exista
         RolesEntity rol = rolesRepository.findById(dto.getIdRol())
                 .orElseThrow(() -> new RuntimeException("Rol no encontrado con ID: " + dto.getIdRol()));
 
@@ -53,7 +52,7 @@ public class UsuariosService {
                 .primerApellido(dto.getPrimerApellido())
                 .segundoApellido(dto.getSegundoApellido())
                 .correo(dto.getCorreo())
-                .contrasena(contrasena) // IMPORTANTE: Debería estar encriptada con BCrypt
+                .contrasena(contrasena) // Debe estar encriptada con BCrypt
                 .fechaRegistro(LocalDateTime.now())
                 .build();
 

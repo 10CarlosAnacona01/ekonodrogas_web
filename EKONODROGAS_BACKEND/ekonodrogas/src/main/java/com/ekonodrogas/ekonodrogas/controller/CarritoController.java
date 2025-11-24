@@ -13,10 +13,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
-/**
+/*
  * Controlador REST para gestionar el carrito de compras
  * Proporciona endpoints para agregar, actualizar, eliminar y consultar items del carrito
  */
+
 @RestController
 @RequestMapping("/api/carrito")
 @RequiredArgsConstructor
@@ -25,7 +26,7 @@ public class CarritoController {
 
     private final CarritoService carritoService;
 
-    /**
+    /*
      * Obtiene el carrito completo de un usuario
      * GET /api/carrito/{idUsuario}
      */
@@ -40,7 +41,7 @@ public class CarritoController {
         return ResponseEntity.ok(carritoService.obtenerCarrito(idUsuario));
     }
 
-    /**
+    /*
      * Agrega un nuevo item al carrito o incrementa la cantidad si ya existe
      * POST /api/carrito/{idUsuario}/items
      * Body: { "idProducto": 1, "cantidad": 2 }
@@ -65,7 +66,7 @@ public class CarritoController {
         }
     }
 
-    /**
+    /*
      * Actualiza la cantidad de un producto específico en el carrito
      * PUT /api/carrito/{idUsuario}/items/{idProducto}
      * Body: { "cantidad": 5 }
@@ -92,7 +93,7 @@ public class CarritoController {
         }
     }
 
-    /**
+    /*
      * Elimina un producto específico del carrito
      * DELETE /api/carrito/{idUsuario}/items/{idProducto}
      */
@@ -109,7 +110,7 @@ public class CarritoController {
         return ResponseEntity.ok(carritoService.eliminarItem(idUsuario, idProducto));
     }
 
-    /**
+    /*
      * Vacía completamente el carrito del usuario (elimina todos los items)
      * DELETE /api/carrito/{idUsuario}
      */
@@ -123,7 +124,7 @@ public class CarritoController {
         return ResponseEntity.ok(carritoService.vaciarCarrito(idUsuario));
     }
 
-    /**
+    /*
      * Valida que todos los productos del carrito tengan stock disponible
      * Se debe llamar antes de procesar una compra
      * GET /api/carrito/{idUsuario}/validar
