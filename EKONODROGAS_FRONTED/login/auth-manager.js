@@ -1,6 +1,5 @@
-// ========================================
+
 // GESTOR CENTRAL DE AUTENTICACIÓN
-// ========================================
 
 class AuthManager {
     constructor() {

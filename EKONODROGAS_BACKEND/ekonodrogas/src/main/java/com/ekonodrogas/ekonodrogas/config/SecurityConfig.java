@@ -58,7 +58,7 @@ public class SecurityConfig {
                             "/webjars/**"
                     ).permitAll();
 
-                    // ENDPOINTS PÚBLICOS
+                    //  Públicos
                     auth.requestMatchers(
                             "/api/productos/**",
                             "/api/categorias/**",
@@ -71,19 +71,19 @@ public class SecurityConfig {
                             "/error"
                     ).permitAll();
 
-                    // ENDPOINTS PROTEGIDOS QUE REQUIEREN AUTENTICACIÓN
+                    // Requieren autenticación
                     auth.requestMatchers(
                             "/api/auth/me",
                             "/api/auth/validar"
                     ).authenticated();
 
-                    // ENDPOINTS PARA USUARIOS Y ADMINISTRADORES
+                    // Para usuarios autenticados (administrador y usuario)
                     auth.requestMatchers(
                             "/api/carrito/**",
                             "/api/pagos/**"
                     ).hasAnyRole("ADMINISTRADOR", "USUARIO");
 
-                    // ENDPOINTS SOLO PARA ADMINISTRADOR
+                    // Solo de administrador
                     auth.requestMatchers(
                             "/api/usuarios/**",
                             "/api/ventas/**",
@@ -91,7 +91,7 @@ public class SecurityConfig {
                             "/api/roles/**"
                     ).hasRole("ADMINISTRADOR");
 
-                    //  RESTO REQUIERE AUTENTICACIÓN
+                    //  Todo lo de más requiere autenticación
                     auth.anyRequest().authenticated();
                 })
 

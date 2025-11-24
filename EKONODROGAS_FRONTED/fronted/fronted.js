@@ -1,15 +1,13 @@
-// ========================================
+
 // FRONTEND PRINCIPAL - EKONODROGAS
-// ========================================
 
 document.addEventListener('DOMContentLoaded', function() {
     inicializarMenuHamburguesa();
     inicializarCambioProductos();
 });
 
-// ========================================
+
 // MENÚ HAMBURGUESA
-// ========================================
 function inicializarMenuHamburguesa() {
     const menuToggle = document.getElementById('menu-toggle');
     const menu = document.querySelector('.menu');
@@ -44,9 +42,9 @@ function inicializarMenuHamburguesa() {
     console.log('✓ Menú hamburguesa inicializado');
 }
 
-// ========================================
+
 // CAMBIO DE PRODUCTOS (destacados/recientes/vendidos)
-// ========================================
+
 function inicializarCambioProductos() {
     const botones = document.querySelectorAll('.container-options span');
     const secciones = document.querySelectorAll('.top-products .container-products');

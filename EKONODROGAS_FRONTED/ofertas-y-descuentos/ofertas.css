@@ -580,9 +580,7 @@ body{
     margin-bottom: 3rem; 
 }
 
-/* ========================================
-    DROPDOWN DE USUARIO AUTENTICADO
-   ======================================== */
+/* DROPDOWN DE USUARIO AUTENTICADO*/
 
 .user-dropdown {
     position: relative;

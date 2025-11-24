@@ -21,9 +21,6 @@ public class VentasController {
 
     private final VentasService ventasService;
 
-    // ========================================
-    // NUEVOS ENDPOINTS - VENTAS COMPLETAS
-    // ========================================
 
     @GetMapping("/completas")
     @Operation(
@@ -68,9 +65,6 @@ public class VentasController {
         return ResponseEntity.ok(ventasService.obtenerVentasCompletasPorUsuario(idUsuario));
     }
 
-    // ========================================
-    // ENDPOINTS ORIGINALES (mantener compatibilidad)
-    // ========================================
 
     @GetMapping
     @Operation(

@@ -1,6 +1,6 @@
-// ========================================
-// CARRITO DE COMPRAS - USUARIO DINÁMICO
-// ========================================
+
+// CARRITO DE COMPRAS 
+
 // IMPORTANTE: Este archivo NO debe declarar API_URL ni API_BASE_URL
 // Usa la variable ya declarada en productos.js
 

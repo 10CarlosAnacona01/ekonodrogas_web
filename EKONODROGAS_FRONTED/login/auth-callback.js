@@ -1,6 +1,5 @@
-// ========================================
+
 // AUTH CALLBACK - MANEJO DE OAUTH2
-// ========================================
 
 console.log('auth-callback.js cargado');
 

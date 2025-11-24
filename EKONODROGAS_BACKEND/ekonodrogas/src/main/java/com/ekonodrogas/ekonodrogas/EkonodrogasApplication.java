@@ -26,8 +26,8 @@ public class EkonodrogasApplication {
             PasswordEncoder passwordEncoder) {
 
         return args -> {
-            // ROLES
-            // Buscar o crear rol ADMINISTRADOR
+            // Roles
+            // Buscar o crear rol administrador
             RolesEntity adminRole;
             Optional<RolesEntity> adminRoleOpt = rolesRepository.findByNombreRol("ADMINISTRADOR");
             if (adminRoleOpt.isEmpty()) {
@@ -51,7 +51,7 @@ public class EkonodrogasApplication {
                 userRole = userRoleOpt.get();
             }
 
-            // USUARIO ADMINISTRADOR
+            // Usuario administrador
             if (!usuariosRepository.existsByCorreo("adminekonodrogas@gmail.com")) {
                 UsuariosEntity administrador = UsuariosEntity.builder()
                         .roles(Set.of(adminRole))
@@ -67,7 +67,7 @@ public class EkonodrogasApplication {
                 usuariosRepository.save(administrador);
             }
 
-            // CATEGORÍAS
+            // Categorías
             if (categoriasRepository.count() == 0) {
                 CategoriasEntity categoriaDrogueria = CategoriasEntity.builder()
                         .nombreCategoria("Droguería")

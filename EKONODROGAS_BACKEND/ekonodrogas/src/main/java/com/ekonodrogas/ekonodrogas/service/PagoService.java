@@ -28,29 +28,29 @@ public class PagoService {
     @Transactional
     public PagoRespuestaDTO procesarPago(PagoDTO pagoDTO) {
         try {
-            // 1. Validar que el usuario exista
+            // Validar que el usuario exista
             UsuariosEntity usuario = usuariosRepository.findById(pagoDTO.getIdUsuario())
                     .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-            // 2. Obtener el carrito del usuario
+            // Obtener el carrito del usuario
             CarritoDTO carrito = carritoService.obtenerCarrito(pagoDTO.getIdUsuario());
 
             if (carrito.getItems().isEmpty()) {
                 throw new RuntimeException("El carrito está vacío");
             }
 
-            // 3. Validar stock antes de procesar
+            // Validar stock antes de procesar
             carritoService.validarStockCarrito(pagoDTO.getIdUsuario());
 
-            // 4. Validar que el monto coincida
+            // Validar que el monto coincida
             if (!carrito.getTotal().equals(pagoDTO.getMontoTotal())) {
                 throw new RuntimeException("El monto no coincide con el total del carrito");
             }
 
-            // 5. Simular validación de tarjeta (ficticia)
+            // Simular validación de tarjeta (ficticia)
             validarTarjetaFicticia(pagoDTO);
 
-            // 6. Crear la venta
+            // Crear la venta
             LocalDateTime fechaVenta = LocalDateTime.now();
             VentasEntity venta = VentasEntity.builder()
                     .usuario(usuario)
@@ -61,7 +61,7 @@ public class PagoService {
 
             VentasEntity ventaGuardada = ventasRepository.save(venta);
 
-            // 7. Guardar detalles y actualizar stock
+            // Guardar detalles y actualizar stock
             for (ItemCarritoDTO item : carrito.getItems()) {
                 // Crear detalle de venta
                 ProductosEntity producto = productosRepository.findById(item.getIdProducto())
@@ -89,16 +89,16 @@ public class PagoService {
                 productosRepository.save(producto);
             }
 
-            // 8. Generar número de autorización ficticio
+            // Generar número de autorización ficticio
             String numeroAutorizacion = "AUTH-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
 
-            // 9. Generar PDF del comprobante
+            // Generar PDF del comprobante
             String pdfBase64 = generarComprobantePDF(ventaGuardada, carrito, pagoDTO, numeroAutorizacion);
 
-            // 10. Vaciar el carrito después del pago exitoso
+            // Vaciar el carrito después del pago exitoso
             carritoService.vaciarCarrito(pagoDTO.getIdUsuario());
 
-            // 11. Construir respuesta
+            // Construir respuesta
             return PagoRespuestaDTO.builder()
                     .idVenta(ventaGuardada.getIdVenta())
                     .estadoPago("completada")

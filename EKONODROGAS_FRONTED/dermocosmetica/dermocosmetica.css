@@ -292,7 +292,7 @@ body{
     flex: 1;
     text-align: center;
 }
-/* === Alineación en columnas dentro del carrito === */
+/*  Alineación en columnas dentro del carrito  */
 .cart-item {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
@@ -580,9 +580,7 @@ body{
     margin-bottom: 3rem; 
 }
 
-/* ========================================
-    DROPDOWN DE USUARIO AUTENTICADO
-   ======================================== */
+/* DROPDOWN DE USUARIO AUTENTICADO  */
 
 .user-dropdown {
     position: relative;

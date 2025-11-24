@@ -21,7 +21,7 @@ public class CarritoService {
     // Cada usuario tiene su propio carrito identificado por idUsuario
     private final Map<Long, CarritoDTO> carritos = new ConcurrentHashMap<>();
 
-    /**
+    /*
      * Obtiene el carrito de un usuario específico
      * Si no existe, retorna un carrito vacío
      */
@@ -35,7 +35,7 @@ public class CarritoService {
                 .build());
     }
 
-    /**
+    /*
      * Agrega un producto al carrito del usuario
      * Si el producto ya existe, incrementa la cantidad
      * Valida disponibilidad y stock antes de agregar
@@ -101,7 +101,7 @@ public class CarritoService {
         return carrito;
     }
 
-    /**
+    /*
      * Actualiza la cantidad de un producto específico en el carrito
      * Valida que haya stock suficiente antes de actualizar
      */
@@ -141,7 +141,7 @@ public class CarritoService {
         return carrito;
     }
 
-    /**
+    /*
      * Elimina un producto específico del carrito
      */
     @Transactional
@@ -160,7 +160,7 @@ public class CarritoService {
         return carrito;
     }
 
-    /**
+    /*
      * Vacía completamente el carrito del usuario
      */
     @Transactional
@@ -179,7 +179,7 @@ public class CarritoService {
         return carrito;
     }
 
-    /**
+    /*
      * Valida que todos los productos del carrito tengan stock disponible
      * Se debe llamar antes de procesar una compra
      */
@@ -205,7 +205,7 @@ public class CarritoService {
         }
     }
 
-    /**
+    /*
      * Método privado para recalcular el total y cantidad total del carrito
      * Se ejecuta cada vez que se modifica el carrito
      */

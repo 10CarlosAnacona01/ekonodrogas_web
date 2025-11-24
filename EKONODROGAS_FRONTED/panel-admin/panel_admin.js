@@ -1,6 +1,5 @@
-// ========================================
+
 // PANEL DE ADMINISTRACIÓN - VERSIÓN CORREGIDA
-// ========================================
 
 // VARIABLES GLOBALES
 let currentEditingProductId = null;
@@ -27,10 +26,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     await cargarDatosIniciales();
 });
 
-// ========================================
 // VERIFICACIÓN DE ACCESO
-// ========================================
-
 function verificarAccesoAdmin() {
     // Verificar que el usuario esté autenticado
     if (!authManager.estaAutenticado()) {
@@ -74,10 +70,7 @@ function mostrarInfoAdmin() {
     }
 }
 
-// ========================================
 // CARGA DE DATOS INICIAL
-// ========================================
-
 async function cargarDatosIniciales() {
     try {
         // Mostrar indicador de carga
@@ -133,9 +126,8 @@ function mostrarCargando(mostrar) {
     }
 }
 
-// ========================================
+
 // CARGA DE DATOS DESDE BACKEND (CON AUTH)
-// ========================================
 
 // Cargar categorías
 async function loadCategorias() {
@@ -336,9 +328,8 @@ async function loadVentas() {
     }
 }
 
-// ========================================
+
 // FUNCIONES AUXILIARES
-// ========================================
 
 function formatNombreUsuario(usuario) {
     const nombres = [
@@ -363,9 +354,8 @@ function getCategoryIdByName(nombreCategoria) {
     return categoria ? categoria.idCategoria : null;
 }
 
-// ========================================
+
 // EVENT LISTENERS
-// ========================================
 
 function initializeEventListeners() {
     // Navegación entre secciones
@@ -412,10 +402,8 @@ function initializeEventListeners() {
     createMobileMenu();
 }
 
-// ========================================
-// NAVEGACIÓN
-// ========================================
 
+// NAVEGACIÓN
 function showSection(sectionId, element) {
     const activeSections = document.querySelectorAll('.section.active');
     activeSections.forEach(s => {
@@ -440,10 +428,8 @@ function showSection(sectionId, element) {
     }, 300);
 }
 
-// ========================================
-// GESTIÓN DE PRODUCTOS
-// ========================================
 
+// GESTIÓN DE PRODUCTOS
 function renderProducts() {
     const tbody = document.getElementById('productsTable');
     if (!tbody) return;
@@ -685,10 +671,8 @@ async function deleteProduct(id) {
     }
 }
 
-// ========================================
-// DASHBOARD
-// ========================================
 
+// DASHBOARD
 function renderDashboard() {
     const totalSales = ventas.reduce((sum, venta) => sum + venta.total, 0);
     const totalProducts = products.length;
@@ -873,10 +857,8 @@ function mostrarDetallesVenta(venta) {
     });
 }
 
-// ========================================
-// ANIMACIONES Y EFECTOS
-// ========================================
 
+// ANIMACIONES Y EFECTOS
 function animateValue(element, start, end, duration, isCurrency = false) {
     let startTimestamp = null;
     const step = (timestamp) => {
@@ -953,10 +935,8 @@ function showNotification(message, type = 'success') {
     }, 3000);
 }
 
-// ========================================
-// MENÚ MÓVIL
-// ========================================
 
+// MENÚ MÓVIL
 function createMobileMenu() {
     const sidebar = document.querySelector('.sidebar');
     if (!sidebar) return;
@@ -1016,10 +996,8 @@ function closeMobileMenu() {
     if (overlay) overlay.style.display = 'none';
 }
 
-// ========================================
-// UTILIDADES
-// ========================================
 
+// UTILIDADES
 function formatDate(dateString) {
     if (!dateString) return '-';
     const date = new Date(dateString);

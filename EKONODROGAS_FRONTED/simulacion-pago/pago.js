@@ -1,6 +1,5 @@
-// ========================================
+
 // SISTEMA DE PAGO - VERSIÓN CORREGIDA
-// ========================================
 
 // Variables globales
 let cartTotal = 0;

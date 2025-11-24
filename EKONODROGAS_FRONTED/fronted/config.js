@@ -1,6 +1,5 @@
-// ========================================
+
 // CONFIGURACIÓN CENTRALIZADA DE LA APLICACIÓN
-// ========================================
 
 // Configuración de la API
 window.APP_CONFIG = {
