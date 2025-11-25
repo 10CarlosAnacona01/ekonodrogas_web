@@ -24,7 +24,7 @@ async function obtenerProductosPorCategoria(categoriaId) {
         
         const productos = await response.json();
         
-        // Filtrar productos por categoría
+        // Filtrar productos por categoría y muestra los que tengan stock disponieble
         const productosFiltrados = productos.filter(
             producto => producto.idCategoria === categoriaId && producto.disponible
         );

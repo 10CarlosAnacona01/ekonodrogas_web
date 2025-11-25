@@ -89,7 +89,7 @@ public class OfertasService {
         return (int) Math.round(((precioAnterior - precioNuevo) * 100.0) / precioAnterior);
     }
 
-    // Conversión Entity <-> DTO
+    // Toma la Entity y envía solo lo necesario DTO
     private OfertasDTO entityToDto(OfertasEntity entity) {
         return OfertasDTO.builder()
                 .idOferta(entity.getIdOferta())

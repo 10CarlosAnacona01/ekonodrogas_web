@@ -15,6 +15,8 @@ public class CategoriasService {
 
     private final CategoriasRepository categoriasRepository;
 
+    // Obtener las categorías
+    // Es de solo lectura, no hace modificaciones en la DB
     @Transactional(readOnly = true)
     public List<CategoriasDTO> obtenerTodas() {
         return categoriasRepository.findAll().stream()
@@ -22,6 +24,7 @@ public class CategoriasService {
                 .collect(Collectors.toList());
     }
 
+    // No se encuentra la categoría por su ID
     @Transactional(readOnly = true)
     public CategoriasDTO obtenerPorId(Long id) {
         CategoriasEntity entity = categoriasRepository.findById(id)
@@ -29,6 +32,7 @@ public class CategoriasService {
         return entityToDto(entity);
     }
 
+    // Crea una categoría
     @Transactional
     public CategoriasDTO crear(CategoriasDTO dto) {
         CategoriasEntity entity = dtoToEntity(dto);
@@ -36,6 +40,7 @@ public class CategoriasService {
         return entityToDto(guardada);
     }
 
+    // Actualiza una categoría
     @Transactional
     public CategoriasDTO actualizar(Long id, CategoriasDTO dto) {
         CategoriasEntity entity = categoriasRepository.findById(id)
@@ -46,6 +51,7 @@ public class CategoriasService {
         return entityToDto(actualizada);
     }
 
+    // Elimina una categoría
     @Transactional
     public void eliminar(Long id) {
         if (!categoriasRepository.existsById(id)) {
@@ -54,7 +60,8 @@ public class CategoriasService {
         categoriasRepository.deleteById(id);
     }
 
-    // Métodos de conversión
+    // Métodos de conversión, devuelve un objeto DTO listo para usarse fuera del servicio, protege la DB, solo
+    // expone datos necesarios al cliente
     private CategoriasDTO entityToDto(CategoriasEntity entity) {
         return CategoriasDTO.builder()
                 .idCategoria(entity.getIdCategoria())

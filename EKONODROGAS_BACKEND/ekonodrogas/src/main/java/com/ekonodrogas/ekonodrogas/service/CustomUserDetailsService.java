@@ -20,15 +20,17 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final UsuariosRepository usuariosRepository;
 
     @Override
+    // Busca usuario en la DB, si no lanza excepción
     public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
         UsuariosEntity usuario = usuariosRepository.findByCorreo(correo)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + correo));
 
-        // Convertir roles a authorities
+        // Convertir roles a authorities (donde se puede acceder)
         Set<GrantedAuthority> authorities = usuario.getRoles().stream()
                 .map(rol -> new SimpleGrantedAuthority("ROLE_" + rol.getNombreRol()))
                 .collect(Collectors.toSet());
 
+        // Se usa para autenticar y autorizar al usuario
         return User.builder()
                 .username(usuario.getCorreo())
                 .password(usuario.getContrasena())
