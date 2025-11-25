@@ -1,83 +1,1 @@
-package com.ekonodrogas.ekonodrogas.service;
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import java.security.Key;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
-
-@Service
-public class JwtService {
-
-    @Value("${jwt.secret}")
-    private String secretKey;
-
-    @Value("${jwt.expiration}")
-    private Long jwtExpiration;
-
-    /* Genera un token JWT para el usuario */
-    public String generarToken(String correo, Long idUsuario, String nombreCompleto) {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("idUsuario", idUsuario);
-        claims.put("nombreCompleto", nombreCompleto);
-        return crearToken(claims, correo);
-    }
-
-    /* Crea el token con los claims y el subject  */
-    private String crearToken(Map<String, Object> claims, String subject) {
-        return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(subject)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
-                .signWith(getSignKey(), SignatureAlgorithm.HS256)
-                .compact();
-    }
-
-    /*Obtiene la clave de firma  */
-    private Key getSignKey() {
-        return Keys.hmacShaKeyFor(secretKey.getBytes());
-    }
-
-    /* Extrae el correo (subject) del token  */
-    public String extraerCorreo(String token) {
-        return extraerClaim(token, Claims::getSubject);
-    }
-
-    /* Extrae la fecha de expiración del token   */
-    public Date extraerExpiracion(String token) {
-        return extraerClaim(token, Claims::getExpiration);
-    }
-
-    /* Extrae un claim específico del token     */
-    public <T> T extraerClaim(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = extraerTodosClaims(token);
-        return claimsResolver.apply(claims);
-    }
-
-    /* Extrae todos los claims del token  */
-    private Claims extraerTodosClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSignKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-    }
-
-    /* Verifica si el token ha expirado */
-    private Boolean esTokenExpirado(String token) {
-        return extraerExpiracion(token).before(new Date());
-    }
-
-    /* Valida el token */
-    public Boolean validarToken(String token, String correo) {
-        final String correoToken = extraerCorreo(token);
-        return (correoToken.equals(correo) && !esTokenExpirado(token));
-    }
-}
+package com.ekonodrogas.ekonodrogas.service;import io.jsonwebtoken.Claims;import io.jsonwebtoken.Jwts;import io.jsonwebtoken.SignatureAlgorithm;import io.jsonwebtoken.security.Keys;import org.springframework.beans.factory.annotation.Value;import org.springframework.stereotype.Service;import java.security.Key;import java.util.Date;import java.util.HashMap;import java.util.Map;import java.util.function.Function;@Servicepublic class JwtService {    @Value("${jwt.secret}")    private String secretKey;    @Value("${jwt.expiration}")    private Long jwtExpiration;    /* Genera un token JWT para el usuario */    public String generarToken(String correo, Long idUsuario, String nombreCompleto) {        Map<String, Object> claims = new HashMap<>();        claims.put("idUsuario", idUsuario);        claims.put("nombreCompleto", nombreCompleto);        return crearToken(claims, correo);    }    /* Crea el token con los claims y el subject  */    private String crearToken(Map<String, Object> claims, String subject) {        return Jwts.builder()                .setClaims(claims)                .setSubject(subject)                .setIssuedAt(new Date(System.currentTimeMillis()))                .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))                .signWith(getSignKey(), SignatureAlgorithm.HS256)                .compact();    }    /*Obtiene la clave de firma  */    private Key getSignKey() {        return Keys.hmacShaKeyFor(secretKey.getBytes());    }    /* Extrae el correo (subject) del token  */    public String extraerCorreo(String token) {        return extraerClaim(token, Claims::getSubject);    }    /* Extrae la fecha de expiración del token   */    public Date extraerExpiracion(String token) {        return extraerClaim(token, Claims::getExpiration);    }    /* Extrae un claim específico del token     */    public <T> T extraerClaim(String token, Function<Claims, T> claimsResolver) {        final Claims claims = extraerTodosClaims(token);        return claimsResolver.apply(claims);    }    /* Extrae todos los claims del token  */    private Claims extraerTodosClaims(String token) {        return Jwts.parserBuilder()                .setSigningKey(getSignKey())                .build()                .parseClaimsJws(token)                .getBody();    }    /* Verifica si el token ha expirado */    private Boolean esTokenExpirado(String token) {        return extraerExpiracion(token).before(new Date());    }    /* Valida el token */    public Boolean validarToken(String token, String correo) {        final String correoToken = extraerCorreo(token);        return (correoToken.equals(correo) && !esTokenExpirado(token));    }}
